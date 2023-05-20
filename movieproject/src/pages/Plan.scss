@@ -1,0 +1,67 @@
+.Plan {
+  //display: flex;
+  justify-content: center;
+  .Bar {
+    width: 800px;
+    background: black;
+    height: 4px;
+    margin-bottom: 30px;
+  }
+  .TxList {
+    width: 800px;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 5px;
+    z-index: 1;
+    .Filter {
+      height: 35px;
+      width: 95px;
+      background-color: white;
+      border-radius: 8px;
+      border: 1px solid #eaeaea;
+      font-size: 0.8rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      .Category {
+        flex: 1;
+      }
+      svg {
+        align-items: right;
+        font-size: 1.3rem;
+        margin-right: 0.5rem;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .select-dropdown {
+      height: 130px;
+      width: 95px;
+      position: absolute;
+      top: 95px;
+      background-color: white;
+      border-radius: 8px;
+      border: 1px solid darkgrey;
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      &:hover {
+        cursor: pointer;
+      }
+      .select-item {
+        margin-top: 0.25rem;
+        &.selected {
+          font-weight: bold;
+          color: darkorange;
+        }
+        &:hover {
+          font-weight: bold;
+          color: darkorange;
+        }
+      }
+    }
+  }
+}
