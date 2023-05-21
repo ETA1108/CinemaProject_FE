@@ -25,11 +25,9 @@ const Login = () => {
     console.log("ID : ", inputId);
     console.log("PW : ", inputPw);
     axios
-      .post("/login", null, {
-        params: {
-          user_id: inputId, // 인덱스 맞게 고치기
-          encrypted_password: inputPw,
-        },
+      .post("/login", {
+        user_id: inputId, // 인덱스 맞게 고치기
+        encrypted_password: inputPw,
       })
       .then((res) => {
         console.log(res);

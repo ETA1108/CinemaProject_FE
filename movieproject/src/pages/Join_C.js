@@ -10,7 +10,7 @@ const Join = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
   const [inputNum, setInputNum] = useState("");
-  const [inputAd, setInputAd] = useState("1");
+  const [inputAd, setInputAd] = useState(true);
   const [inputPh, setInputPh] = useState("");
 
   const saveInputId = (e) => {
@@ -30,30 +30,36 @@ const Join = () => {
     setInputPh(e.target.value);
   };
 
-  const onClickJoin = () => {
-    axios
-      .post("/customers", null, {
-        params: {
-          user_id: inputId,
-          encrypted_password: inputPw,
-          resident_registration_number: inputNum,
-          is_verfied: true,
-          is_verified_adult: inputAd,
-          mobile_number: inputPh,
-        },
-      })
+  function onClickJoin(e) {
+    fetch("/customers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: inputId,
+        password: inputPw,
+        resident_registration_number: inputNum,
+        is_verfied: true,
+        is_verified_adult: inputAd,
+        point: 0,
+        mobile_number: inputPh,
+      }),
+    })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
         document.location.href = "/";
         alert("회원가입을 축하합니다!");
       })
-      .catch();
-  };
+      .catch((error) => {
+        console.log(error.response);
+      });
+  }
 
   return (
     <div className="join">
       <h1 style={{ textAlign: "center" }}>회원가입</h1>
-      <form>
+      <form onSubmit={onClickJoin}>
         ID
         <input id="id" type="text" value={inputId} onChange={saveInputId} />
         비밀번호
@@ -82,23 +88,21 @@ const Join = () => {
           <input
             type="radio"
             id="isadult"
-            value="1"
-            checked={inputAd === "1" ? true : false}
+            value={true}
+            checked={inputAd === true ? true : false}
             onChange={saveInputAd}
           ></input>
           <div className="text">예</div>
           <input
             type="radio"
             id="isadult"
-            value="0"
-            checked={inputAd === "0" ? true : false}
+            value={false}
+            checked={inputAd === false ? true : false}
             onChange={saveInputAd}
           ></input>
           <div className="text">아니오</div>
         </div>
-        <button type="submit" onClick={onClickJoin}>
-          가입하기
-        </button>
+        <button type="submit">가입하기</button>
       </form>
     </div>
   );

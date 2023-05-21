@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import SeatItem from "../components/RoomItem";
-import "./Seat.scss";
+import SeatItem from "../components/SeatItem";
+import "./Seat_per.scss";
 import axios from "axios";
 
-const Seat = () => {
+const Seat_per = () => {
   const [txs, setTxs] = useState(null);
 
   const useInterval = (callback, delay) => {
@@ -28,11 +28,10 @@ const Seat = () => {
     const fetchData = async () => {
       //      setLoading(true);
       try {
-        const response = await axios.get("/theaters");
+        const response = await axios.get("/swagger/0");
         let filteredTxs = [];
-        for (let i = 0; i < response.data.theaters.length; i++) {
-          filteredTxs.push(response.data.theaters[i]);
-          console.log(response.data.theaters[i].id);
+        for (let i = 0; i < response.data.length; i++) {
+          filteredTxs.push(response.data[i]);
         }
         setTxs(filteredTxs);
       } catch (e) {
@@ -48,14 +47,13 @@ const Seat = () => {
 
   return (
     <div className="Seat">
+      <div className="Screen">SCREEN</div>
       <ul className="TxList">
         {txs.map((txs) => (
-          <SeatItem txs={txs} key={txs.id} />
+          <SeatItem txs={txs} key={txs.index} />
         ))}
       </ul>
     </div>
   );
 };
-export default Seat;
-
-// seat_per로 보내기
+export default Seat_per;

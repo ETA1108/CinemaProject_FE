@@ -8,7 +8,6 @@ import { BiCameraMovie } from "react-icons/bi";
 import { GrPlan } from "react-icons/gr";
 import { MdEventSeat, MdOutlinePeopleAlt } from "react-icons/md";
 import { BsCreditCard } from "react-icons/bs";
-
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 
@@ -48,11 +47,13 @@ const Header = () => {
               <BiCameraMovie /> 영화 관리
             </button>
           </Link>
+          {/*
           <Link to="/plan" onClick={() => setActiveNav(2)}>
             <button className={activeNav === 2 ? "active" : ""}>
               <GrPlan /> 상영일정 관리
             </button>
           </Link>
+  */}
           <Link to="/seat" onClick={() => setActiveNav(3)}>
             <button className={activeNav === 3 ? "active" : ""}>
               <MdEventSeat /> 좌석 관리
