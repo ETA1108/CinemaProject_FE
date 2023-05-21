@@ -4,9 +4,14 @@ import "./Plan.scss";
 import axios from "axios";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Plan_C = () => {
+  const location = useLocation();
+
+  const movieid = location.state.id;
+  const moviename = location.state.name;
+
   const category = [
     // 날짜 조회
     { id: 0, name: "전체", state: null },
@@ -52,10 +57,13 @@ const Plan_C = () => {
     const fetchData = async () => {
       //      setLoading(true);
       try {
-        const response = await axios.get("/swagger/0");
+        const response = await axios.get(
+          "/movies/" + movieid + "/screening-schedules"
+        );
         let filteredTxs = [];
-        for (let i = 0; i < response.data.length; i++) {
-          if (categoryItem.state === null) filteredTxs.push(response.data[i]);
+        for (let i = 0; i < response.data.screening_schedules.length; i++) {
+          if (categoryItem.state === null)
+            filteredTxs.push(response.data.screening_schedules[i]);
           else if (response.data[i].state + 1 === categoryItem.id)
             filteredTxs.push(response.data[i]);
         }
@@ -75,7 +83,11 @@ const Plan_C = () => {
   return (
     <div className="Plan">
       <div className="PageName">
-        <h1>상영일정</h1>
+        <h1>
+          상영일정 - {"<"}
+          {moviename}
+          {">"}
+        </h1>
       </div>
       <div className="Bar"></div>
       <ul className="TxList">
@@ -106,14 +118,9 @@ const Plan_C = () => {
           </div>
         )}
         {txs.map((txs) => (
-          <PlanItem txs={txs} key={txs.index} />
+          <PlanItem txs={txs} key={txs.id} />
         ))}
       </ul>
-      <Link to="/seat_c">
-        <button className="NextButton">
-          <BsFillArrowRightCircleFill />
-        </button>
-      </Link>
     </div>
   );
 };

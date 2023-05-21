@@ -52,10 +52,11 @@ const Movie_C = () => {
     const fetchData = async () => {
       //      setLoading(true);
       try {
-        const response = await axios.get("/swagger/0");
+        const response = await axios.get("/movies");
         let filteredTxs = [];
-        for (let i = 0; i < response.data.length; i++) {
-          if (categoryItem.state === null) filteredTxs.push(response.data[i]);
+        for (let i = 0; i < response.data.movies.length; i++) {
+          if (categoryItem.state === null)
+            filteredTxs.push(response.data.movies[i]);
           else if (response.data[i].state + 1 === categoryItem.id)
             filteredTxs.push(response.data[i]);
         }
@@ -106,14 +107,9 @@ const Movie_C = () => {
           </div>
         )}
         {txs.map((txs) => (
-          <MovieItem txs={txs} key={txs.index} />
+          <MovieItem txs={txs} key={txs.id} />
         ))}
       </ul>
-      <Link to="/plan_c">
-        <button className="NextButton">
-          <BsFillArrowRightCircleFill />
-        </button>
-      </Link>
     </div>
   );
 };
