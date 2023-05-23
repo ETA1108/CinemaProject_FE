@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import PlanItem from "../components/PlanItem";
+import PlanItem_C from "../components/PlanItem_C";
 import "./Plan.scss";
 import axios from "axios";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
@@ -69,7 +69,7 @@ const Plan_C = () => {
       <div className="Bar"></div>
       <ul className="TxList">
         {txs.map((txs) => (
-          <PlanItem txs={txs} key={txs.id} />
+          <PlanItem_C txs={txs} key={txs.id} />
         ))}
       </ul>
     </div>

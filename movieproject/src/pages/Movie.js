@@ -3,6 +3,7 @@ import MovieItem from "../components/MovieItem";
 import "./Movie.scss";
 import axios from "axios";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Movie = () => {
   const category = [
@@ -108,6 +109,9 @@ const Movie = () => {
           <MovieItem txs={txs} key={txs.id} />
         ))}
       </ul>
+      <Link to="/movie_create">
+        <button className="gotoupdate">영화 추가하기</button>
+      </Link>
     </div>
   );
 };

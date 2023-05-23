@@ -10,18 +10,15 @@ import { MdAdUnits } from "react-icons/md";
 const Pay_C = () => {
   const [customer_id, setCId] = useState("");
   const [txs, setTxs] = useState(null);
-  const [id, setId] = useState(""); //결제방법
-  const [pw, setPw] = useState(""); //카드번호
-  const [mn, setMn] = useState(""); //포인트 사용 얼마나?
+  const [method, setMethod] = useState(""); //결제방법
+  const [apnum, setApnum] = useState(""); //카드번호
+  const [point, setPoint] = useState(""); //포인트 -> 전체사용 여부
 
   const saveInputId = (e) => {
-    setId(e.target.value);
+    setMethod(e.target.value);
   };
   const saveInputPw = (e) => {
-    setPw(e.target.value);
-  };
-  const saveInputPh = (e) => {
-    setMn(e.target.value);
+    setApnum(e.target.value);
   };
 
   const useInterval = (callback, delay) => {
@@ -52,6 +49,7 @@ const Pay_C = () => {
             res1.data.customers[i].user_id === sessionStorage.getItem("user_id")
           ) {
             setCId(res1.data.customers[i].id);
+            setPoint(res1.data.customers[i].point);
             break;
           }
         } // 토큰 저장하기
@@ -93,9 +91,9 @@ const Pay_C = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        method: id,
+        method: method,
         status: "발권",
-        approval_number: pw,
+        approval_number: apnum,
         original_price: 12000, //합하는 함수 만들기
         amount: 10000, //합하는 함수 만들기
         paid_at: "05/21", // 오늘 나타내는 메서드
@@ -126,16 +124,16 @@ const Pay_C = () => {
         */}
       <form onSubmit={onClickPay}>
         결제방법
-        <input id="id" type="text" value={id} onChange={saveInputId} />
+        <input id="id" type="text" value={method} onChange={saveInputId} />
         카드번호{" ('-'없이)"}
         <input
           id="password"
           type="password"
-          value={pw}
+          value={apnum}
           onChange={saveInputPw}
         />
         포인트 사용 여부
-        <input id="phonenumber" type="text" value={mn} onChange={saveInputPh} />
+        <input id="phonenumber" type="text" value={point} />
         <button className="pay" type="submit">
           결제하기
         </button>

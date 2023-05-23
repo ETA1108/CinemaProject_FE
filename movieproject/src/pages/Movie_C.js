@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import MovieItem from "../components/MovieItem";
+import MovieItem_C from "../components/MovieItem_C";
 import "./Movie.scss";
 import axios from "axios";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
@@ -107,7 +107,7 @@ const Movie_C = () => {
           </div>
         )}
         {txs.map((txs) => (
-          <MovieItem txs={txs} key={txs.id} />
+          <MovieItem_C txs={txs} key={txs.id} />
         ))}
       </ul>
     </div>

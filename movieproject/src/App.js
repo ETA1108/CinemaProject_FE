@@ -4,8 +4,12 @@ import Layout_C from "./Layout_C";
 import Login from "./pages/Login";
 import Movie from "./pages/Movie";
 import Movie_C from "./pages/Movie_C";
+import Movie_Create from "./pages/Movie_Create";
+import Movie_Update from "./pages/Movie_Update";
 import Plan from "./pages/Plan";
 import Plan_C from "./pages/Plan_C";
+import Plan_Create from "./pages/Plan_Create";
+import Plan_Update from "./pages/Plan_Update";
 import Seat from "./pages/Seat";
 import Seat_C from "./pages/Seat_C";
 import Ticket from "./pages/Ticket";
@@ -25,7 +29,11 @@ const App = () => {
       <Route path="/join" element={<Join />} />
       <Route element={<Layout />}>
         <Route path="/movie" element={<Movie />} />
+        <Route path="/movie_create" element={<Movie_Create />} />
+        <Route path="/movie_update" element={<Movie_Update />} />
         <Route path="/plan" element={<Plan />} />
+        <Route path="/plan_create" element={<Plan_Create />} />
+        <Route path="/plan_update" element={<Plan_Update />} />
         <Route path="/seat" element={<Seat />} />
         <Route path="/ticket" element={<Ticket />} />
         <Route path="/customer" element={<Customer />} />
