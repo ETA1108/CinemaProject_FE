@@ -10,8 +10,8 @@ const Join = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
   const [inputNum, setInputNum] = useState("");
-  const [inputAd, setInputAd] = useState(true);
   const [inputPh, setInputPh] = useState("");
+  let inputAd = "";
 
   const saveInputId = (e) => {
     setInputId(e.target.value);
@@ -22,15 +22,23 @@ const Join = () => {
   const saveInputNum = (e) => {
     setInputNum(e.target.value);
   };
-  const saveInputAd = (e) => {
-    setInputAd(e.target.value);
-    console.log(inputAd);
-  };
+
   const saveInputPh = (e) => {
     setInputPh(e.target.value);
   };
 
+  function isadult(num) {
+    const year = num.substr(0, 2);
+    const realyear = year > 23 ? "19" + year : "20" + year;
+    if (realyear > 2004) {
+      inputAd = false;
+    } else if (realyear <= 2004) {
+      inputAd = true;
+    }
+  }
+
   function onClickJoin(e) {
+    isadult(inputNum);
     fetch("/customers", {
       method: "POST",
       headers: {
@@ -40,7 +48,7 @@ const Join = () => {
         user_id: inputId,
         password: inputPw,
         resident_registration_number: inputNum,
-        is_verfied: true,
+        is_verified: true,
         is_verified_adult: inputAd,
         point: 0,
         mobile_number: inputPh,
@@ -48,12 +56,13 @@ const Join = () => {
     })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
-        document.location.href = "/";
+        //document.location.href = "/";
         alert("회원가입을 축하합니다!");
       })
       .catch((error) => {
         console.log(error.response);
       });
+    e.preventDefault();
   }
 
   return (
@@ -83,25 +92,6 @@ const Join = () => {
           value={inputPh}
           onChange={saveInputPh}
         />
-        성인 여부{" (만 19세 이상 여부)"}
-        <div>
-          <input
-            type="radio"
-            id="isadult"
-            value={true}
-            checked={inputAd === true ? true : false}
-            onChange={saveInputAd}
-          ></input>
-          <div className="text">예</div>
-          <input
-            type="radio"
-            id="isadult"
-            value={false}
-            checked={inputAd === false ? true : false}
-            onChange={saveInputAd}
-          ></input>
-          <div className="text">아니오</div>
-        </div>
         <button type="submit">가입하기</button>
       </form>
     </div>

@@ -37,9 +37,11 @@ const Header = () => {
         >
           {arrow()}
         </button>
-        <div className="name">
-          <h2>서울시네마</h2>
-        </div>
+        <Link to="/movie">
+          <button className="name">
+            <h2>서울 시네마</h2>
+          </button>
+        </Link>
         <hr></hr>
         <nav className="menu">
           <Link to="/movie" onClick={() => setActiveNav(1)}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import SeatItem from "../components/SeatItem";
-import "./Seat_per.scss";
+import "./Seat.scss";
 import axios from "axios";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { Link } from "react-router-dom";

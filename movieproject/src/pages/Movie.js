@@ -73,6 +73,10 @@ const Movie = () => {
 
   return (
     <div className="Movie">
+      <div className="PageName">
+        <h1>영화 차트</h1>
+      </div>
+      <div className="Bar"></div>
       <ul className="TxList">
         <div className="Filter" onClick={onClick}>
           <div className="Category">&nbsp; {categoryItem.name}</div>

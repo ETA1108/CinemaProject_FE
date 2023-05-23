@@ -7,7 +7,6 @@ import Movie_C from "./pages/Movie_C";
 import Plan from "./pages/Plan";
 import Plan_C from "./pages/Plan_C";
 import Seat from "./pages/Seat";
-import Seat_per from "./pages/Seat_per";
 import Seat_C from "./pages/Seat_C";
 import Ticket from "./pages/Ticket";
 import Ticket_C from "./pages/Ticket_C";
@@ -28,7 +27,6 @@ const App = () => {
         <Route path="/movie" element={<Movie />} />
         <Route path="/plan" element={<Plan />} />
         <Route path="/seat" element={<Seat />} />
-        <Route path="/seat_per" element={<Seat_per />} />
         <Route path="/ticket" element={<Ticket />} />
         <Route path="/customer" element={<Customer />} />
         <Route path="/pay" element={<Pay />} />

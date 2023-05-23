@@ -13,6 +13,7 @@ const Mypage = () => {
   const [ad, setAd] = useState("");
   const [pt, setPt] = useState("");
   const [mn, setMn] = useState("");
+  const [customer_id, setCId] = useState("");
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -36,7 +37,28 @@ const Mypage = () => {
     const fetchData = async () => {
       //      setLoading(true);
       try {
-        const response = await axios.get("/customers/1"); // 토큰 저장하기
+        const res1 = await axios.get("/customers");
+        for (let i = 0; i < res1.data.customers.length; i++) {
+          if (
+            res1.data.customers[i].user_id === sessionStorage.getItem("user_id")
+          ) {
+            setCId(res1.data.customers[i].id);
+            break;
+          }
+        } // 토큰 저장하기
+      } catch (e) {
+        console.log(e);
+      }
+      //      setLoading(false);
+    };
+    fetchData();
+  }, 500);
+
+  useInterval(() => {
+    const fetchData = async () => {
+      //      setLoading(true);
+      try {
+        const response = await axios.get("/customers/" + customer_id);
         setId(response.data.user_id);
         setPw(response.data.encrypted_password);
         setRn(response.data.resident_registration_number);
@@ -59,12 +81,10 @@ const Mypage = () => {
         <input disabled={true} id="id" type="text" value={id} />
         비밀번호
         <input disabled={true} id="password" type="password" value={pw} />
-        주민등록번호{" ('-'없이)"}
-        <input disabled={true} id="renumber" type="text" value={rn} />
         전화번호
         <input disabled={true} id="phonenumber" type="text" value={mn} />
-        포인트
-        <input disabled={true} id="point" type="text" value={pt} />
+        주민등록번호{" ('-'없이)"}
+        <input disabled={true} id="renumber" type="text" value={rn} />
         성인 여부{" (만 19세 이상 여부)"}
         <div>
           <input
@@ -84,6 +104,8 @@ const Mypage = () => {
           ></input>
           <div className="text">아니오</div>
         </div>
+        포인트
+        <input disabled={true} id="point" type="text" value={pt} />
         <Link to="/mypage_ud">
           <button className="gotoupdate">개인정보 수정하기</button>
         </Link>

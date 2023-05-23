@@ -1,4 +1,4 @@
-.Plan {
+.Ticket {
   //display: flex;
   justify-content: center;
   .Bar {
@@ -15,5 +15,10 @@
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 5px;
     z-index: 1;
+    button {
+      height: 50px;
+      font-size: 1.2rem;
+      width: 100%;
+    }
   }
 }
