@@ -1,0 +1,21 @@
+.CustomerListItem {
+  height: 200px;
+  width: 200px;
+  background-color: white;
+  margin-bottom: 15px;
+  border: 1px solid #eaeaea;
+  text-align: left;
+  //text-align: center;
+  //display: flex;
+  //align-items: center;
+
+  div {
+    width: 185px;
+    margin-left: 15px;
+    text-align: left;
+    font-size: 1rem;
+  }
+  .id {
+    margin-top: 10px;
+  }
+}

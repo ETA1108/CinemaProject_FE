@@ -1,6 +1,7 @@
 import React from "react";
 import "./MovieItem.scss";
 import { Link } from "react-router-dom";
+import noimage from "./images/noimage.png";
 
 const MovieItem = ({ txs }) => {
   const name = txs.name;
@@ -21,7 +22,10 @@ const MovieItem = ({ txs }) => {
   }
 
   return (
-    <li className="TxListItem">
+    <li className="MovieListItem">
+      <div className="image">
+        <img src={noimage} />
+      </div>
       <div className="name">{txs.name}</div>
       <div className="info1">
         {txs.genre} | {txs.running_time}분 | {txs.release_date} 개봉
@@ -33,7 +37,7 @@ const MovieItem = ({ txs }) => {
         <button className="gotoplan">상영일정 보러가기</button>
       </Link>
       <Link to="/movie_update" state={{ name: name, id: id }}>
-        <button className="gotoplan">영화 수정하기</button>
+        <button className="movieupdate">영화 수정하기</button>
       </Link>
       <button className="moviedelete" onClick={onClickDelete}>
         영화 삭제하기

@@ -73,7 +73,7 @@ const Plan = () => {
         ))}
       </ul>
       <Link to="/plan_create" state={{ name: moviename, id: movieid }}>
-        <button className="gotoupdate">상영일정 추가하기</button>
+        <button className="plancreate">상영일정 추가하기</button>
       </Link>
     </div>
   );

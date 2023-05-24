@@ -1,5 +1,5 @@
-li {
-  height: 250px;
+.PlanListItem {
+  height: 200px;
   width: 200px;
   background-color: white;
   margin-bottom: 15px;
@@ -8,9 +8,7 @@ li {
   //text-align: center;
   //display: flex;
   //align-items: center;
-  .gotoplan {
-    margin-top: 20px;
-  }
+
   .time {
     width: 185px;
     margin-left: 15px;
@@ -22,6 +20,20 @@ li {
     width: 185px;
     margin-left: 15px;
     text-align: left;
+    font-size: 1rem;
+  }
+  button {
+    border: none;
+    outline: none;
+    color: white;
+    background-color: #6e6e6e;
+    margin-left: 38px;
+    cursor: pointer;
+  }
+  .gotoseat {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 43px;
     font-size: 1rem;
   }
 }

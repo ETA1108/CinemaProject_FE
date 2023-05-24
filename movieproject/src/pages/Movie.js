@@ -110,7 +110,7 @@ const Movie = () => {
         ))}
       </ul>
       <Link to="/movie_create">
-        <button className="gotoupdate">영화 추가하기</button>
+        <button className="moviecreate">영화 추가하기</button>
       </Link>
     </div>
   );

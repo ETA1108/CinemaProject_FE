@@ -19,19 +19,19 @@ const PlanItem = ({ txs }) => {
     e.preventDefault();
   }
   return (
-    <li className="TxListItem">
+    <li className="PlanListItem">
       <div className="time">
         {txs.screening_started_at} ~ {txs.screening_ended_at}
       </div>
       <div className="info1">{txs.theater_id}관</div>
 
       <Link to={"/seat"} state={{ id: id }}>
-        <button className="gotoplan">좌석 보러가기</button>
+        <button className="gotoseat">좌석 보러가기</button>
       </Link>
       <Link to={"/plan_update"} state={{ id: id }}>
-        <button className="gotoplan">상영일정 수정하기</button>
+        <button className="planupdate">상영일정 수정하기</button>
       </Link>
-      <button className="moviedelete" onClick={onClickDelete}>
+      <button className="plandelete" onClick={onClickDelete}>
         상영일정 삭제하기
       </button>
     </li>

@@ -1,12 +1,16 @@
 import React from "react";
 import "./MovieItem.scss";
 import { Link } from "react-router-dom";
+import noimage from "./images/noimage.png";
 
 const MovieItem_C = ({ txs }) => {
   const name = txs.name;
   const id = txs.id;
   return (
-    <li className="TxListItem">
+    <li className="MovieListItem">
+      <div className="image">
+        <img src={noimage} />
+      </div>
       <div className="name">{txs.name}</div>
       <div className="info1">
         {txs.genre} | {txs.running_time}분 | {txs.release_date} 개봉

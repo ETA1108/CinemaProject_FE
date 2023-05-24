@@ -54,7 +54,6 @@ const Header = () => {
           <div>
             <BsFillArrowDownCircleFill />
           </div>
-
           <Link to="/plan_c">
             <button>
               <GrPlan /> 상영일정

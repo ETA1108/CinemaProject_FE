@@ -1,5 +1,5 @@
 import React from "react";
-import TicketItem from "../components/PlanItem";
+import TicketItem from "../components/TicketItem";
 import "./Ticket_C.scss";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
@@ -58,6 +58,7 @@ const Ticket_C = () => {
           "/customers/" + customer_id + "/orders"
         );
         let filteredTxs = [];
+        const orderlength = response.data.orders.length;
         for (let i = 0; i < response.data.orders[0].tickets.length; i++) {
           filteredTxs.push(response.data.orders[0].tickets[i]);
           console.log(response.data.orders[0].tickets[i]);
@@ -78,7 +79,7 @@ const Ticket_C = () => {
         <h1>티켓 예매</h1>
       </div>
       <div className="Bar"></div>
-      {/*
+      {/*}
       <ul className="TxList">
         {txs.map((txs) => (
           <TicketItem txs={txs} key={txs.id} />

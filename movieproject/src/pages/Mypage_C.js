@@ -2,6 +2,7 @@ import React from "react";
 import "./Mypage.scss";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import TicketItem_Mypage from "../components/TicketItem_Mypage";
 
 import { Link } from "react-router-dom";
 import { MdAdUnits } from "react-icons/md";
@@ -14,6 +15,7 @@ const Mypage = () => {
   const [pt, setPt] = useState("");
   const [mn, setMn] = useState("");
   const [customer_id, setCId] = useState("");
+  const [txs, setTxs] = useState(null);
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -73,6 +75,27 @@ const Mypage = () => {
     fetchData();
   }, 500);
 
+  useInterval(() => {
+    const fetchData = async () => {
+      //      setLoading(true);
+      try {
+        const response = await axios.get(
+          "/customers/" + customer_id + "/orders"
+        );
+        let filteredTxs = [];
+
+        for (let i = 0; i < response.data.orders.length; i++) {
+          filteredTxs.push(response.data.orders[i]);
+        }
+        setTxs(filteredTxs);
+      } catch (e) {
+        console.log(e);
+      }
+      //      setLoading(false);
+    };
+    fetchData();
+  }, 500);
+
   return (
     <div className="join">
       <h1 style={{ textAlign: "center" }}>마이 페이지</h1>
@@ -110,6 +133,13 @@ const Mypage = () => {
           <button className="gotoupdate">개인정보 수정하기</button>
         </Link>
       </form>
+      {/*
+      <ul className="TxList">
+        {txs.map((txs) => (
+          <TicketItem txs={txs} key={txs.id} />
+        ))}
+      </ul>
+        */}
     </div>
   );
 };

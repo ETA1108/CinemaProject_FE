@@ -91,8 +91,9 @@ const Pay_C = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        //payment에 싸서 보내기
         method: method,
-        status: "발권",
+        status: "결제완료",
         approval_number: apnum,
         original_price: 12000, //합하는 함수 만들기
         amount: 10000, //합하는 함수 만들기
@@ -123,6 +124,10 @@ const Pay_C = () => {
       </ul>
         */}
       <form onSubmit={onClickPay}>
+        표준 가격
+        <input disabled={true} id="id" type="text" value={"표준가격"} />
+        판매 가격
+        <input disabled={true} id="id" type="text" value={"판매가격"} />
         결제방법
         <input id="id" type="text" value={method} onChange={saveInputId} />
         카드번호{" ('-'없이)"}

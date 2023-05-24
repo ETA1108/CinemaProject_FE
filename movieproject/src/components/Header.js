@@ -7,6 +7,7 @@ import {
 import { BiCameraMovie } from "react-icons/bi";
 import { GrPlan } from "react-icons/gr";
 import { MdEventSeat, MdOutlinePeopleAlt } from "react-icons/md";
+import { BsFillArrowDownCircleFill } from "react-icons/bs";
 import { BsCreditCard } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
@@ -44,36 +45,36 @@ const Header = () => {
         </Link>
         <hr></hr>
         <nav className="menu">
-          <Link to="/movie" onClick={() => setActiveNav(1)}>
-            <button className={activeNav === 1 ? "active" : ""}>
+          <Link to="/movie">
+            <button>
               <BiCameraMovie /> 영화 관리
             </button>
           </Link>
-          {/*
-          <Link to="/plan" onClick={() => setActiveNav(2)}>
-            <button className={activeNav === 2 ? "active" : ""}>
+          <div>
+            <BsFillArrowDownCircleFill />
+          </div>
+          <Link to="/plan">
+            <button>
               <GrPlan /> 상영일정 관리
             </button>
           </Link>
-  */}
-          <Link to="/seat" onClick={() => setActiveNav(3)}>
-            <button className={activeNav === 3 ? "active" : ""}>
+          <div>
+            <BsFillArrowDownCircleFill />
+          </div>
+          <Link to="/seat">
+            <button>
               <MdEventSeat /> 좌석 관리
             </button>
           </Link>
-          <Link to="/ticket" onClick={() => setActiveNav(4)}>
-            <button className={activeNav === 4 ? "active" : ""}>
+          <hr></hr>
+          <Link to="/ticket">
+            <button>
               <HiOutlineTicket /> 티켓 관리
             </button>
           </Link>
-          <Link to="/customer" onClick={() => setActiveNav(5)}>
-            <button className={activeNav === 5 ? "active" : ""}>
-              <MdOutlinePeopleAlt /> 고객 관리
-            </button>
-          </Link>
-          <Link to="/pay" onClick={() => setActiveNav(6)}>
-            <button className={activeNav === 6 ? "active" : ""}>
-              <BsCreditCard /> 결제 관리
+          <Link to="/customer">
+            <button>
+              <MdOutlinePeopleAlt /> 고객 조회
             </button>
           </Link>
         </nav>
