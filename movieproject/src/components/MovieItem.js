@@ -2,14 +2,19 @@ import React from "react";
 import "./MovieItem.scss";
 import { Link } from "react-router-dom";
 import noimage from "./images/noimage.png";
+import axios from "axios";
 
 const MovieItem = ({ txs }) => {
   const name = txs.name;
   const id = txs.id;
 
   function onClickDelete(e) {
-    // delete로 바꾸기
-    fetch("/movies", {})
+    axios
+      .delete("/movies/" + id, {
+        data: {
+          id: id,
+        },
+      })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
         document.location.href = "/movie";

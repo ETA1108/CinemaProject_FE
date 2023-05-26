@@ -3,6 +3,8 @@ import "./PlanItem.scss";
 import { Link } from "react-router-dom";
 
 const PlanItem_C = ({ txs }) => {
+  const id = txs.id;
+
   return (
     <li className="PlanListItem">
       <div className="time">
@@ -10,7 +12,7 @@ const PlanItem_C = ({ txs }) => {
       </div>
       <div className="info1">{txs.theater_id}관</div>
 
-      <Link to={"/plan_c"}>
+      <Link to={"/seat_c"} state={{ id: id }}>
         <button className="gotoseat">좌석 보러가기</button>
       </Link>
     </li>

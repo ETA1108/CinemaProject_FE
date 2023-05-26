@@ -2,7 +2,7 @@
   "name": "project1",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://3.38.151.97:8000",
+  "proxy": "http://alb-cinema-583106664.ap-northeast-2.elb.amazonaws.com",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

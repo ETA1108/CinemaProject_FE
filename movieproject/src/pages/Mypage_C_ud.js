@@ -61,35 +61,13 @@ const Mypage_ud = () => {
     fetchData();
   }, 500);
 
-  useInterval(() => {
-    const fetchData = async () => {
-      //      setLoading(true);
-      try {
-        const response = await axios.get("/customers/" + customer_id);
-        setId(response.data.user_id);
-        setPw(response.data.encrypted_password);
-        setMn(response.data.mobile_number);
-      } catch (e) {
-        console.log(e);
-      }
-      //      setLoading(false);
-    };
-    fetchData();
-  }, 500);
-
   function onClickUpdate(e) {
-    fetch("/customers", {
-      //put으로 바꾸기
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    axios
+      .patch("/customers/" + customer_id, {
         user_id: id,
-        encrypted_password: pw,
+        password: pw,
         mobile_number: mn,
-      }),
-    })
+      })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
         sessionStorage.setItem("user_id", id);
@@ -99,6 +77,7 @@ const Mypage_ud = () => {
       .catch((error) => {
         console.log(error.response);
       });
+    e.preventDefault();
   }
 
   return (

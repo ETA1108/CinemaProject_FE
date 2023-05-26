@@ -7,14 +7,39 @@
     height: 4px;
     margin-bottom: 30px;
   }
-  .TxList {
-    width: 800px;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 5px;
-    z-index: 1;
+
+  form {
+    margin-top: 2%;
+    display: flex;
+    width: 30%;
+    height: 100%;
+    flex-direction: column;
+    text-align: left;
+
+    input {
+      background: none;
+      height: 40px;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid black;
+    }
+
+    .text {
+      float: left;
+      margin-bottom: 30px;
+      margin-top: 11px;
+      margin-right: 20px;
+    }
+
+    #point {
+      float: left;
+      height: 40px;
+      margin-bottom: 50px;
+      margin-right: 7px;
+    }
+
     button {
       height: 50px;
       font-size: 1.2rem;

@@ -1,13 +1,18 @@
 import React from "react";
 import "./PlanItem.scss";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const PlanItem = ({ txs }) => {
   const id = txs.id;
 
   function onClickDelete(e) {
-    // delete로 바꾸기
-    fetch("/screening-schedules", {})
+    axios
+      .delete("/screening-schedules/" + id, {
+        data: {
+          id: id,
+        },
+      })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
         document.location.href = "/movie";
@@ -23,7 +28,7 @@ const PlanItem = ({ txs }) => {
       <div className="time">
         {txs.screening_started_at} ~ {txs.screening_ended_at}
       </div>
-      <div className="info1">{txs.theater_id}관</div>
+      <div className="info1">{txs.theater.name}</div>
 
       <Link to={"/seat"} state={{ id: id }}>
         <button className="gotoseat">좌석 보러가기</button>

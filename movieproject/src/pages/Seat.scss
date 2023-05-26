@@ -32,4 +32,15 @@
     grid-gap: 5px;
     z-index: 1;
   }
+  button {
+    &.active {
+      background-color: #4b088a;
+      color: white;
+
+      //&:hover {
+      //  background: white;
+      //  color: darkorange;
+      //}
+    }
+  }
 }

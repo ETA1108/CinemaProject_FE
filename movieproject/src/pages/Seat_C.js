@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import SeatItem from "../components/SeatItem";
 import "./Seat.scss";
 import axios from "axios";
-import { BsFillArrowRightCircleFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Seat_C = () => {
+  const location = useLocation();
+
+  const planid = location.state.id;
+
   const [txs, setTxs] = useState(null);
+  const [seat, setSeat] = useState("");
+  const [activeNav, setActiveNav] = useState(null);
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -30,12 +34,13 @@ const Seat_C = () => {
     const fetchData = async () => {
       //      setLoading(true);
       try {
-        const response = await axios.get("/swagger/0");
+        const response = await axios.get("/screening-schedules/" + planid);
         let filteredTxs = [];
-        for (let i = 0; i < response.data.length; i++) {
-          filteredTxs.push(response.data[i]);
+        for (let i = 0; i < Object.keys(response.data.seat_map).length; i++) {
+          filteredTxs.push(Object.keys(response.data.seat_map)[i]);
         }
         setTxs(filteredTxs);
+        console.log(txs);
       } catch (e) {
         console.log(e);
       }
@@ -47,23 +52,30 @@ const Seat_C = () => {
     return null;
   }
 
+  function SeatItem(txs) {
+    let seat = [];
+    for (let i = 0; i < txs.length; i++) {
+      seat.push(
+        <button
+          onClick={(e) => {
+            setSeat(txs[i]);
+            setActiveNav(i);
+          }}
+          className={activeNav === i ? "active" : ""}
+        >
+          <div className="TxID">{txs[i]}</div>
+        </button>
+      );
+    }
+    return seat;
+  }
+
   return (
     <div className="Seat">
-      <div className="PageName">
-        <h1>좌석 선택</h1>
-      </div>
-      <div className="Bar"></div>
-      <div className="Number">6관</div>
       <div className="Screen">SCREEN</div>
-      <ul className="TxList">
-        {txs.map((txs) => (
-          <SeatItem txs={txs} key={txs.index} />
-        ))}
-      </ul>
-      <Link to="/ticket_c">
-        <button className="NextButton">
-          <BsFillArrowRightCircleFill />
-        </button>
+      <div className="SeatItem">{SeatItem(txs)}</div>
+      <Link to="/ticket_c" state={{ planid: planid, seatid: seat }}>
+        <button className="gototicket">예매하러 가기</button>
       </Link>
     </div>
   );

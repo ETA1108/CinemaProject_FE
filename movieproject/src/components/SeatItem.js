@@ -2,12 +2,13 @@ import React from "react";
 import "./SeatItem.scss";
 
 const SeatItem = ({ txs }) => {
-  return (
-    //onclick함수로 데이터 담기
-    <button className="TxListItem">
-      <div className="TxID">{txs.id}</div>
-    </button>
-  );
+  for (let i = 0; i < txs.length; i++) {
+    return (
+      <button className="TxListItem">
+        <div className="TxID">{txs[i]}</div>
+      </button>
+    );
+  }
 };
 
 export default SeatItem;
