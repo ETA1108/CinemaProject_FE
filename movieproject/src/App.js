@@ -19,8 +19,10 @@ import Pay from "./pages/Pay";
 import Pay_C from "./pages/Pay_C";
 import Mypage from "./pages/Mypage_C";
 import Mypage_ud from "./pages/Mypage_C_ud";
+import Orderabout from "./pages/Orderabout_C";
+import Order_Update from "./pages/Order_Update";
 import Join from "./pages/Join_C";
-import Temp from "./pages/temp";
+//import Temp from "./pages/temp";
 
 const App = () => {
   return (
@@ -47,6 +49,8 @@ const App = () => {
         <Route path="/ticket_c" element={<Ticket_C />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/mypage_ud" element={<Mypage_ud />} />
+        <Route path="/order_update" element={<Order_Update />} />
+        <Route path="/orderabout" element={<Orderabout />} />
       </Route>
     </Routes>
   );

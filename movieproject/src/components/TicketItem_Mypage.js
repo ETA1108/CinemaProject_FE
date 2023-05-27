@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const TicketItem_Mypage = ({ txs }) => {
   return (
     <li className="TxListItem">
-      <div className="reservenum">전체 주문 번호: {txs.id}</div>
+      <div className="reservenum">전체 예매 번호: {txs.id}</div>
       <div className="info1">
         결제 방법: {txs.payment.method}
         결제 여부: {txs.payment.status}

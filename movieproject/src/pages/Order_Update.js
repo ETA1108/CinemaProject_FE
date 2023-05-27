@@ -1,18 +1,13 @@
-import React from "react";
-import TicketItem from "../components/TicketItem";
-import "./Pay.scss";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-
+import { useForm } from "react-hook-form";
+import "./Pay.scss";
 import { Link, useLocation } from "react-router-dom";
-import { MdAdUnits } from "react-icons/md";
 
-const Pay_C = () => {
-  let orderid = 0;
+const Order_Update = () => {
+  const location = useLocation();
 
-  const { state } = useLocation();
-  const { seatid } = state;
-  //const {seatname} = state;
+  const orderid = location.state.id;
 
   const [customer_id, setCId] = useState("");
   const [txs, setTxs] = useState(null);
@@ -27,14 +22,8 @@ const Pay_C = () => {
   const [ticketrsnum, setTicketrsnum] = useState("");
   const [seat, setSeat] = useState("");
 
-  const saveInputId = (e) => {
-    setMethod(e.target.value);
-  };
-  const saveInputPw = (e) => {
-    setApnum(e.target.value);
-  };
-  const saveInputPoint = (e) => {
-    setUsepoint(e.target.value);
+  const saveInputSeat = (e) => {
+    setSeat(e.target.value);
   };
 
   const useInterval = (callback, delay) => {
@@ -84,10 +73,7 @@ const Pay_C = () => {
         const response = await axios.get(
           "/customers/" + customer_id + "/orders"
         );
-
         for (let i = 0; i < response.data.orders.length; i++) {
-          if (response.data.orders[i].tickets[0].seat_id === seatid)
-            orderid = response.data.orders[i].id;
           if (response.data.orders[i].id === orderid)
             setTxs(response.data.orders[i]);
         }
@@ -108,68 +94,44 @@ const Pay_C = () => {
     fetchData();
   }, 500);
 
-  function ticketform() {
-    const array = [];
-    for (let i = 0; i < txs.length; i++) {
-      array.push(
-        <form>
-          예매 번호
-          <input
-            disabled={true}
-            id="id"
-            type="text"
-            value={txs[i].reservation_number}
-          />
-          가격
-          <input disabled={true} id="id" type="text" value={"가격 추가"} />
-          좌석
-          <input disabled={true} id="id" type="text" value={"좌석 추가"} />
-        </form>
-      );
-    }
-    return array;
-  }
-
-  function onClickPay(e) {
-    fetch("/customers/" + customer_id + "/orders", {
+  function onClickUpdate(e) {
+    fetch("/screening-schedules", {
       //put으로 바꾸기
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        //payment에 싸서 보내기
-        method: method,
-        status: "결제완료",
-        approval_number: apnum,
-        original_price: 12000, //합하는 함수 만들기
-        amount: 10000, //합하는 함수 만들기
-        paid_at: "05/21", // 오늘 나타내는 메서드
+        movie_id: 0,
+        theater_id: 0,
+        screening_started_at: 0,
+        screening_ended_at: 0,
       }),
     })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
-        //document.location.href = "/mypage";
-        alert("결제 완료되었습니다.");
+        document.location.href = "/mypage";
+        alert("상영일정이 수정되었습니다.");
       })
       .catch((error) => {
         console.log(error.response);
       });
+    e.preventDefault();
   }
 
   return (
     <div className="Pay">
       <div className="PageName">
-        <h1>티켓 결제</h1>
+        <h1>티켓 수정 - 주문번호: {orderid} (좌석 수정만 가능합니다.)</h1>
       </div>
       <div className="Bar"></div>
-      <form onSubmit={onClickPay}>
+      <form onSubmit={onClickUpdate}>
         티켓 예매 번호
         <input disabled={true} id="id" type="text" value={ticketrsnum} />
         티켓 가격
         <input disabled={true} id="id" type="text" value={ticketprice} />
         좌석
-        <input disabled={true} id="id" type="text" value={seat} />
+        <input id="id" type="text" value={seat} onChange={saveInputSeat} />
         <div className="line">
           <hr></hr>
         </div>
@@ -178,18 +140,11 @@ const Pay_C = () => {
         판매 가격
         <input disabled={true} id="id" type="text" value={realprice} />
         결제방법
-        <input id="id" type="text" value={method} onChange={saveInputId} />
+        <input disabled={true} id="id" type="text" value={method} />
         카드번호{" ('-'없이)"}
-        <input id="password" type="text" value={apnum} onChange={saveInputPw} />
-        보유 포인트
-        <input disabled={true} id="phonenumber" type="text" value={point} />
-        사용할 포인트
-        <input
-          id="usepoint"
-          type="text"
-          value={usepoint}
-          onChange={saveInputPoint}
-        />
+        <input disabled={true} id="password" type="text" value={apnum} />
+        사용한 포인트
+        <input disabled={true} id="usepoint" type="text" value={usepoint} />
         최종 결제 금액
         <input
           disabled={true}
@@ -197,12 +152,10 @@ const Pay_C = () => {
           type="text"
           value={"realprice-usepoint"}
         />
-        <button className="pay" type="submit">
-          결제하기
-        </button>
+        <button type="submit">수정하기</button>
       </form>
     </div>
   );
 };
 
-export default Pay_C;
+export default Order_Update;

@@ -2,8 +2,7 @@ import React from "react";
 import "./Mypage.scss";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import TicketItem_Mypage from "../components/TicketItem_Mypage";
-
+import OrderItem_C from "../components/OrderItem_C";
 import { Link } from "react-router-dom";
 import { MdAdUnits } from "react-icons/md";
 
@@ -79,15 +78,15 @@ const Mypage = () => {
     const fetchData = async () => {
       //      setLoading(true);
       try {
+        let filteredTxs = [];
         const response = await axios.get(
           "/customers/" + customer_id + "/orders"
         );
-        let filteredTxs = [];
-
         for (let i = 0; i < response.data.orders.length; i++) {
           filteredTxs.push(response.data.orders[i]);
         }
         setTxs(filteredTxs);
+        console.log(txs);
       } catch (e) {
         console.log(e);
       }
@@ -133,13 +132,14 @@ const Mypage = () => {
           <button className="gotoupdate">개인정보 수정하기</button>
         </Link>
       </form>
-      {/*
+      <div className="Bar"></div>
+      <div className="PageName">
+        <h2>주문 내역</h2>
+      </div>
+      <div className="Bar"></div>
       <ul className="TxList">
-        {txs.map((txs) => (
-          <TicketItem txs={txs} key={txs.id} />
-        ))}
+        {txs && txs.map((txs) => <OrderItem_C txs={txs} key={txs.id} />)}
       </ul>
-        */}
     </div>
   );
 };

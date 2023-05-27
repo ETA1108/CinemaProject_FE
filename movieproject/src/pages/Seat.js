@@ -37,7 +37,7 @@ const Seat = () => {
         for (let i = 0; i < Object.keys(response.data.seat_map).length; i++) {
           filteredTxs.push(Object.keys(response.data.seat_map)[i]);
         }
-        setTxs(filteredTxs);
+        setTxs(filteredTxs.sort());
         console.log(txs);
       } catch (e) {
         console.log(e);

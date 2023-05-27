@@ -1,5 +1,5 @@
-.TicketListItem {
-  height: 200px;
+.OrderListItem {
+  height: 270px;
   width: 200px;
   background-color: white;
   margin-bottom: 15px;
@@ -15,20 +15,32 @@
     text-align: left;
     font-size: 1rem;
   }
-  .id {
-    margin-top: 10px;
-  }
   .reservenum {
     width: 185px;
     margin-left: 15px;
     font-size: 1.1rem;
     font-weight: bold;
     text-align: left;
+    margin-top: 10px;
   }
   .info1 {
     width: 185px;
     margin-left: 15px;
     text-align: left;
+    font-size: 1rem;
+  }
+  button {
+    border: none;
+    outline: none;
+    color: white;
+    background-color: #6e6e6e;
+    margin-right: 3px;
+    cursor: pointer;
+  }
+  .gotoplan {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 50px;
     font-size: 1rem;
   }
 }

@@ -2,14 +2,18 @@ import React from "react";
 import "./Ticket_C.scss";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MdAdUnits } from "react-icons/md";
 
 const Ticket_C = () => {
   const location = useLocation();
 
+  const navigate = useNavigate();
+
   const planid = location.state.planid;
   const seatid = location.state.seatid;
+  const seatname = location.state.seatname;
+
   const [customer_id, setCId] = useState("");
 
   const [inputName, setInputName] = useState("");
@@ -76,11 +80,20 @@ const Ticket_C = () => {
     fetchData();
   }, 500);
 
+  let seatarray = [];
+  for (let i = 0; i < 3; i++) {
+    let dataset = {
+      id: i,
+    };
+    seatarray.push(JSON.stringify(dataset));
+  }
+  console.log(seatarray);
+
   function onClickMakeTicket(e) {
     fetch("/customers/" + customer_id + "/orders", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json", // Content-Type을 반드시 이렇게 하여야 한다.
       },
       body: JSON.stringify({
         screening_schedule: {
@@ -89,7 +102,7 @@ const Ticket_C = () => {
             id: +inputThid,
             seats: [
               {
-                id: 0,
+                id: +seatid,
               },
             ],
           },
@@ -108,7 +121,7 @@ const Ticket_C = () => {
         // 작업 완료 되면 페이지 이동(새로고침)
         if (window.confirm("장바구니에 담겼습니다. 바로 결제하시겠습니까?")) {
           //true는 확인버튼을 눌렀을 때 코드 작성
-          document.location.href = "/pay_c";
+          navigate("/pay_c", { state: { seatid: seatid, seatname: seatname } });
         } else {
           // false는 취소버튼을 눌렀을 때, 취소됨
           document.location.href = "/mypage";
@@ -143,7 +156,7 @@ const Ticket_C = () => {
         상영시간
         <input disabled={true} id="renumber" type="text" value={inputTime} />
         좌석
-        <input disabled={true} id="point" type="text" value={seatid} />
+        <input disabled={true} id="point" type="text" value={seatname} />
         <button className="intostorage">장바구니에 담기</button>
       </form>
     </div>

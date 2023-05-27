@@ -10,7 +10,11 @@ const Seat_C = () => {
 
   const [txs, setTxs] = useState(null);
   const [seat, setSeat] = useState("");
+  const [seatid, setSeatid] = useState("");
   const [activeNav, setActiveNav] = useState(null);
+
+  let seatarray = [];
+  let seatidarray = [];
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -39,7 +43,7 @@ const Seat_C = () => {
         for (let i = 0; i < Object.keys(response.data.seat_map).length; i++) {
           filteredTxs.push(Object.keys(response.data.seat_map)[i]);
         }
-        setTxs(filteredTxs);
+        setTxs(filteredTxs.sort());
         console.log(txs);
       } catch (e) {
         console.log(e);
@@ -59,6 +63,7 @@ const Seat_C = () => {
         <button
           onClick={(e) => {
             setSeat(txs[i]);
+            setSeatid(i);
             setActiveNav(i);
           }}
           className={activeNav === i ? "active" : ""}
@@ -74,7 +79,10 @@ const Seat_C = () => {
     <div className="Seat">
       <div className="Screen">SCREEN</div>
       <div className="SeatItem">{SeatItem(txs)}</div>
-      <Link to="/ticket_c" state={{ planid: planid, seatid: seat }}>
+      <Link
+        to="/ticket_c"
+        state={{ planid: planid, seatid: seatid, seatname: seat }}
+      >
         <button className="gototicket">예매하러 가기</button>
       </Link>
     </div>

@@ -1,0 +1,58 @@
+.Pay {
+  //display: flex;
+  justify-content: center;
+  .Bar {
+    width: 800px;
+    background: black;
+    height: 4px;
+    margin-bottom: 30px;
+  }
+
+  form {
+    margin-top: 2%;
+    display: flex;
+    width: 30%;
+    height: 100%;
+    flex-direction: column;
+    text-align: left;
+
+    .line {
+      hr {
+        width: 800px;
+        color: #7f7f7f;
+        border-style: double;
+      }
+      margin-bottom: 20px;
+    }
+
+    input {
+      background: none;
+      height: 40px;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid black;
+    }
+
+    .text {
+      float: left;
+      margin-bottom: 30px;
+      margin-top: 11px;
+      margin-right: 20px;
+    }
+
+    #final {
+      float: left;
+      height: 40px;
+      margin-bottom: 50px;
+      margin-right: 7px;
+    }
+
+    button {
+      height: 50px;
+      font-size: 1.2rem;
+      width: 100%;
+    }
+  }
+}
