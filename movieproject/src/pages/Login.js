@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   // 지정된 ID를 가진 유저에 대한 요청
-
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
@@ -21,7 +20,7 @@ const Login = () => {
   };
 
   function onClickLogin(e) {
-    fetch("/login?user_id=" + inputId + "&password=" + inputPw, {
+    fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,12 +30,16 @@ const Login = () => {
         password: inputPw,
       }),
     })
-      .then((res) => {
-        // 작업 완료 되면 페이지 이동(새로고침)
-        sessionStorage.setItem("user_id", inputId);
-        document.location.href = "/movie_c";
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.success) {
+          sessionStorage.setItem("user_id", inputId);
+          document.location.href = "/movie_c";
+        } else {
+          alert("다시 로그인해주세요.");
+        }
       })
-      .catch();
+      .catch(() => {});
     e.preventDefault();
   }
 
