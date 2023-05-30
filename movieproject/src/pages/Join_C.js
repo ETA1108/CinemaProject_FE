@@ -85,7 +85,7 @@ const Join = () => {
           value={inputNum}
           onChange={saveInputNum}
         />
-        전화번호
+        전화번호{" ('-'없이)"}
         <input
           id="phonenumber"
           type="text"

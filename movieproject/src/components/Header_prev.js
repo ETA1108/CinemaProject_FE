@@ -1,8 +1,12 @@
-import "./Header.scss";
-import { HiOutlineTicket } from "react-icons/hi2";
+import "./Header_C.scss";
+import {
+  HiOutlineTicket,
+  HiChevronDoubleLeft,
+  HiChevronDoubleRight,
+} from "react-icons/hi2";
 import { BiCameraMovie } from "react-icons/bi";
 import { GrPlan } from "react-icons/gr";
-import { MdEventSeat } from "react-icons/md";
+import { MdEventSeat, MdOutlinePeopleAlt } from "react-icons/md";
 import { BsFillArrowDownCircleFill } from "react-icons/bs";
 import { BsCreditCard } from "react-icons/bs";
 
@@ -10,9 +14,31 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 
 const Header = () => {
+  const [activeNav, setActiveNav] = useState(1);
+  const [isOpen, setMenu] = useState(true);
+
+  const toggleMenu = () => {
+    setMenu((isOpen) => !isOpen); // on, off
+  };
+
+  const arrow = () => {
+    if (isOpen) {
+      return <HiChevronDoubleLeft />;
+    } else {
+      return <HiChevronDoubleRight />;
+    }
+  };
+
   return (
     <header className="Header">
-      <div className="show-menu">
+      <div className={isOpen ? "show-menu" : "hide-menu"}>
+        <button
+          className="slide"
+          variant="contained"
+          onClick={() => toggleMenu()}
+        >
+          {arrow()}
+        </button>
         <Link to="/movie_c">
           <button className="name">
             <div>서울 시네마</div>

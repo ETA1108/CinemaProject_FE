@@ -44,6 +44,9 @@ const Plan = () => {
         for (let i = 0; i < response.data.screening_schedules.length; i++) {
           filteredTxs.push(response.data.screening_schedules[i]);
         }
+        filteredTxs.sort((a, b) =>
+          a.screening_started_at < b.screening_started_at ? -1 : 1
+        );
         setTxs(filteredTxs);
       } catch (e) {
         console.log(e);
@@ -73,7 +76,7 @@ const Plan = () => {
         ))}
       </ul>
       <Link to="/plan_create" state={{ name: moviename, id: movieid }}>
-        <button className="plancreate">상영일정 추가하기</button>
+        <button className="plancreate">일정 추가하기</button>
       </Link>
     </div>
   );

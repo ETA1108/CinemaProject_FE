@@ -1,14 +1,14 @@
-.Customer {
+.Ticket {
   //display: flex;
   justify-content: center;
   .Bar {
-    width: 800px;
+    width: 700px;
     background: black;
     height: 4px;
     margin-bottom: 30px;
   }
   .TxList {
-    width: 800px;
+    width: 700px;
     padding: 0;
     list-style: none;
     display: grid;

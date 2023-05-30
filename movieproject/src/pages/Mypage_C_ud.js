@@ -10,6 +10,8 @@ const Mypage_ud = () => {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const [mn, setMn] = useState("");
+  const [previd, setprevId] = useState("");
+  const [prevmn, setprevMn] = useState("");
   const [customer_id, setCId] = useState("");
 
   const saveInputId = (e) => {
@@ -61,6 +63,21 @@ const Mypage_ud = () => {
     fetchData();
   }, 500);
 
+  useInterval(() => {
+    const fetchData = async () => {
+      //      setLoading(true);
+      try {
+        const response = await axios.get("/customers/" + customer_id);
+        setprevId(response.data.user_id);
+        setprevMn(response.data.mobile_number);
+      } catch (e) {
+        console.log(e);
+      }
+      //      setLoading(false);
+    };
+    fetchData();
+  }, 500);
+
   function onClickUpdate(e) {
     axios
       .patch("/customers/" + customer_id, {
@@ -84,17 +101,29 @@ const Mypage_ud = () => {
     <div className="join">
       <h1 style={{ textAlign: "center" }}>개인정보 수정</h1>
       <form onSubmit={onClickUpdate}>
-        ID
-        <input id="id" type="text" value={id} onChange={saveInputId} />
-        비밀번호
+        새 ID
+        <input
+          id="id"
+          type="text"
+          placeholder={previd}
+          value={id}
+          onChange={saveInputId}
+        />
+        새 비밀번호
         <input
           id="password"
           type="password"
           value={pw}
           onChange={saveInputPw}
         />
-        전화번호
-        <input id="phonenumber" type="text" value={mn} onChange={saveInputPh} />
+        새 전화번호{" ('-'없이)"}
+        <input
+          id="phonenumber"
+          type="text"
+          placeholder={prevmn}
+          value={mn}
+          onChange={saveInputPh}
+        />
         <button type="submit">수정하기</button>
       </form>
     </div>

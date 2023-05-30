@@ -97,13 +97,13 @@ const Mypage = () => {
 
   return (
     <div className="join">
-      <h1 style={{ textAlign: "center" }}>마이 페이지</h1>
+      <h1>마이 페이지</h1>
       <form>
         ID
         <input disabled={true} id="id" type="text" value={id} />
         비밀번호
         <input disabled={true} id="password" type="password" value={pw} />
-        전화번호
+        전화번호{" ('-'없이)"}
         <input disabled={true} id="phonenumber" type="text" value={mn} />
         주민등록번호{" ('-'없이)"}
         <input disabled={true} id="renumber" type="text" value={rn} />

@@ -1,14 +1,16 @@
 .Plan {
-  //display: flex;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   .Bar {
-    width: 800px;
+    width: 700px;
     background: black;
     height: 4px;
     margin-bottom: 30px;
   }
   .TxList {
-    width: 800px;
+    width: 700px;
     padding: 0;
     list-style: none;
     display: grid;
@@ -17,11 +19,15 @@
     z-index: 1;
   }
   .plancreate {
+    margin-bottom: 30px;
     border: none;
     outline: none;
-    color: white;
-    background-color: #6e6e6e;
-    margin-right: 3px;
+    background-color: transparent;
+    color: #6e6e6e;
+    text-decoration: underline;
     cursor: pointer;
+    &:hover {
+      color: #0174df;
+    }
   }
 }

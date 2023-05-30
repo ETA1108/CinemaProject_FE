@@ -44,6 +44,9 @@ const Plan_C = () => {
         for (let i = 0; i < response.data.screening_schedules.length; i++) {
           filteredTxs.push(response.data.screening_schedules[i]);
         }
+        filteredTxs.sort((a, b) =>
+          a.screening_started_at < b.screening_started_at ? -1 : 1
+        );
         setTxs(filteredTxs);
       } catch (e) {
         console.log(e);

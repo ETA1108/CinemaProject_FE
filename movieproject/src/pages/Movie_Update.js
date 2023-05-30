@@ -18,6 +18,12 @@ const Movie_Update = () => {
   const [inputRelease, setInputRelease] = useState("");
   const [inputDistributor, setInputDistributor] = useState("");
   const [inputRate, setInputRate] = useState("");
+  const [prevTime, setprevTime] = useState("");
+  const [prevGenre, setprevGenre] = useState("");
+  const [prevDirector, setprevDirector] = useState("");
+  const [prevRelease, setprevRelease] = useState("");
+  const [prevDistributor, setprevDistributor] = useState("");
+  const [prevRate, setprevRate] = useState("");
 
   const saveInputTime = (e) => {
     setInputTime(e.target.value);
@@ -63,12 +69,12 @@ const Movie_Update = () => {
         const res1 = await axios.get("/movies");
         for (let i = 0; i < res1.data.movies.length; i++) {
           if (res1.data.movies[i].id === movieid) {
-            setInputTime(res1.data.movies[i].running_time);
-            setInputGenre(res1.data.movies[i].genre);
-            setInputDirector(res1.data.movies[i].director_name);
-            setInputRelease(res1.data.movies[i].release_date);
-            setInputDistributor(res1.data.movies[i].distributor_name);
-            setInputRate(res1.data.movies[i].rating);
+            setprevTime(res1.data.movies[i].running_time);
+            setprevGenre(res1.data.movies[i].genre);
+            setprevDirector(res1.data.movies[i].director_name);
+            setprevRelease(res1.data.movies[i].release_date);
+            setprevDistributor(res1.data.movies[i].distributor_name);
+            setprevRate(res1.data.movies[i].rating);
             break;
           }
         } // 토큰 저장하기
@@ -120,6 +126,7 @@ const Movie_Update = () => {
         <input
           id="time"
           type="text"
+          placeholder={prevTime}
           value={inputTime}
           onChange={saveInputTime}
         />
@@ -127,6 +134,7 @@ const Movie_Update = () => {
         <input
           id="genre"
           type="text"
+          placeholder={prevGenre}
           value={inputGenre}
           onChange={saveInputGenre}
         />
@@ -134,6 +142,7 @@ const Movie_Update = () => {
         <input
           id="director"
           type="text"
+          placeholder={prevDirector}
           value={inputDirector}
           onChange={saveInputDirector}
         />
@@ -141,6 +150,7 @@ const Movie_Update = () => {
         <input
           id="release"
           type="text"
+          placeholder={prevRelease}
           value={inputRelease}
           onChange={saveInputRelease}
         />
@@ -148,6 +158,7 @@ const Movie_Update = () => {
         <input
           id="distributor"
           type="text"
+          placeholder={prevDistributor}
           value={inputDistributor}
           onChange={saveInputDistributor}
         />
@@ -155,6 +166,7 @@ const Movie_Update = () => {
         <input
           id="rate"
           type="text"
+          placeholder={prevRate}
           value={inputRate}
           onChange={saveInputRate}
         />

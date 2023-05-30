@@ -25,19 +25,22 @@ const PlanItem = ({ txs }) => {
   }
   return (
     <li className="PlanListItem">
-      <div className="time">
-        {txs.screening_started_at} ~ {txs.screening_ended_at}
+      <div className="time">{txs.screening_started_at.substr(0, 10)}</div>
+      <div className="info1">
+        {txs.screening_started_at.substr(11)} ~{" "}
+        {txs.screening_ended_at.substr(11)}
       </div>
-      <div className="info1">{txs.theater.name}</div>
+      <div className="info2">상영관: {txs.theater.name}</div>
+      <div className="info2">상영회차: {"상영회차"}</div>
 
       <Link to={"/seat"} state={{ id: id }}>
         <button className="gotoseat">좌석 보러가기</button>
       </Link>
       <Link to={"/plan_update"} state={{ id: id }}>
-        <button className="planupdate">상영일정 수정하기</button>
+        <button className="planupdate">일정 수정하기</button>
       </Link>
       <button className="plandelete" onClick={onClickDelete}>
-        상영일정 삭제하기
+        일정 삭제하기
       </button>
     </li>
   );

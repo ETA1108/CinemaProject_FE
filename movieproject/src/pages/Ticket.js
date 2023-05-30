@@ -75,7 +75,7 @@ const Ticket = () => {
   }
 
   return (
-    <div className="Movie">
+    <div className="Ticket">
       <div className="PageName">
         <h1>전체 티켓 조회</h1>
       </div>

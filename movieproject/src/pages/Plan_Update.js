@@ -102,20 +102,15 @@ const Plan_Update = () => {
           value={inputThid}
           onChange={saveInputThid}
         />
-        상영 시작시간
+        상영 시작시간<br></br>(YYYY-MM-DDThh:mm:ss 형식)
         <input
           id="time"
           type="text"
           value={inputStart}
           onChange={saveInputStart}
         />
-        상영 종료시간
-        <input
-          id="genre"
-          type="text"
-          value={inputEnd}
-          onChange={saveInputEnd}
-        />
+        상영 종료시간<br></br>(YYYY-MM-DDThh:mm:ss 형식)
+        <input id="rate" type="text" value={inputEnd} onChange={saveInputEnd} />
         <button type="submit">수정하기</button>
       </form>
     </div>

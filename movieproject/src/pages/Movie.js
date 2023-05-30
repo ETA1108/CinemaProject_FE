@@ -8,11 +8,22 @@ import { Link } from "react-router-dom";
 const Movie = () => {
   const category = [
     // 장르, 등급 조회
-    { id: 0, name: "전체", state: null },
-    { id: 1, name: "방전", state: "NONE" },
-    { id: 2, name: "충전", state: "CHAR" },
-    { id: 3, name: "대기", state: "WAIT" },
-    { id: 4, name: "저전압", state: "ERROR" },
+    { id: 0, name: "장르 전체", state: null },
+    { id: 1, name: "액션", state: "액션" },
+    { id: 2, name: "로맨스", state: "로맨스" },
+    { id: 3, name: "판타지", state: "판타지" },
+    { id: 4, name: "공포", state: "공포" },
+    { id: 5, name: "코미디", state: "코미디" },
+    { id: 6, name: "SF", state: "SF" },
+    { id: 7, name: "기타", state: "기타" },
+  ];
+
+  const classcategory = [
+    { id: 0, name: "등급 전체", state: null },
+    { id: 1, name: "전체 관람가", state: "액션" },
+    { id: 2, name: "12세 관람가", state: "로맨스" },
+    { id: 3, name: "15세 관람가", state: "판타지" },
+    { id: 4, name: "청소년 관람불가", state: "공포" },
   ];
 
   const [categoryItem, setCategoryItem] = useState(category[0]);
@@ -56,8 +67,8 @@ const Movie = () => {
         for (let i = 0; i < response.data.movies.length; i++) {
           if (categoryItem.state === null)
             filteredTxs.push(response.data.movies[i]);
-          else if (response.data[i].state + 1 === categoryItem.id)
-            filteredTxs.push(response.data[i]);
+          else if (response.data.movies[i].genre === categoryItem.state)
+            filteredTxs.push(response.data.movies[i]);
         }
         setTxs(filteredTxs);
       } catch (e) {

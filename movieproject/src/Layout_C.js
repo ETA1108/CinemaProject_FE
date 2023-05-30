@@ -7,7 +7,7 @@ const Layout_C = () => {
       <header style={{ position: "fixed", width: "100vw" }}>
         <Header />
       </header>
-      <main style={{ paddingTop: "40px", paddingLeft: "400px" }}>
+      <main style={{ paddingTop: "20px", width: "100vw" }}>
         <Outlet />
       </main>
     </div>
