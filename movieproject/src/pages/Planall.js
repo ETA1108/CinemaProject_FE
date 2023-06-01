@@ -1,19 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import PlanItem from "../components/PlanItem";
+import PlanAllItem from "../components/PlanAllItem";
 import "./Plan.scss";
 import axios from "axios";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 
-const Plan = () => {
-  const location = useLocation();
-
-  const movieid = location.state.id;
-  const moviename = location.state.name;
-
+const Planall = () => {
   const [txs, setTxs] = useState(null);
-  //  const [loading, setLoading] = useState(false);
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -37,9 +31,7 @@ const Plan = () => {
     const fetchData = async () => {
       //      setLoading(true);
       try {
-        const response = await axios.get(
-          "/movies/" + movieid + "/screening-schedules"
-        );
+        const response = await axios.get("/screening-schedules");
         let filteredTxs = [];
         for (let i = 0; i < response.data.screening_schedules.length; i++) {
           filteredTxs.push(response.data.screening_schedules[i]);
@@ -63,25 +55,13 @@ const Plan = () => {
   return (
     <div className="Plan">
       <div className="PageName">
-        <h1>
-          상영일정 - {"<"}
-          {moviename}
-          {">"}
-        </h1>
+        <h1>전체 상영일정</h1>
       </div>
       <div className="Bar"></div>
       <ul className="TxList">
-        {txs.map((txs) => (
-          <PlanItem txs={txs} key={txs.id} />
-        ))}
+        {txs && txs.map((txs) => <PlanAllItem txs={txs} key={txs.id} />)}
       </ul>
-      <Link to="/plan_create" state={{ name: moviename, id: movieid }}>
-        <button className="plancreate">일정 추가하기</button>
-      </Link>
-      <Link to="/planall">
-        <button className="gotoplanall">전체 상영일정 조회</button>
-      </Link>
     </div>
   );
 };
-export default Plan;
+export default Planall;

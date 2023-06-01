@@ -42,16 +42,13 @@
         color: #0174df;
       }
     }
+
     .menu {
-      margin-top: 30px;
+      margin-top: 25px;
       align-items: center;
       flex-direction: column;
       text-align: center;
       height: 75%;
-
-      hr {
-        margin-top: 30px;
-      }
 
       div {
         //width: 80%;
@@ -94,7 +91,7 @@
         border-bottom: 4px solid white;
         border-radius: 4px;
         background: white;
-        margin-top: 120px;
+        margin-top: 110px;
         padding: 0.5rem 2.5rem;
         align-items: center;
         cursor: pointer;
@@ -104,7 +101,10 @@
         &:hover {
           border: none;
           background: white;
-          color: black;
+          color: #0174df;
+        }
+        u {
+          text-decoration: underline;
         }
       }
     }

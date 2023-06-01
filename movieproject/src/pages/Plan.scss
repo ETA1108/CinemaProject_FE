@@ -19,6 +19,18 @@
     z-index: 1;
   }
   .plancreate {
+    margin-bottom: 10px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #6e6e6e;
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover {
+      color: #0174df;
+    }
+  }
+  .gotoplanall {
     margin-bottom: 30px;
     border: none;
     outline: none;

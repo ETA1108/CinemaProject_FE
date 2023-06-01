@@ -6,12 +6,14 @@ import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import { MdAdUnits } from "react-icons/md";
 
-const Orderabout_C = () => {
+const Orderabout = () => {
   const location = useLocation();
 
-  const orderid = location.state.id;
+  const customerid = location.state.customerid;
+  const orderid = location.state.orderid;
+  console.log(orderid);
+  console.log(customerid);
 
-  const [customer_id, setCId] = useState("");
   const [txs, setTxs] = useState(null);
   const [method, setMethod] = useState(""); //결제방법
   const [apnum, setApnum] = useState(""); //카드번호
@@ -48,10 +50,7 @@ const Orderabout_C = () => {
       try {
         const res1 = await axios.get("/customers");
         for (let i = 0; i < res1.data.customers.length; i++) {
-          if (
-            res1.data.customers[i].user_id === sessionStorage.getItem("user_id")
-          ) {
-            setCId(res1.data.customers[i].id);
+          if (res1.data.customers[i].id === customerid) {
             setPoint(res1.data.customers[i].point);
             break;
           }
@@ -69,7 +68,7 @@ const Orderabout_C = () => {
       //      setLoading(true);
       try {
         const response = await axios.get(
-          "/customers/" + customer_id + "/orders"
+          "/customers/" + customerid + "/orders"
         );
         for (let i = 0; i < response.data.orders.length; i++) {
           if (response.data.orders[i].id === orderid)
@@ -125,12 +124,9 @@ const Orderabout_C = () => {
           type="text"
           value={"realprice-usepoint"}
         />
-        <button className="pay" type="submit">
-          결제하기
-        </button>
       </form>
     </div>
   );
 };
 
-export default Orderabout_C;
+export default Orderabout;

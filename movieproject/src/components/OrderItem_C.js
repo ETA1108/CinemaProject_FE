@@ -34,7 +34,7 @@ const OrderItem_C = ({ txs }) => {
       <div className="info1">표준 가격: {txs.payment.original_price}</div>
       <div className="info1">판매 가격: {txs.payment.amount}</div>
       <div className="info1">결제 일시: {txs.payment.paid_at}</div>
-      <Link to="/orderabout" state={{ id: id }}>
+      <Link to="/orderabout_c" state={{ id: id }}>
         <button className="gotoplan">자세히 보기</button>
       </Link>
       <Link to="/order_update" state={{ id: id }}>

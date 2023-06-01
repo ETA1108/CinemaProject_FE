@@ -7,20 +7,23 @@ const PlanItem = ({ txs }) => {
   const id = txs.id;
 
   function onClickDelete(e) {
-    axios
-      .delete("/screening-schedules/" + id, {
-        data: {
-          id: id,
-        },
-      })
-      .then((res) => {
-        // 작업 완료 되면 페이지 이동(새로고침)
-        document.location.href = "/movie";
-        alert("해당 상영일정이 삭제되었습니다.");
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
+    if (window.confirm("해당 상영일정을 삭제하시겠습니까?")) {
+      axios
+        .delete("/screening-schedules/" + id, {
+          data: {
+            id: id,
+          },
+        })
+        .then((res) => {
+          // 작업 완료 되면 페이지 이동(새로고침)
+          document.location.href = "/movie";
+          alert("해당 상영일정이 삭제되었습니다.");
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    } else {
+    }
     e.preventDefault();
   }
   return (

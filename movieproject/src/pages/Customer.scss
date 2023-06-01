@@ -1,11 +1,13 @@
 .Customer {
-  //display: flex;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   .Bar {
     width: 700px;
     background: black;
     height: 4px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
   }
   .TxList {
     width: 700px;
@@ -15,5 +17,42 @@
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 5px;
     z-index: 1;
+    .Filter {
+      margin-bottom: 20px;
+      height: 35px;
+      width: 150px;
+      background-color: white;
+      border-radius: 8px;
+      border: 1px solid #eaeaea;
+      font-size: 0.8rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      .Category {
+        width: 110px;
+        margin-left: 5px;
+        //flex: 1;
+        border: none;
+        outline: none;
+      }
+      button {
+        cursor: pointer;
+        border: none;
+        outline: none;
+        background-color: transparent;
+      }
+    }
+  }
+  .gotoplanall {
+    margin-bottom: 30px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #6e6e6e;
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover {
+      color: #0174df;
+    }
   }
 }

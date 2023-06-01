@@ -61,6 +61,7 @@ const Ticket = () => {
             filteredTxs.push(response.data.orders[i]);
           }
         }
+        filteredTxs.sort((a, b) => (a.id < b.id ? -1 : 1));
         setTxs(filteredTxs);
       } catch (e) {
         console.log(e);
@@ -75,7 +76,7 @@ const Ticket = () => {
   }
 
   return (
-    <div className="Ticket">
+    <div className="Ticket_All">
       <div className="PageName">
         <h1>전체 티켓 조회</h1>
       </div>

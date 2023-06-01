@@ -1,18 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
-import PlanItem from "../components/PlanItem";
-import "./Plan.scss";
+import OrderItem from "../components/OrderItem";
+import "./Ticket.scss";
 import axios from "axios";
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
-import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 
-const Plan = () => {
+const Customer_Order = () => {
+  const [txs, setTxs] = useState(null);
+
+  const [customername, setCustomername] = useState(null);
+
   const location = useLocation();
 
-  const movieid = location.state.id;
-  const moviename = location.state.name;
+  const customerid = location.state.id;
 
-  const [txs, setTxs] = useState(null);
   //  const [loading, setLoading] = useState(false);
 
   const useInterval = (callback, delay) => {
@@ -37,16 +38,33 @@ const Plan = () => {
     const fetchData = async () => {
       //      setLoading(true);
       try {
-        const response = await axios.get(
-          "/movies/" + movieid + "/screening-schedules"
-        );
+        const res1 = await axios.get("/customers");
+        for (let i = 0; i < res1.data.customers.length; i++) {
+          if (res1.data.customers[i].id === customerid) {
+            setCustomername(res1.data.customers[i].user_id);
+            break;
+          }
+        } // 토큰 저장하기
+      } catch (e) {
+        console.log(e);
+      }
+      //      setLoading(false);
+    };
+    fetchData();
+  }, 500);
+
+  useInterval(() => {
+    const fetchData = async () => {
+      //      setLoading(true);
+      try {
         let filteredTxs = [];
-        for (let i = 0; i < response.data.screening_schedules.length; i++) {
-          filteredTxs.push(response.data.screening_schedules[i]);
-        }
-        filteredTxs.sort((a, b) =>
-          a.screening_started_at < b.screening_started_at ? -1 : 1
+        const response = await axios.get(
+          "/customers/" + customerid + "/orders"
         );
+        for (let i = 0; i < response.data.orders.length; i++) {
+          filteredTxs.push(response.data.orders[i]);
+        }
+        filteredTxs.sort((a, b) => (a.id < b.id ? -1 : 1));
         setTxs(filteredTxs);
       } catch (e) {
         console.log(e);
@@ -61,27 +79,17 @@ const Plan = () => {
   }
 
   return (
-    <div className="Plan">
+    <div className="Ticket_All">
       <div className="PageName">
-        <h1>
-          상영일정 - {"<"}
-          {moviename}
-          {">"}
-        </h1>
+        <h1>티켓 조회 - {customername}</h1>
       </div>
       <div className="Bar"></div>
       <ul className="TxList">
         {txs.map((txs) => (
-          <PlanItem txs={txs} key={txs.id} />
+          <OrderItem txs={txs} key={txs.id} />
         ))}
       </ul>
-      <Link to="/plan_create" state={{ name: moviename, id: movieid }}>
-        <button className="plancreate">일정 추가하기</button>
-      </Link>
-      <Link to="/planall">
-        <button className="gotoplanall">전체 상영일정 조회</button>
-      </Link>
     </div>
   );
 };
-export default Plan;
+export default Customer_Order;

@@ -1,9 +1,13 @@
 import React from "react";
 import "./OrderItem.scss";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const OrderItem = ({ txs }) => {
-  const id = txs.id;
+  const orderid = txs.id;
+
+  const location = useLocation();
+
+  const customerid = location.state.id;
 
   return (
     <li className="OrderListItem">
@@ -14,7 +18,10 @@ const OrderItem = ({ txs }) => {
       <div className="info1">표준 가격: {txs.payment.original_price}</div>
       <div className="info1">판매 가격: {txs.payment.amount}</div>
       <div className="info1">결제 일시: {txs.payment.paid_at}</div>
-      <Link to="/orderabout" state={{ id: id }}>
+      <Link
+        to="/orderabout"
+        state={{ orderid: orderid, customerid: customerid }}
+      >
         <button className="gotoplan">자세히 보기</button>
       </Link>
     </li>

@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 
 const Header = () => {
+  const userid = sessionStorage.getItem("user_id");
+
   return (
     <header className="Header">
       <div className="show-menu">
@@ -48,7 +50,11 @@ const Header = () => {
             <BsCreditCard /> 결제
           </div>
           <Link to="/mypage">
-            <button className="mypage">마이 페이지</button>
+            <button className="mypage">
+              <u>{userid}</u>님의
+              <br />
+              마이 페이지
+            </button>
           </Link>
         </nav>
       </div>

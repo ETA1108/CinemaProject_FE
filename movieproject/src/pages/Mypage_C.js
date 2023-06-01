@@ -85,6 +85,7 @@ const Mypage = () => {
         for (let i = 0; i < response.data.orders.length; i++) {
           filteredTxs.push(response.data.orders[i]);
         }
+        filteredTxs.sort((a, b) => (a.id < b.id ? -1 : 1));
         setTxs(filteredTxs);
         console.log(txs);
       } catch (e) {

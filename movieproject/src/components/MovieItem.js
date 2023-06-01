@@ -9,20 +9,23 @@ const MovieItem = ({ txs }) => {
   const id = txs.id;
 
   function onClickDelete(e) {
-    axios
-      .delete("/movies/" + id, {
-        data: {
-          id: id,
-        },
-      })
-      .then((res) => {
-        // 작업 완료 되면 페이지 이동(새로고침)
-        document.location.href = "/movie";
-        alert("해당 영화가 삭제되었습니다.");
-      })
-      .catch((error) => {
-        alert("해당 영화의 상영일정을 모두 삭제한 후 삭제해주세요.");
-      });
+    if (window.confirm("해당 영화를 삭제하시겠습니까?")) {
+      //true는 확인버튼을 눌렀을 때 코드 작성
+      axios
+        .delete("/movies/" + id, {
+          data: {
+            id: id,
+          },
+        })
+        .then((res) => {
+          document.location.href = "/movie";
+          alert("해당 영화가 삭제되었습니다.");
+        })
+        .catch((error) => {
+          alert("해당 영화의 상영일정을 모두 삭제한 후 삭제해주세요.");
+        });
+    } else {
+    }
     e.preventDefault();
   }
 

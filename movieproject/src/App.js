@@ -10,16 +10,19 @@ import Plan from "./pages/Plan";
 import Plan_C from "./pages/Plan_C";
 import Plan_Create from "./pages/Plan_Create";
 import Plan_Update from "./pages/Plan_Update";
+import Planall from "./pages/Planall";
 import Seat from "./pages/Seat";
 import Seat_C from "./pages/Seat_C";
 import Ticket from "./pages/Ticket";
 import Ticket_C from "./pages/Ticket_C";
 import Customer from "./pages/Customer";
+import Customer_Order from "./pages/Customer_Order";
 import Pay from "./pages/Pay";
 import Pay_C from "./pages/Pay_C";
 import Mypage from "./pages/Mypage_C";
 import Mypage_ud from "./pages/Mypage_C_ud";
-import Orderabout from "./pages/Orderabout_C";
+import Orderabout_C from "./pages/Orderabout_C";
+import Orderabout from "./pages/Orderabout";
 import Order_Update from "./pages/Order_Update";
 import Join from "./pages/Join_C";
 //import Temp from "./pages/temp";
@@ -36,9 +39,12 @@ const App = () => {
         <Route path="/plan" element={<Plan />} />
         <Route path="/plan_create" element={<Plan_Create />} />
         <Route path="/plan_update" element={<Plan_Update />} />
+        <Route path="/planall" element={<Planall />} />
         <Route path="/seat" element={<Seat />} />
         <Route path="/ticket" element={<Ticket />} />
         <Route path="/customer" element={<Customer />} />
+        <Route path="/orderabout" element={<Orderabout />} />
+        <Route path="/customer_order" element={<Customer_Order />} />
         <Route path="/pay" element={<Pay />} />
       </Route>
       <Route element={<Layout_C />}>
@@ -50,7 +56,7 @@ const App = () => {
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/mypage_ud" element={<Mypage_ud />} />
         <Route path="/order_update" element={<Order_Update />} />
-        <Route path="/orderabout" element={<Orderabout />} />
+        <Route path="/orderabout_c" element={<Orderabout_C />} />
       </Route>
     </Routes>
   );

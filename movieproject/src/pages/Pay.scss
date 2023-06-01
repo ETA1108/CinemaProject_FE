@@ -1,6 +1,9 @@
 .Pay {
-  //display: flex;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
   .Bar {
     width: 800px;
     background: black;

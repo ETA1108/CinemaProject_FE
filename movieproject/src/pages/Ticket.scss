@@ -1,6 +1,8 @@
-.Ticket {
-  //display: flex;
+.Ticket_All {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   .Bar {
     width: 700px;
     background: black;

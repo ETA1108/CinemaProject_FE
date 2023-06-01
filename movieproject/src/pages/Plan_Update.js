@@ -10,10 +10,13 @@ const Plan_Update = () => {
 
   const planid = location.state.id;
 
-  const [movieid, setInputMvid] = useState("");
+  const [movieid, setMvid] = useState("");
   const [inputThid, setInputThid] = useState("");
   const [inputStart, setInputStart] = useState("");
   const [inputEnd, setInputEnd] = useState("");
+  const [prevThid, setprevThid] = useState("");
+  const [prevStart, setprevStart] = useState("");
+  const [prevEnd, setprevEnd] = useState("");
 
   const saveInputThid = (e) => {
     setInputThid(e.target.value);
@@ -49,12 +52,10 @@ const Plan_Update = () => {
         const res1 = await axios.get("/screening-schedules");
         for (let i = 0; i < res1.data.screening_schedules.length; i++) {
           if (res1.data.screening_schedules[i].id === planid) {
-            setInputMvid(res1.data.screening_schedules[i].movie_id);
-            setInputThid(res1.data.screening_schedules[i].theater_id);
-            setInputStart(
-              res1.data.screening_schedules[i].screening_started_at
-            );
-            setInputEnd(res1.data.screening_schedules[i].screening_ended_at);
+            setMvid(res1.data.screening_schedules[i].movie.id);
+            setprevThid(res1.data.screening_schedules[i].theater.id);
+            setprevStart(res1.data.screening_schedules[i].screening_started_at);
+            setprevEnd(res1.data.screening_schedules[i].screening_ended_at);
             break;
           }
         } // 토큰 저장하기
@@ -99,6 +100,7 @@ const Plan_Update = () => {
         <input
           id="name"
           type="text"
+          placeholder={prevThid}
           value={inputThid}
           onChange={saveInputThid}
         />
@@ -106,11 +108,18 @@ const Plan_Update = () => {
         <input
           id="time"
           type="text"
+          placeholder={prevStart}
           value={inputStart}
           onChange={saveInputStart}
         />
         상영 종료시간<br></br>(YYYY-MM-DDThh:mm:ss 형식)
-        <input id="rate" type="text" value={inputEnd} onChange={saveInputEnd} />
+        <input
+          id="rate"
+          type="text"
+          placeholder={prevEnd}
+          value={inputEnd}
+          onChange={saveInputEnd}
+        />
         <button type="submit">수정하기</button>
       </form>
     </div>

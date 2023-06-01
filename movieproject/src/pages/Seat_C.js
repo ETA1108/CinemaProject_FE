@@ -9,6 +9,7 @@ const Seat_C = () => {
   const planid = location.state.id;
 
   const [txs, setTxs] = useState(null);
+  const [theater, setTheater] = useState("");
   const [seat, setSeat] = useState("");
   const [seatid, setSeatid] = useState("");
   const [activeNav, setActiveNav] = useState(null);
@@ -44,6 +45,7 @@ const Seat_C = () => {
           filteredTxs.push(Object.keys(response.data.seat_map)[i]);
         }
         setTxs(filteredTxs.sort());
+        setTheater(response.data.theater.name);
         console.log(txs);
       } catch (e) {
         console.log(e);
@@ -77,6 +79,7 @@ const Seat_C = () => {
 
   return (
     <div className="Seat">
+      <div className="theater">{theater}</div>
       <div className="Screen">SCREEN</div>
       <div className="SeatItem">{SeatItem(txs)}</div>
       <Link

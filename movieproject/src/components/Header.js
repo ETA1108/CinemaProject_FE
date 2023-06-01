@@ -39,14 +39,10 @@ const Header = () => {
           </div>
 
           <hr></hr>
-          <Link to="/ticket">
-            <button className="manage">
-              <HiOutlineTicket /> 티켓 관리
-            </button>
-          </Link>
+
           <Link to="/customer">
             <button className="manage">
-              <MdOutlinePeopleAlt /> 고객 조회
+              <MdOutlinePeopleAlt /> 고객/티켓 관리
             </button>
           </Link>
         </nav>
