@@ -89,6 +89,11 @@ const Customer_Order = () => {
           <OrderItem txs={txs} key={txs.id} />
         ))}
       </ul>
+      {/*}
+      <Link to="/ticket">
+        <button className="gotoplanall">전체 티켓 조회</button>
+      </Link>
+        */}
     </div>
   );
 };

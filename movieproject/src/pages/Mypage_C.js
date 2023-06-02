@@ -61,7 +61,12 @@ const Mypage = () => {
       try {
         const response = await axios.get("/customers/" + customer_id);
         setId(response.data.user_id);
-        setPw(response.data.encrypted_password);
+        setPw(
+          response.data.encrypted_password.substring(
+            0,
+            response.data.encrypted_password.length - 10
+          )
+        );
         setRn(response.data.resident_registration_number);
         setAd(response.data.is_verified_adult);
         setPt(response.data.point);
@@ -97,13 +102,13 @@ const Mypage = () => {
   }, 500);
 
   return (
-    <div className="join">
+    <div className="Mypage">
       <h1>마이 페이지</h1>
       <form>
         ID
         <input disabled={true} id="id" type="text" value={id} />
         비밀번호
-        <input disabled={true} id="password" type="password" value={pw} />
+        <input disabled={true} id="password" type="text" value={pw} />
         전화번호{" ('-'없이)"}
         <input disabled={true} id="phonenumber" type="text" value={mn} />
         주민등록번호{" ('-'없이)"}
@@ -127,7 +132,7 @@ const Mypage = () => {
           ></input>
           <div className="text">아니오</div>
         </div>
-        포인트
+        보유 포인트
         <input disabled={true} id="point" type="text" value={pt} />
         <Link to="/mypage_ud">
           <button className="gotoupdate">개인정보 수정하기</button>

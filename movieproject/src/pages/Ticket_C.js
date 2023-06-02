@@ -144,15 +144,27 @@ const Ticket_C = () => {
         <input disabled={true} id="id" type="text" value={inputName} />
         상영관
         <input disabled={true} id="password" type="text" value={inputThname} />
+        상영일
+        <input
+          disabled={true}
+          id="phonenumber"
+          type="text"
+          value={inputStart.substr(0, 10)}
+        />
         상영 시작시간
         <input
           disabled={true}
           id="phonenumber"
           type="text"
-          value={inputStart}
+          value={inputStart.substr(11)}
         />
         상영 종료시간
-        <input disabled={true} id="renumber" type="text" value={inputEnd} />
+        <input
+          disabled={true}
+          id="renumber"
+          type="text"
+          value={inputEnd.substr(11)}
+        />
         상영시간
         <input disabled={true} id="renumber" type="text" value={inputTime} />
         좌석

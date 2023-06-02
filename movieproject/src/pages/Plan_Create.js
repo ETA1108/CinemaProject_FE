@@ -52,7 +52,7 @@ const Plan_Create = () => {
   return (
     <div className="create">
       <h1 style={{ textAlign: "center" }}>
-        상영일정 추가 - {"<"}
+        상영일정 등록 - {"<"}
         {moviename}
         {">"}
       </h1>

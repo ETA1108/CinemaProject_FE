@@ -78,4 +78,31 @@
     margin-left: 55px;
     font-size: 1rem;
   }
+  .gotocontent {
+    height: 25px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #6e6e6e;
+    cursor: pointer;
+    //margin-top: 20px;
+    //margin-bottom: 10px;
+    //margin-left: 55px;
+    //font-size: 1rem;
+  }
+}
+
+.content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 200px;
+  padding: 20px;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 }

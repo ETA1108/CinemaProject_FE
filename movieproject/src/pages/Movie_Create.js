@@ -67,7 +67,7 @@ const Movie_Create = () => {
 
   return (
     <div className="create">
-      <h1 style={{ textAlign: "center" }}>영화 추가</h1>
+      <h1 style={{ textAlign: "center" }}>영화 등록</h1>
       <form onSubmit={onClickCreate}>
         영화명
         <input

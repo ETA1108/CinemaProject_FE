@@ -13,8 +13,8 @@ const Movie = () => {
     { id: 2, name: "로맨스", state: "로맨스" },
     { id: 3, name: "판타지", state: "판타지" },
     { id: 4, name: "공포", state: "공포" },
-    { id: 5, name: "코미디", state: "코미디" },
-    { id: 6, name: "SF", state: "SF" },
+    { id: 5, name: "애니메이션", state: "애니메이션" },
+    { id: 6, name: "드라마", state: "드라마" },
     { id: 7, name: "기타", state: "기타" },
   ];
 
@@ -121,7 +121,7 @@ const Movie = () => {
         ))}
       </ul>
       <Link to="/movie_create">
-        <button className="moviecreate">영화 추가하기</button>
+        <button className="moviecreate">영화 등록하기</button>
       </Link>
     </div>
   );

@@ -98,7 +98,7 @@ const Mypage_ud = () => {
   }
 
   return (
-    <div className="join">
+    <div className="Mypage">
       <h1 style={{ textAlign: "center" }}>개인정보 수정</h1>
       <form onSubmit={onClickUpdate}>
         새 ID
@@ -118,7 +118,7 @@ const Mypage_ud = () => {
         />
         새 전화번호{" ('-'없이)"}
         <input
-          id="phonenumber"
+          id="point"
           type="text"
           placeholder={prevmn}
           value={mn}
