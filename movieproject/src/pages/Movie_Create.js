@@ -3,7 +3,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import "./Movie_Create.scss";
 import { Link } from "react-router-dom";
-import test1 from "../components/images/test.png";
+import test1 from "../components/images/남은 인생 10년.jpg";
 
 const Movie_Create = () => {
   // 지정된 ID를 가진 유저에 대한 요청
@@ -18,6 +18,7 @@ const Movie_Create = () => {
   const [inputCast, setInputCast] = useState("");
   const [inputSynopsis, setInputSynopsis] = useState("");
   const [inputPrice, setInputPrice] = useState("");
+  const [file, setFile] = useState(null);
 
   const saveInputName = (e) => {
     setInputName(e.target.value);
@@ -50,40 +51,39 @@ const Movie_Create = () => {
     setInputPrice(e.target.value);
   };
 
-  const formData = new FormData();
+  const onChangeImg = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
 
-  formData.append("file", test1); //files[0] === upload file
-
-  const value = [
-    {
-      name: inputName,
-      running_time: +inputTime,
-      genre: inputGenre,
-      director_name: inputDirector,
-      release_date: inputRelease,
-      distributor_name: inputDistributor,
-      rating: inputRate,
-      cast: inputCast,
-      synopsis: inputSynopsis,
-      price: +inputPrice,
-    },
-  ];
-  const blob = new Blob([JSON.stringify(value)], {
-    type: "application/json",
-  });
-
-  formData.append("data", blob);
+    if (e.target.files) {
+      const uploadFile = e.target.files[0];
+      formData.append("file", uploadFile);
+      setFile(uploadFile);
+    }
+  };
 
   function onClickCreate(e) {
+    const formData = new FormData();
+
+    formData.append("file", file);
+    formData.append("name", inputName);
+    formData.append("running_time", +inputTime);
+    formData.append("genre", inputGenre);
+    formData.append("director_name", inputDirector);
+    formData.append("release_date", inputRelease);
+    formData.append("distributor_name", inputDistributor);
+    formData.append("rating", inputRate);
+    formData.append("cast", inputCast);
+    formData.append("synopsis", inputSynopsis);
+    formData.append("price", +inputPrice);
+
     fetch("/movies", {
       method: "POST",
-
       body: formData,
     })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
-        console.log(res);
-        //document.location.href = "/movie";
+        document.location.href = "/movie";
         alert("영화가 추가되었습니다.");
       })
       .catch((error) => {
@@ -165,6 +165,13 @@ const Movie_Create = () => {
           type="text"
           value={inputSynopsis}
           onChange={saveInputSynopsis}
+        />
+        영화 포스터
+        <input
+          type="file"
+          id="profile-upload"
+          accept="image/*"
+          onChange={onChangeImg}
         />
         <button type="submit">추가하기</button>
       </form>

@@ -22,6 +22,7 @@ const Movie_Update = () => {
   const [inputCast, setInputCast] = useState("");
   const [inputSynopsis, setInputSynopsis] = useState("");
   const [inputPrice, setInputPrice] = useState("");
+  const [file, setFile] = useState("");
 
   const [prevTime, setprevTime] = useState("");
   const [prevGenre, setprevGenre] = useState("");
@@ -106,40 +107,49 @@ const Movie_Update = () => {
     fetchData();
   }, 500);
 
+  const onChangeImg = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    if (e.target.files) {
+      const uploadFile = e.target.files[0];
+      formData.append("file", uploadFile);
+      setFile(uploadFile);
+    }
+  };
+
   function onClickUpdate(e) {
     const formData = new FormData();
 
-    formData.append("file", noimage); //files[0] === upload file
+    formData.append("file", file);
+    formData.append("name", "처음");
+    formData.append("running_time", +inputTime);
+    formData.append("genre", inputGenre);
+    formData.append("director_name", inputDirector);
+    formData.append("release_date", inputRelease);
+    formData.append("distributor_name", inputDistributor);
+    formData.append("rating", inputRate);
+    formData.append("cast", inputCast);
+    formData.append("synopsis", inputSynopsis);
+    formData.append("price", inputPrice);
 
-    const value = [
-      {
-        name: inputName,
-        running_time: +inputTime,
-        genre: inputGenre,
-        director_name: inputDirector,
-        release_date: inputRelease,
-        distributor_name: inputDistributor,
-        rating: inputRate,
-        cast: inputCast,
-        synopsis: inputSynopsis,
-        price: +inputPrice,
-      },
-    ];
+    // FormData의 key 확인
+    for (let key of formData.keys()) {
+      console.log(key);
+    }
 
-    const blob = new Blob([JSON.stringify(value)], {
-      type: "application/json",
-    });
+    // FormData의 value 확인
+    for (let value of formData.values()) {
+      console.log(value);
+    }
 
-    formData.append("data", blob);
-
-    fetch("/movies/" + movieid, {
-      //put으로 바꾸기
-      method: "PUT",
-      data: formData,
-    })
+    axios
+      .put("/movies/" + movieid, {
+        data: formData,
+      })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
-        document.location.href = "/movie";
+        //document.location.href = "/movie";
         alert("영화가 수정되었습니다.");
       })
       .catch((error) => {
@@ -227,6 +237,13 @@ const Movie_Update = () => {
           placeholder={prevSynopsis}
           value={inputSynopsis}
           onChange={saveInputSynopsis}
+        />
+        영화 포스터
+        <input
+          type="file"
+          id="profile-upload"
+          accept="image/*"
+          onChange={onChangeImg}
         />
         <button type="submit">수정하기</button>
       </form>

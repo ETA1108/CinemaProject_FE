@@ -10,6 +10,10 @@ const MovieItem_C = ({ txs }) => {
   const id = txs.id;
   const price = txs.price;
   const rate = txs.rating;
+  const picturepath =
+    "https://cinema-prod.s3.ap-northeast-2.amazonaws.com/movies/" +
+    name +
+    ".jpg";
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isAdult, setIsAdult] = useState("");
   const navigate = useNavigate();
@@ -67,7 +71,7 @@ const MovieItem_C = ({ txs }) => {
     <>
       <li className="MovieListItem">
         <div className="image">
-          <img src={noimage} />
+          <img src={picturepath} />
         </div>
         <div className="name">{txs.name}</div>
         <div className="info1">

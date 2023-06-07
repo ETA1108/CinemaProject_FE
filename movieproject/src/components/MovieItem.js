@@ -8,6 +8,10 @@ import Modal from "react-modal";
 const MovieItem = ({ txs }) => {
   const name = txs.name;
   const id = txs.id;
+  const picturepath =
+    "https://cinema-prod.s3.ap-northeast-2.amazonaws.com/movies/" +
+    name +
+    ".jpg";
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   function onClickDelete(e) {
@@ -35,7 +39,7 @@ const MovieItem = ({ txs }) => {
     <>
       <li className="MovieListItem" style={{ zIndex: 50 }}>
         <div className="image">
-          <img src={noimage} />
+          <img src={picturepath} />
         </div>
         <div className="name">{txs.name}</div>
         <div className="info1">
