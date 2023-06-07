@@ -33,6 +33,11 @@ const Plan = () => {
     }, []);
   };
 
+  function add(dict, key, value) {
+    dict[key] = value;
+    return { ...dict, [key]: value };
+  }
+
   useInterval(() => {
     const fetchData = async () => {
       //      setLoading(true);
@@ -41,13 +46,18 @@ const Plan = () => {
           "/movies/" + movieid + "/screening-schedules"
         );
         let filteredTxs = [];
+        let finalTxs = [];
         for (let i = 0; i < response.data.screening_schedules.length; i++) {
           filteredTxs.push(response.data.screening_schedules[i]);
         }
         filteredTxs.sort((a, b) =>
           a.screening_started_at < b.screening_started_at ? -1 : 1
         );
-        setTxs(filteredTxs);
+        for (let i = 0; i < filteredTxs.length; i++) {
+          finalTxs.push(add(filteredTxs[i], "num", i + 1));
+        }
+        setTxs(finalTxs);
+        console.log(txs);
       } catch (e) {
         console.log(e);
       }

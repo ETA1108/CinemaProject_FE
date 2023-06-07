@@ -20,9 +20,40 @@
     width: 800px;
     background: black;
     height: 4px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
+  }
+  .select-dropdown {
+    height: 40px;
+    width: 800px;
+    position: absolute;
+    top: 120px;
+    background-color: transparent;
+    border: none;
+    font-size: 0.8rem;
+    display: flex;
+    padding-left: 25px;
+    div {
+      float: left;
+      margin-left: 5px;
+      margin-right: 2px;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+    .select-item {
+      margin-top: 0.25rem;
+      &.selected {
+        font-weight: bold;
+        color: #0174df;
+      }
+      &:hover {
+        font-weight: bold;
+        color: #0174df;
+      }
+    }
   }
   .TxList {
+    z-index: 10;
     width: 800px;
     padding: 0;
     list-style: none;
@@ -49,32 +80,6 @@
       }
       &:hover {
         cursor: pointer;
-      }
-    }
-    .select-dropdown {
-      height: 175px;
-      width: 100px;
-      position: absolute;
-      top: 200px;
-      background-color: white;
-      border-radius: 8px;
-      border: 1px solid darkgrey;
-      font-size: 0.8rem;
-      display: flex;
-      flex-direction: column;
-      &:hover {
-        cursor: pointer;
-      }
-      .select-item {
-        margin-top: 0.25rem;
-        &.selected {
-          font-weight: bold;
-          color: #0174df;
-        }
-        &:hover {
-          font-weight: bold;
-          color: #0174df;
-        }
       }
     }
   }

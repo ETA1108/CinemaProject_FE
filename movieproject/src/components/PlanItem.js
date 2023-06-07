@@ -34,7 +34,7 @@ const PlanItem = ({ txs }) => {
         {txs.screening_ended_at.substr(11)}
       </div>
       <div className="info2">상영관: {txs.theater.name}</div>
-      <div className="info2">상영회차: {"상영회차"}</div>
+      <div className="info2">상영회차: {txs.num}</div>
 
       <Link to={"/seat"} state={{ id: id }}>
         <button className="gotoseat">좌석 보러가기</button>

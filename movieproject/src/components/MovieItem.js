@@ -39,18 +39,18 @@ const MovieItem = ({ txs }) => {
         </div>
         <div className="name">{txs.name}</div>
         <div className="info1">
-          {txs.genre} | {txs.running_time}분 | {txs.release_date} 개봉
+          {txs.genre} | {txs.rating} | {txs.running_time}분 | {txs.release_date}{" "}
+          개봉
         </div>
         <div className="info1">
           <button className="gotocontent" onClick={() => setModalIsOpen(true)}>
             영화 소개
           </button>
         </div>
-        <div className="info2">배급사: {txs.distributor_name} 등</div>
+        <div className="info2">배급사: {txs.distributor_name}</div>
         <div className="info2">감독: {txs.director_name}</div>
-        <div className="info2">배우: {"배우이름"} 등</div>
-        <div className="info2">가격: {"가격"}</div>
-        <div className="info2">별점: {txs.rating}</div>
+        <div className="info2">배우: {txs.cast}</div>
+        <div className="info2">가격: {txs.price}원</div>
         <Link to="/plan" state={{ name: name, id: id }}>
           <button className="gotoplan">상영일정 보러가기</button>
         </Link>
@@ -73,7 +73,7 @@ const MovieItem = ({ txs }) => {
       >
         {txs.name}
         <br />
-        {"영화소개"}
+        {txs.synopsis}
       </Modal>
     </>
   );

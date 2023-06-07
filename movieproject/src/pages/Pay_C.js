@@ -8,10 +8,9 @@ import { Link, useLocation } from "react-router-dom";
 import { MdAdUnits } from "react-icons/md";
 
 const Pay_C = () => {
-  let orderid = 0;
-
   const { state } = useLocation();
-  const { seatid } = state;
+  const { orderid } = state;
+  console.log(orderid);
   //const {seatname} = state;
 
   const [customer_id, setCId] = useState("");
@@ -23,7 +22,7 @@ const Pay_C = () => {
   const [orprice, setOrprice] = useState("");
   const [realprice, setRealprice] = useState("");
 
-  const [ticketprice, setTicketprice] = useState("");
+  //const [ticketprice, setTicketprice] = useState("");
   const [ticketrsnum, setTicketrsnum] = useState("");
   const [seat, setSeat] = useState("");
 
@@ -86,20 +85,13 @@ const Pay_C = () => {
         );
 
         for (let i = 0; i < response.data.orders.length; i++) {
-          if (response.data.orders[i].tickets[0].seat_id === seatid)
-            orderid = response.data.orders[i].id;
           if (response.data.orders[i].id === orderid)
             setTxs(response.data.orders[i]);
         }
         setTicketrsnum(txs.tickets[0].revervation_number);
-        setTicketprice("가격 추가하기");
         setSeat(txs.tickets[0].seat_id);
-        setMethod(txs.payment.method);
-        setApnum(txs.payment.approval_number);
         setOrprice(txs.payment.original_price);
         setRealprice(txs.payment.amount);
-        setUsepoint("포인트추가하기");
-        console.log(txs);
       } catch (e) {
         console.log(e);
       }
@@ -108,29 +100,8 @@ const Pay_C = () => {
     fetchData();
   }, 500);
 
-  function ticketform() {
-    const array = [];
-    for (let i = 0; i < txs.length; i++) {
-      array.push(
-        <form>
-          예매 번호
-          <input
-            disabled={true}
-            id="id"
-            type="text"
-            value={txs[i].reservation_number}
-          />
-          가격
-          <input disabled={true} id="id" type="text" value={"가격 추가"} />
-          좌석
-          <input disabled={true} id="id" type="text" value={"좌석 추가"} />
-        </form>
-      );
-    }
-    return array;
-  }
-
   function onClickPay(e) {
+    /*
     fetch("/customers/" + customer_id + "/orders", {
       //put으로 바꾸기
       method: "POST",
@@ -155,6 +126,24 @@ const Pay_C = () => {
       .catch((error) => {
         console.log(error.response);
       });
+
+      axios
+      .patch("/customers/" + customer_id, {
+        user_id: id,
+        password: pw,
+        mobile_number: mn,
+      })
+      .then((res) => {
+        // 작업 완료 되면 페이지 이동(새로고침)
+        sessionStorage.setItem("user_id", id);
+        document.location.href = "/mypage";
+        alert("수정되었습니다.");
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+    e.preventDefault();
+    */
   }
 
   return (
@@ -166,8 +155,6 @@ const Pay_C = () => {
       <form onSubmit={onClickPay}>
         티켓 예매 번호
         <input disabled={true} id="id" type="text" value={ticketrsnum} />
-        티켓 가격
-        <input disabled={true} id="id" type="text" value={ticketprice} />
         좌석
         <input disabled={true} id="id" type="text" value={seat} />
         <div className="line">
@@ -177,11 +164,11 @@ const Pay_C = () => {
         <input disabled={true} id="id" type="text" value={orprice} />
         판매 가격
         <input disabled={true} id="id" type="text" value={realprice} />
-        결제방법
+        결제방법 (카드 / 계좌이체 / 무통장입금)
         <input id="id" type="text" value={method} onChange={saveInputId} />
         카드번호{" ('-'없이)"}
         <input id="password" type="text" value={apnum} onChange={saveInputPw} />
-        보유 포인트
+        보유 포인트 (결제 시 티켓 판매 가격의 10%가 적립됩니다.)
         <input disabled={true} id="phonenumber" type="text" value={point} />
         사용할 포인트
         <input
@@ -195,7 +182,7 @@ const Pay_C = () => {
           disabled={true}
           id="final"
           type="text"
-          value={"realprice-usepoint"}
+          value={realprice - usepoint}
         />
         <button className="pay" type="submit">
           결제하기

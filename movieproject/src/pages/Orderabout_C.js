@@ -9,18 +9,16 @@ import { MdAdUnits } from "react-icons/md";
 const Orderabout_C = () => {
   const location = useLocation();
 
-  const orderid = location.state.id;
+  const { state } = useLocation();
+  const { orderid } = state;
 
   const [customer_id, setCId] = useState("");
   const [txs, setTxs] = useState(null);
   const [method, setMethod] = useState(""); //결제방법
   const [apnum, setApnum] = useState(""); //카드번호
-  const [point, setPoint] = useState(""); //보유포인트
   const [usepoint, setUsepoint] = useState(""); //사용할 포인트
   const [orprice, setOrprice] = useState("");
   const [realprice, setRealprice] = useState("");
-
-  const [ticketprice, setTicketprice] = useState("");
   const [ticketrsnum, setTicketrsnum] = useState("");
   const [seat, setSeat] = useState("");
 
@@ -52,7 +50,6 @@ const Orderabout_C = () => {
             res1.data.customers[i].user_id === sessionStorage.getItem("user_id")
           ) {
             setCId(res1.data.customers[i].id);
-            setPoint(res1.data.customers[i].point);
             break;
           }
         } // 토큰 저장하기
@@ -76,13 +73,12 @@ const Orderabout_C = () => {
             setTxs(response.data.orders[i]);
         }
         setTicketrsnum(txs.tickets[0].revervation_number);
-        setTicketprice("가격 추가하기");
         setSeat(txs.tickets[0].seat_id);
         setMethod(txs.payment.method);
         setApnum(txs.payment.approval_number);
         setOrprice(txs.payment.original_price);
         setRealprice(txs.payment.amount);
-        setUsepoint("포인트추가하기");
+        setUsepoint("포인트 추가하기");
         console.log(txs);
       } catch (e) {
         console.log(e);
@@ -101,8 +97,6 @@ const Orderabout_C = () => {
       <form>
         티켓 예매 번호
         <input disabled={true} id="id" type="text" value={ticketrsnum} />
-        티켓 가격
-        <input disabled={true} id="id" type="text" value={ticketprice} />
         좌석
         <input disabled={true} id="id" type="text" value={seat} />
         <div className="line">
@@ -112,10 +106,10 @@ const Orderabout_C = () => {
         <input disabled={true} id="id" type="text" value={orprice} />
         판매 가격
         <input disabled={true} id="id" type="text" value={realprice} />
-        결제방법
-        <input disabled={true} id="id" type="text" value={method} />
+        결제방법 (카드 / 계좌이체 / 무통장입금)
+        <input id="id" type="text" value={method} />
         카드번호{" ('-'없이)"}
-        <input disabled={true} id="password" type="text" value={apnum} />
+        <input id="password" type="text" value={apnum} />
         사용한 포인트
         <input disabled={true} id="usepoint" type="text" value={usepoint} />
         최종 결제 금액
@@ -123,11 +117,8 @@ const Orderabout_C = () => {
           disabled={true}
           id="final"
           type="text"
-          value={"realprice-usepoint"}
+          value={realprice - usepoint}
         />
-        <button className="pay" type="submit">
-          결제하기
-        </button>
       </form>
     </div>
   );

@@ -1,14 +1,16 @@
 import React from "react";
 import "./OrderItem.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const OrderItem_C = ({ txs }) => {
   const id = txs.id;
+  const status = txs.payment.status;
+  const navigate = useNavigate();
 
   function onClickDelete(e) {
     axios
-      .delete("/movies/" + id, {
+      .delete("/customers/" + id + "/orders/" + id, {
         //수정
         data: {
           id: id,
@@ -25,18 +27,46 @@ const OrderItem_C = ({ txs }) => {
     e.preventDefault();
   }
 
+  function onClickOrder(e) {
+    console.log(status);
+    if (status === "결제 전") {
+      navigate("/pay_c", {
+        state: { orderid: id },
+      });
+    } else if (status === "결제 완료") {
+      navigate("/orderabout_c", {
+        state: { orderid: id },
+      });
+    }
+  }
+
   return (
     <li className="OrderListItem">
       <div className="reservenum">전체 주문 번호: {txs.id}</div>
-      <div className="info1">결제 방법: {txs.payment.method}</div>
       <div className="info1">결제 여부: {txs.payment.status}</div>
-      <div className="info1">카드 번호: {txs.payment.approval_number}</div>
       <div className="info1">표준 가격: {txs.payment.original_price}</div>
-      <div className="info1">판매 가격: {txs.payment.amount}</div>
-      <div className="info1">결제 일시: {txs.payment.paid_at}</div>
-      <Link to="/orderabout_c" state={{ id: id }}>
-        <button className="gotoplan">자세히 보기</button>
-      </Link>
+      {(() => {
+        if (txs.payment.status === "결제 완료")
+          return (
+            <>
+              <div className="info1">결제 방법: {txs.payment.method}</div>
+              <div className="info1">
+                카드 번호: {txs.payment.approval_number}
+              </div>
+              <div className="info1">판매 가격: {txs.payment.amount}</div>
+            </>
+          );
+      })()}
+      <div className="info1">
+        {(() => {
+          if (txs.payment.status === "결제 전") return "예매 일시";
+          else if (txs.payment.status === "결제 완료") return "결제 일시";
+        })()}
+        : {txs.payment.paid_at}
+      </div>
+      <button className="gotoplan" onClick={onClickOrder}>
+        자세히 보기
+      </button>
       <Link to="/order_update" state={{ id: id }}>
         <button className="ticketupdate">티켓 수정하기</button>
       </Link>

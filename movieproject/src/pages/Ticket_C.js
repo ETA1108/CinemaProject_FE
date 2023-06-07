@@ -13,6 +13,9 @@ const Ticket_C = () => {
   const planid = location.state.planid;
   const seatid = location.state.seatid;
   const seatname = location.state.seatname;
+  const price = location.state.price;
+
+  const date = new Date().toISOString();
 
   const [customer_id, setCId] = useState("");
 
@@ -108,20 +111,24 @@ const Ticket_C = () => {
           },
         },
         payment: {
-          method: "string",
-          status: "string",
-          approval_number: "string",
-          original_price: 10000,
-          amount: 10000,
-          paid_at: "2023-05-25T17:28:47.065Z",
+          method: "-",
+          status: "결제 전",
+          approval_number: "-",
+          original_price: price,
+          amount: price,
+          point: 0,
+          paid_at: date,
         },
       }),
     })
-      .then((res) => {
+      .then((response) => response.json())
+      .then((response) => {
         // 작업 완료 되면 페이지 이동(새로고침)
         if (window.confirm("장바구니에 담겼습니다. 바로 결제하시겠습니까?")) {
           //true는 확인버튼을 눌렀을 때 코드 작성
-          navigate("/pay_c", { state: { seatid: seatid, seatname: seatname } });
+          navigate("/pay_c", {
+            state: { seatid: seatid, seatname: seatname, orderid: response.id },
+          });
         } else {
           // false는 취소버튼을 눌렀을 때, 취소됨
           document.location.href = "/mypage";

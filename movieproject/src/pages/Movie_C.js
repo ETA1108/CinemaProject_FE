@@ -10,10 +10,17 @@ const Movie_C = () => {
   const category = [
     // 장르, 등급 조회
     { id: 0, name: "전체", state: null },
-    { id: 1, name: "방전", state: "NONE" },
-    { id: 2, name: "충전", state: "CHAR" },
-    { id: 3, name: "대기", state: "WAIT" },
-    { id: 4, name: "저전압", state: "ERROR" },
+    { id: 1, name: "액션", state: "액션" },
+    { id: 2, name: "로맨스", state: "로맨스" },
+    { id: 3, name: "판타지", state: "판타지" },
+    { id: 4, name: "공포", state: "공포" },
+    { id: 5, name: "애니메이션", state: "애니메이션" },
+    { id: 6, name: "드라마", state: "드라마" },
+    //{ id: 7, name: "기타", state: "기타" },
+    { id: 7, name: "전체 관람가", state: "전체 관람가" },
+    { id: 8, name: "12세 관람가", state: "12세 관람가" },
+    { id: 9, name: "15세 관람가", state: "15세 관람가" },
+    { id: 10, name: "청소년 관람불가", state: "청소년 관람불가" },
   ];
 
   const [categoryItem, setCategoryItem] = useState(category[0]);
@@ -57,8 +64,11 @@ const Movie_C = () => {
         for (let i = 0; i < response.data.movies.length; i++) {
           if (categoryItem.state === null)
             filteredTxs.push(response.data.movies[i]);
-          else if (response.data[i].state + 1 === categoryItem.id)
-            filteredTxs.push(response.data[i]);
+          else if (
+            response.data.movies[i].genre === categoryItem.state ||
+            response.data.movies[i].rating === categoryItem.state
+          )
+            filteredTxs.push(response.data.movies[i]);
         }
         setTxs(filteredTxs);
       } catch (e) {
@@ -79,33 +89,22 @@ const Movie_C = () => {
         <h1>영화 차트</h1>
       </div>
       <div className="Bar"></div>
-      <ul className="TxList">
-        <div className="Filter" onClick={onClick}>
-          <div className="Category">&nbsp; {categoryItem.name}</div>
-          {(() => {
-            if (!toggle) return <MdExpandMore />;
-            else return <MdExpandLess />;
-          })()}
-        </div>
-        <div></div>
-        <div></div>
-        {toggle && (
-          <div className="select-dropdown">
-            {category.map((cate) => (
-              <div
-                className={(() => {
-                  if (cate.name === categoryItem.name)
-                    return "select-item selected";
-                  else return "select-item";
-                })()}
-                key={cate.id}
-                onClick={() => onChange(cate.id)}
-              >
-                &nbsp; {cate.name}
-              </div>
-            ))}
+      <div className="select-dropdown">
+        {category.map((cate) => (
+          <div
+            className={(() => {
+              if (cate.name === categoryItem.name)
+                return "select-item selected";
+              else return "select-item";
+            })()}
+            key={cate.id}
+            onClick={() => onChange(cate.id)}
+          >
+            &nbsp; <div>{cate.name}</div>
           </div>
-        )}
+        ))}
+      </div>
+      <ul className="TxList">
         {txs.map((txs) => (
           <MovieItem_C txs={txs} key={txs.id} />
         ))}

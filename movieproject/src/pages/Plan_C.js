@@ -7,10 +7,9 @@ import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 
 const Plan_C = () => {
-  const location = useLocation();
-
-  const movieid = location.state.id;
-  const moviename = location.state.name;
+  const { state } = useLocation();
+  const { movieid } = state;
+  const { moviename } = state;
 
   const [txs, setTxs] = useState(null);
   //  const [loading, setLoading] = useState(false);
@@ -33,6 +32,11 @@ const Plan_C = () => {
     }, []);
   };
 
+  function add(dict, key, value) {
+    dict[key] = value;
+    return { ...dict, [key]: value };
+  }
+
   useInterval(() => {
     const fetchData = async () => {
       //      setLoading(true);
@@ -41,12 +45,16 @@ const Plan_C = () => {
           "/movies/" + movieid + "/screening-schedules"
         );
         let filteredTxs = [];
+        let finalTxs = [];
         for (let i = 0; i < response.data.screening_schedules.length; i++) {
           filteredTxs.push(response.data.screening_schedules[i]);
         }
         filteredTxs.sort((a, b) =>
           a.screening_started_at < b.screening_started_at ? -1 : 1
         );
+        for (let i = 0; i < filteredTxs.length; i++) {
+          finalTxs.push(add(filteredTxs[i], "num", i + 1));
+        }
         setTxs(filteredTxs);
       } catch (e) {
         console.log(e);

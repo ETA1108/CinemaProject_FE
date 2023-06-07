@@ -3,6 +3,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import "./Movie_Create.scss";
 import { Link } from "react-router-dom";
+import test1 from "../components/images/test.png";
 
 const Movie_Create = () => {
   // 지정된 ID를 가진 유저에 대한 요청
@@ -14,6 +15,9 @@ const Movie_Create = () => {
   const [inputRelease, setInputRelease] = useState("");
   const [inputDistributor, setInputDistributor] = useState("");
   const [inputRate, setInputRate] = useState("");
+  const [inputCast, setInputCast] = useState("");
+  const [inputSynopsis, setInputSynopsis] = useState("");
+  const [inputPrice, setInputPrice] = useState("");
 
   const saveInputName = (e) => {
     setInputName(e.target.value);
@@ -36,22 +40,45 @@ const Movie_Create = () => {
   const saveInputRate = (e) => {
     setInputRate(e.target.value);
   };
+  const saveInputCast = (e) => {
+    setInputCast(e.target.value);
+  };
+  const saveInputSynopsis = (e) => {
+    setInputSynopsis(e.target.value);
+  };
+  const saveInputPrice = (e) => {
+    setInputPrice(e.target.value);
+  };
+
+  const formData = new FormData();
+
+  formData.append("file", test1); //files[0] === upload file
+
+  const value = [
+    {
+      name: inputName,
+      running_time: +inputTime,
+      genre: inputGenre,
+      director_name: inputDirector,
+      release_date: inputRelease,
+      distributor_name: inputDistributor,
+      rating: inputRate,
+      cast: inputCast,
+      synopsis: inputSynopsis,
+      price: +inputPrice,
+    },
+  ];
+  const blob = new Blob([JSON.stringify(value)], {
+    type: "application/json",
+  });
+
+  formData.append("data", blob);
 
   function onClickCreate(e) {
     fetch("/movies", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: inputName,
-        running_time: +inputTime,
-        genre: inputGenre,
-        director_name: inputDirector,
-        release_date: inputRelease,
-        distributor_name: inputDistributor,
-        rating: inputRate,
-      }),
+
+      body: formData,
     })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
@@ -90,19 +117,12 @@ const Movie_Create = () => {
           value={inputGenre}
           onChange={saveInputGenre}
         />
-        등급- 감독명
+        등급
         <input
-          id="director"
+          id="rating"
           type="text"
-          value={inputDirector}
-          onChange={saveInputDirector}
-        />
-        개봉일
-        <input
-          id="release"
-          type="text"
-          value={inputRelease}
-          onChange={saveInputRelease}
+          value={inputRate}
+          onChange={saveInputRate}
         />
         배급사
         <input
@@ -111,12 +131,40 @@ const Movie_Create = () => {
           value={inputDistributor}
           onChange={saveInputDistributor}
         />
-        평점
+        감독명
         <input
-          id="rate"
+          id="director"
           type="text"
-          value={inputRate}
-          onChange={saveInputRate}
+          value={inputDirector}
+          onChange={saveInputDirector}
+        />
+        배우명
+        <input
+          id="director"
+          type="text"
+          value={inputCast}
+          onChange={saveInputCast}
+        />
+        개봉일
+        <input
+          id="release"
+          type="text"
+          value={inputRelease}
+          onChange={saveInputRelease}
+        />
+        가격
+        <input
+          id="release"
+          type="text"
+          value={inputPrice}
+          onChange={saveInputPrice}
+        />
+        영화소개
+        <input
+          id="intro"
+          type="text"
+          value={inputSynopsis}
+          onChange={saveInputSynopsis}
         />
         <button type="submit">추가하기</button>
       </form>

@@ -68,19 +68,11 @@ const Plan_Update = () => {
   }, 500);
 
   function onClickUpdate(e) {
-    fetch("/screening-schedules", {
-      //put으로 바꾸기
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        movie_id: movieid,
-        theater_id: +inputThid,
-        screening_started_at: inputStart,
-        screening_ended_at: inputEnd,
-      }),
-    })
+    axios
+      .patch("/screening-schedules/" + planid, {
+        screening_started_at: inputStart + ".432Z",
+        screening_ended_at: inputEnd + ".432Z",
+      })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
         document.location.href = "/movie";
@@ -96,14 +88,8 @@ const Plan_Update = () => {
     <div className="create">
       <h1 style={{ textAlign: "center" }}>상영일정 수정</h1>
       <form onSubmit={onClickUpdate}>
-        상영관 번호
-        <input
-          id="name"
-          type="text"
-          placeholder={prevThid}
-          value={inputThid}
-          onChange={saveInputThid}
-        />
+        상영관 번호 (고정)
+        <input disabled={true} id="name" type="text" value={prevThid} />
         상영 시작시간<br></br>(YYYY-MM-DDThh:mm:ss 형식)
         <input
           id="time"

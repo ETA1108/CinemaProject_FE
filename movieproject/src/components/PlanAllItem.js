@@ -20,7 +20,6 @@ const PlanAllItem = ({ txs }) => {
       </div>
 
       <div className="info2">상영관: {txs.theater.name}</div>
-      <div className="info2">상영회차: {"상영회차"}</div>
     </li>
   );
 };

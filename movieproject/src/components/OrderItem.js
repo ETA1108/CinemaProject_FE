@@ -12,12 +12,27 @@ const OrderItem = ({ txs }) => {
   return (
     <li className="OrderListItem">
       <div className="reservenum">전체 주문 번호: {txs.id}</div>
-      <div className="info1">결제 방법: {txs.payment.method}</div>
       <div className="info1">결제 여부: {txs.payment.status}</div>
-      <div className="info1">카드 번호: {txs.payment.approval_number}</div>
       <div className="info1">표준 가격: {txs.payment.original_price}</div>
-      <div className="info1">판매 가격: {txs.payment.amount}</div>
-      <div className="info1">결제 일시: {txs.payment.paid_at}</div>
+      {(() => {
+        if (txs.payment.status === "결제 완료")
+          return (
+            <>
+              <div className="info1">결제 방법: {txs.payment.method}</div>
+              <div className="info1">
+                카드 번호: {txs.payment.approval_number}
+              </div>
+              <div className="info1">판매 가격: {txs.payment.amount}</div>
+            </>
+          );
+      })()}
+      <div className="info1">
+        {(() => {
+          if (txs.payment.status === "결제 전") return "예매 일시";
+          else if (txs.payment.status === "결제 완료") return "결제 일시";
+        })()}
+        : {txs.payment.paid_at}
+      </div>
       <Link
         to="/orderabout"
         state={{ orderid: orderid, customerid: customerid }}

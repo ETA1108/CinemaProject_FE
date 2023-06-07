@@ -34,8 +34,8 @@ const Plan_Create = () => {
       body: JSON.stringify({
         movie_id: movieid,
         theater_id: +inputThid,
-        screening_started_at: inputStart,
-        screening_ended_at: inputEnd,
+        screening_started_at: inputStart + ".432Z",
+        screening_ended_at: inputEnd + ".432Z",
       }),
     })
       .then((res) => {

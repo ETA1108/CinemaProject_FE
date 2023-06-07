@@ -7,6 +7,7 @@ const Seat_C = () => {
   const location = useLocation();
 
   const planid = location.state.id;
+  const price = location.state.price;
 
   const [txs, setTxs] = useState(null);
   const [theater, setTheater] = useState("");
@@ -84,7 +85,7 @@ const Seat_C = () => {
       <div className="SeatItem">{SeatItem(txs)}</div>
       <Link
         to="/ticket_c"
-        state={{ planid: planid, seatid: seatid, seatname: seat }}
+        state={{ planid: planid, seatid: seatid, seatname: seat, price: price }}
       >
         <button className="gototicket">예매하러 가기</button>
       </Link>

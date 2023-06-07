@@ -3,6 +3,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import "./Movie_Create.scss";
 import { Link, useLocation } from "react-router-dom";
+import noimage from "../components/images/noimage.png";
 
 const Movie_Update = () => {
   // 지정된 ID를 가진 유저에 대한 요청
@@ -18,12 +19,19 @@ const Movie_Update = () => {
   const [inputRelease, setInputRelease] = useState("");
   const [inputDistributor, setInputDistributor] = useState("");
   const [inputRate, setInputRate] = useState("");
+  const [inputCast, setInputCast] = useState("");
+  const [inputSynopsis, setInputSynopsis] = useState("");
+  const [inputPrice, setInputPrice] = useState("");
+
   const [prevTime, setprevTime] = useState("");
   const [prevGenre, setprevGenre] = useState("");
   const [prevDirector, setprevDirector] = useState("");
   const [prevRelease, setprevRelease] = useState("");
   const [prevDistributor, setprevDistributor] = useState("");
   const [prevRate, setprevRate] = useState("");
+  const [prevCast, setprevCast] = useState("");
+  const [prevSynopsis, setprevSynopsis] = useState("");
+  const [prevPrice, setprevPrice] = useState("");
 
   const saveInputTime = (e) => {
     setInputTime(e.target.value);
@@ -42,6 +50,15 @@ const Movie_Update = () => {
   };
   const saveInputRate = (e) => {
     setInputRate(e.target.value);
+  };
+  const saveInputCast = (e) => {
+    setInputCast(e.target.value);
+  };
+  const saveInputSynopsis = (e) => {
+    setInputSynopsis(e.target.value);
+  };
+  const saveInputPrice = (e) => {
+    setInputPrice(e.target.value);
   };
 
   const useInterval = (callback, delay) => {
@@ -75,6 +92,9 @@ const Movie_Update = () => {
             setprevRelease(res1.data.movies[i].release_date);
             setprevDistributor(res1.data.movies[i].distributor_name);
             setprevRate(res1.data.movies[i].rating);
+            setprevCast(res1.data.movies[i].cast);
+            setprevSynopsis(res1.data.movies[i].synopsis);
+            setprevPrice(res1.data.movies[i].price);
             break;
           }
         } // 토큰 저장하기
@@ -87,13 +107,12 @@ const Movie_Update = () => {
   }, 500);
 
   function onClickUpdate(e) {
-    fetch("/movies", {
-      //put으로 바꾸기
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    const formData = new FormData();
+
+    formData.append("file", noimage); //files[0] === upload file
+
+    const value = [
+      {
         name: inputName,
         running_time: +inputTime,
         genre: inputGenre,
@@ -101,7 +120,22 @@ const Movie_Update = () => {
         release_date: inputRelease,
         distributor_name: inputDistributor,
         rating: inputRate,
-      }),
+        cast: inputCast,
+        synopsis: inputSynopsis,
+        price: +inputPrice,
+      },
+    ];
+
+    const blob = new Blob([JSON.stringify(value)], {
+      type: "application/json",
+    });
+
+    formData.append("data", blob);
+
+    fetch("/movies/" + movieid, {
+      //put으로 바꾸기
+      method: "PUT",
+      data: formData,
     })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
@@ -138,21 +172,13 @@ const Movie_Update = () => {
           value={inputGenre}
           onChange={saveInputGenre}
         />
-        등급- 감독명
+        등급
         <input
-          id="director"
+          id="rating"
           type="text"
-          placeholder={prevDirector}
-          value={inputDirector}
-          onChange={saveInputDirector}
-        />
-        개봉일
-        <input
-          id="release"
-          type="text"
-          placeholder={prevRelease}
-          value={inputRelease}
-          onChange={saveInputRelease}
+          placeholder={prevRate}
+          value={inputRate}
+          onChange={saveInputRate}
         />
         배급사
         <input
@@ -162,13 +188,45 @@ const Movie_Update = () => {
           value={inputDistributor}
           onChange={saveInputDistributor}
         />
-        평점
+        감독명
         <input
-          id="rate"
+          id="director"
           type="text"
-          placeholder={prevRate}
-          value={inputRate}
-          onChange={saveInputRate}
+          placeholder={prevDirector}
+          value={inputDirector}
+          onChange={saveInputDirector}
+        />
+        배우명
+        <input
+          id="director"
+          type="text"
+          placeholder={prevCast}
+          value={inputCast}
+          onChange={saveInputCast}
+        />
+        개봉일
+        <input
+          id="release"
+          type="text"
+          placeholder={prevRelease}
+          value={inputRelease}
+          onChange={saveInputRelease}
+        />
+        가격
+        <input
+          id="release"
+          type="text"
+          placeholder={prevPrice}
+          value={inputPrice}
+          onChange={saveInputPrice}
+        />
+        영화소개
+        <input
+          id="intro"
+          type="text"
+          placeholder={prevSynopsis}
+          value={inputSynopsis}
+          onChange={saveInputSynopsis}
         />
         <button type="submit">수정하기</button>
       </form>
