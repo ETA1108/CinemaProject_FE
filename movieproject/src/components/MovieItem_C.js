@@ -101,8 +101,7 @@ const MovieItem_C = ({ txs }) => {
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
       >
-        {txs.name}
-        <br />
+        <div className="name">{txs.name}</div>
         {txs.synopsis}
       </Modal>
     </>

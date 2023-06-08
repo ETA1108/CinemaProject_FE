@@ -69,7 +69,7 @@ const Login = () => {
         />
         <button type="submit">로그인</button>
       </form>
-      <button className="join" onClick={check(inputId, inputPw)}>
+      <button className="join" onClick={() => check(inputId, inputPw)}>
         관리자 로그인
       </button>
       <Link to="/join">

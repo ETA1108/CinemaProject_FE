@@ -7,6 +7,7 @@ const OrderItem_C = ({ txs }) => {
   const id = txs.id;
   const status = txs.payment.status;
   const navigate = useNavigate();
+  const paystatus = txs.payment.status;
 
   function onClickDelete(e) {
     axios
@@ -18,8 +19,11 @@ const OrderItem_C = ({ txs }) => {
       })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
+        if (paystatus === "결제 전")
+          alert("해당 티켓은 예매 취소되었고, 결제 금액은 환불됩니다.");
+        else if (paystatus === "결제 완료")
+          alert("해당 티켓(결제 내역)은 삭제되었습니다.");
         document.location.href = "/mypage";
-        alert("해당 티켓은 예매 취소되었고, 결제 금액은 환불됩니다.");
       })
       .catch((error) => {
         console.log(error.response);
@@ -67,11 +71,12 @@ const OrderItem_C = ({ txs }) => {
       <button className="gotoplan" onClick={onClickOrder}>
         자세히 보기
       </button>
-      <Link to="/order_update" state={{ id: id }}>
-        <button className="ticketupdate">티켓 수정하기</button>
-      </Link>
       <button className="ticketdelete" onClick={onClickDelete}>
-        티켓 삭제하기
+        티켓{" "}
+        {(() => {
+          if (txs.payment.status === "결제 전") return "취소하기";
+          else if (txs.payment.status === "결제 완료") return "삭제하기";
+        })()}
       </button>
     </li>
   );

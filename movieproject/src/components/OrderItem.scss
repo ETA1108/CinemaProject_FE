@@ -52,25 +52,13 @@
     margin-left: 50px;
     font-size: 1rem;
   }
-  .ticketupdate {
-    margin-left: 2px;
-    margin-right: 3px;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    color: #6e6e6e;
-    text-decoration: underline;
-    cursor: pointer;
-    &:hover {
-      color: #0174df;
-    }
-  }
   .ticketdelete {
     border: none;
     outline: none;
     background-color: transparent;
     color: #6e6e6e;
     text-decoration: underline;
+    margin-left: 50px;
     cursor: pointer;
     &:hover {
       color: #0174df;

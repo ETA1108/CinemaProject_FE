@@ -1,6 +1,7 @@
 import React from "react";
 import "./OrderItem.scss";
 import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
 
 const OrderItem = ({ txs }) => {
   const orderid = txs.id;
@@ -8,6 +9,29 @@ const OrderItem = ({ txs }) => {
   const location = useLocation();
 
   const customerid = location.state.id;
+  const paystatus = txs.payment.status;
+
+  function onClickDelete(e) {
+    axios
+      .delete("/customers/" + customerid + "/orders/" + orderid, {
+        //수정
+        data: {
+          id: orderid,
+        },
+      })
+      .then((res) => {
+        // 작업 완료 되면 페이지 이동(새로고침)
+        if (paystatus === "결제 전")
+          alert("해당 티켓은 예매 취소되었고, 결제 금액은 환불됩니다.");
+        else if (paystatus === "결제 완료")
+          alert("해당 티켓(결제 내역)은 삭제되었습니다.");
+        document.location.href = "/customer";
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+    e.preventDefault();
+  }
 
   return (
     <li className="OrderListItem">
@@ -39,6 +63,13 @@ const OrderItem = ({ txs }) => {
       >
         <button className="gotoplan">자세히 보기</button>
       </Link>
+      <button className="ticketdelete" onClick={onClickDelete}>
+        티켓{" "}
+        {(() => {
+          if (txs.payment.status === "결제 전") return "취소하기";
+          else if (txs.payment.status === "결제 완료") return "삭제하기";
+        })()}
+      </button>
     </li>
   );
 };

@@ -12,17 +12,16 @@ const Movie_Update = () => {
   const movieid = location.state.id;
   const moviename = location.state.name;
 
-  const [inputName, setInputName] = useState("");
-  const [inputTime, setInputTime] = useState("");
-  const [inputGenre, setInputGenre] = useState("");
-  const [inputDirector, setInputDirector] = useState("");
-  const [inputRelease, setInputRelease] = useState("");
-  const [inputDistributor, setInputDistributor] = useState("");
-  const [inputRate, setInputRate] = useState("");
-  const [inputCast, setInputCast] = useState("");
-  const [inputSynopsis, setInputSynopsis] = useState("");
-  const [inputPrice, setInputPrice] = useState("");
-  const [file, setFile] = useState("");
+  const [inputTime, setInputTime] = useState(null);
+  const [inputGenre, setInputGenre] = useState(null);
+  const [inputDirector, setInputDirector] = useState(null);
+  const [inputRelease, setInputRelease] = useState(null);
+  const [inputDistributor, setInputDistributor] = useState(null);
+  const [inputRate, setInputRate] = useState(null);
+  const [inputCast, setInputCast] = useState(null);
+  const [inputSynopsis, setInputSynopsis] = useState(null);
+  const [inputPrice, setInputPrice] = useState(null);
+  const [file, setFile] = useState(null);
 
   const [prevTime, setprevTime] = useState("");
   const [prevGenre, setprevGenre] = useState("");
@@ -122,8 +121,8 @@ const Movie_Update = () => {
     const formData = new FormData();
 
     formData.append("file", file);
-    formData.append("name", "처음");
-    formData.append("running_time", +inputTime);
+    formData.append("name", moviename);
+    formData.append("running_time", inputTime);
     formData.append("genre", inputGenre);
     formData.append("director_name", inputDirector);
     formData.append("release_date", inputRelease);
@@ -143,13 +142,13 @@ const Movie_Update = () => {
       console.log(value);
     }
 
-    axios
-      .put("/movies/" + movieid, {
-        data: formData,
-      })
+    fetch("/movies/" + movieid, {
+      method: "PUT",
+      body: formData,
+    })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
-        //document.location.href = "/movie";
+        document.location.href = "/movie";
         alert("영화가 수정되었습니다.");
       })
       .catch((error) => {

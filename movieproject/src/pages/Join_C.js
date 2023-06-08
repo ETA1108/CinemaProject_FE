@@ -11,6 +11,7 @@ const Join = () => {
   const [inputPw, setInputPw] = useState("");
   const [inputNum, setInputNum] = useState("");
   const [inputPh, setInputPh] = useState("");
+  const [txs, setTxs] = useState(null);
   let inputAd = "";
 
   const saveInputId = (e) => {
@@ -27,6 +28,42 @@ const Join = () => {
     setInputPh(e.target.value);
   };
 
+  const useInterval = (callback, delay) => {
+    const savedCallback = useRef(null);
+
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    useEffect(() => {
+      const executeCallback = () => {
+        savedCallback.current();
+      };
+
+      const timerId = setInterval(executeCallback, delay);
+
+      return () => clearInterval(timerId);
+    }, []);
+  };
+
+  useInterval(() => {
+    const fetchData = async () => {
+      //      setLoading(true);
+      try {
+        const response = await axios.get("/customers");
+        let filteredTxs = ["master"];
+        for (let i = 0; i < response.data.customers.length; i++) {
+          filteredTxs.push(response.data.customers[i].user_id);
+        }
+        setTxs(filteredTxs);
+      } catch (e) {
+        console.log(e);
+      }
+      //      setLoading(false);
+    };
+    fetchData();
+  }, 500);
+
   function isadult(num) {
     const year = num.substr(0, 2);
     const realyear = year > 23 ? "19" + year : "20" + year;
@@ -38,30 +75,40 @@ const Join = () => {
   }
 
   function onClickJoin(e) {
-    isadult(inputNum);
-    fetch("/customers", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: inputId,
-        password: inputPw,
-        resident_registration_number: inputNum,
-        is_verified: true,
-        is_verified_adult: inputAd,
-        point: 0,
-        mobile_number: inputPh,
-      }),
-    })
-      .then((res) => {
-        // 작업 완료 되면 페이지 이동(새로고침)
-        document.location.href = "/";
-        alert("회원가입을 축하합니다!");
+    let temp = 0;
+    for (let i = 0; i < txs.length; i++) {
+      if (inputId === txs[i]) {
+        temp = 1;
+        alert("이미 사용 중인 아이디입니다.");
+        break;
+      }
+    }
+    if (temp !== 1) {
+      isadult(inputNum);
+      fetch("/customers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: inputId,
+          password: inputPw,
+          resident_registration_number: inputNum,
+          is_verified: true,
+          is_verified_adult: inputAd,
+          point: 0,
+          mobile_number: inputPh,
+        }),
       })
-      .catch((error) => {
-        console.log(error.response);
-      });
+        .then((res) => {
+          // 작업 완료 되면 페이지 이동(새로고침)
+          document.location.href = "/";
+          alert("회원가입을 축하합니다!");
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    }
     e.preventDefault();
   }
 
