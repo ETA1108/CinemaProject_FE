@@ -2,19 +2,61 @@ import React from "react";
 import "./OrderItem.scss";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useState, useEffect, useRef } from "react";
 
 const OrderItem_C = ({ txs }) => {
   const id = txs.id;
   const status = txs.payment.status;
   const navigate = useNavigate();
   const paystatus = txs.payment.status;
+  const [customer_id, setCId] = useState("");
+
+  const useInterval = (callback, delay) => {
+    const savedCallback = useRef(null);
+
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    useEffect(() => {
+      const executeCallback = () => {
+        savedCallback.current();
+      };
+
+      const timerId = setInterval(executeCallback, delay);
+
+      return () => clearInterval(timerId);
+    }, []);
+  };
+
+  useInterval(() => {
+    const fetchData = async () => {
+      //      setLoading(true);
+      try {
+        const res1 = await axios.get("/customers");
+        for (let i = 0; i < res1.data.customers.length; i++) {
+          if (
+            res1.data.customers[i].user_id === sessionStorage.getItem("user_id")
+          ) {
+            setCId(res1.data.customers[i].id);
+            break;
+          }
+        } // 토큰 저장하기
+      } catch (e) {
+        console.log(e);
+      }
+      //      setLoading(false);
+    };
+    fetchData();
+  }, 500);
 
   function onClickDelete(e) {
     axios
-      .delete("/customers/" + id + "/orders/" + id, {
+      .delete("/customers/" + customer_id + "/orders/" + id, {
         //수정
         data: {
-          id: id,
+          customer_id: customer_id,
+          order_id: id,
         },
       })
       .then((res) => {

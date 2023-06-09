@@ -26,10 +26,6 @@ const Pay_C = () => {
   const [orprice, setOrprice] = useState("");
   const [realprice, setRealprice] = useState("");
 
-  //const [ticketprice, setTicketprice] = useState("");
-  const [ticketrsnum, setTicketrsnum] = useState("");
-  const [seat, setSeat] = useState("");
-
   const saveInputId = (e) => {
     setMethod(e.target.value);
   };
@@ -95,8 +91,6 @@ const Pay_C = () => {
           if (response.data.orders[i].id === orderid)
             setTxs(response.data.orders[i]);
         }
-        setTicketrsnum(txs.tickets[0].revervation_number);
-        setSeat(txs.tickets[0].seat_id);
         setOrprice(txs.payment.original_price);
         setRealprice(txs.payment.amount);
       } catch (e) {
@@ -154,13 +148,6 @@ const Pay_C = () => {
       </div>
       <div className="Bar"></div>
       <form onSubmit={onClickPay}>
-        티켓 예매 번호
-        <input disabled={true} id="id" type="text" value={ticketrsnum} />
-        좌석
-        <input disabled={true} id="id" type="text" value={seat} />
-        <div className="line">
-          <hr></hr>
-        </div>
         표준 가격
         <input disabled={true} id="id" type="text" value={orprice} />
         판매 가격

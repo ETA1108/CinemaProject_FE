@@ -103,16 +103,15 @@ const Login = () => {
             zIndex: 100,
           },
         }}
-        className="content"
+        className="nmcontent"
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
       >
         <form onSubmit={onClickNonMemberPage}>
-          전화번호
+          <div className="call">전화번호를 입력해주세요.</div>
           <input
             id="password"
             type="text"
-            placeholder="Password"
             value={inputMn}
             onChange={saveInputMn}
           />

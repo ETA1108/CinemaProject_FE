@@ -81,3 +81,43 @@
     }
   }
 }
+
+.nmcontent {
+  justify-content: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 170px;
+  padding: 20px;
+  border: 3px solid #6e6e6e;
+  background-color: rgb(255, 255, 255);
+  //border-radius: 10px;
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+  .call {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  input {
+    background: none;
+    height: 40px;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid black;
+  }
+  button {
+    color: white;
+    margin-bottom: 50px;
+    background-color: #0174df;
+    height: 40px;
+    font-size: 1.1rem;
+    width: 200px;
+    border-radius: 8px;
+    border: 1px solid #eaeaea;
+    cursor: pointer;
+  }
+}

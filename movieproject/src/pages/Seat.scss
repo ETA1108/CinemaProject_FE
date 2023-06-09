@@ -3,19 +3,18 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  .Bar {
-    width: 800px;
-    background: black;
-    height: 4px;
-    margin-bottom: 30px;
-  }
-  .Number {
-    margin-left: 750px;
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-    color: #4b088a;
+  .theater {
+    margin-top: 40px;
+    margin-bottom: 5px;
+    margin-left: 770px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    width: 30px;
+    justify-content: right;
+    align-items: right;
   }
   .Screen {
+    margin-bottom: 40px;
     width: 800px;
     font-weight: bold;
     text-align: center;
@@ -24,24 +23,45 @@
     height: 25px;
     background: #bdbdbd;
   }
-  .TxList {
-    width: 800px;
-    padding: 0;
+  .SeatItem {
+    width: 700px;
     list-style: none;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 5px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 1px;
     z-index: 1;
-  }
-  button {
-    &.active {
-      background-color: #4b088a;
-      color: white;
-
-      //&:hover {
-      //  background: white;
-      //  color: darkorange;
-      //}
+    .FakeItem {
+      width: 30px;
+      height: 30px;
+      border: none;
+      outline: none;
+      background-color: transparent;
     }
+    .RealSeatItem {
+      width: 30px;
+      height: 30px;
+      font-size: 0.3rem;
+      cursor: pointer;
+      &:focus {
+        background-color: #4b088a;
+        color: white;
+
+        //&:hover {
+        //  background: white;
+        //  color: darkorange;
+        //}
+      }
+    }
+  }
+  .gototicket {
+    margin-top: 40px;
+    margin-left: 650px;
+    color: white;
+    background-color: #0174df;
+    height: 35px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #eaeaea;
+    cursor: pointer;
   }
 }

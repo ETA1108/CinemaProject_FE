@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const Movie_C = () => {
   const category = [
     // 장르, 등급 조회
-    { id: 0, name: "전체", state: null },
+    { id: 0, name: "영화 전체", state: null },
     { id: 1, name: "액션", state: "액션" },
     { id: 2, name: "로맨스", state: "로맨스" },
     { id: 3, name: "판타지", state: "판타지" },

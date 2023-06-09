@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Seat.scss";
 import axios from "axios";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Seat_C = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const planid = location.state.id;
   const price = location.state.price;
@@ -13,10 +14,6 @@ const Seat_C = () => {
   const [theater, setTheater] = useState("");
   const [seat, setSeat] = useState("");
   const [seatid, setSeatid] = useState("");
-  const [activeNav, setActiveNav] = useState(null);
-
-  let seatarray = [];
-  let seatidarray = [];
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -47,7 +44,6 @@ const Seat_C = () => {
         }
         setTxs(filteredTxs.sort());
         setTheater(response.data.theater.name);
-        console.log(txs);
       } catch (e) {
         console.log(e);
       }
@@ -62,14 +58,24 @@ const Seat_C = () => {
   function SeatItem(txs) {
     let seat = [];
     for (let i = 0; i < txs.length; i++) {
+      if (
+        [
+          4, 16, 24, 36, 44, 56, 64, 76, 84, 96, 104, 116, 124, 136, 144, 156,
+          164, 176, 184, 196, 204, 216, 224, 236, 244,
+        ].includes(i)
+      )
+        seat.push(
+          <button className="FakeItem">
+            <div className="TxID"></div>
+          </button>
+        );
       seat.push(
         <button
           onClick={(e) => {
             setSeat(txs[i]);
             setSeatid(i);
-            setActiveNav(i);
           }}
-          className={activeNav === i ? "active" : ""}
+          className="RealSeatItem"
         >
           <div className="TxID">{txs[i]}</div>
         </button>
@@ -78,23 +84,26 @@ const Seat_C = () => {
     return seat;
   }
 
+  function onClickGoTicket(e) {
+    if (!sessionStorage.getItem("user_id")) {
+      navigate("/ticket_nm", {
+        state: { planid: planid, seatid: seatid, seatname: seat, price: price },
+      });
+    } else {
+      navigate("/ticket_c", {
+        state: { planid: planid, seatid: seatid, seatname: seat, price: price },
+      });
+    }
+  }
+
   return (
     <div className="Seat">
       <div className="theater">{theater}</div>
       <div className="Screen">SCREEN</div>
       <div className="SeatItem">{SeatItem(txs)}</div>
-      <Link
-        to="/ticket_c"
-        state={{ planid: planid, seatid: seatid, seatname: seat, price: price }}
-      >
-        <button className="gototicket">예매하러 가기</button>
-      </Link>
-      <Link
-        to="/ticket_nm"
-        state={{ planid: planid, seatid: seatid, seatname: seat, price: price }}
-      >
-        <button className="gototicket">예매하러 eee가기</button>
-      </Link>
+      <button onClick={onClickGoTicket} className="gototicket">
+        예매하러 가기 →
+      </button>
     </div>
   );
 };

@@ -168,50 +168,51 @@ const TicketNM = () => {
       </div>
       <div className="Bar"></div>
       <form onSubmit={onClickJoin}>
-        영화명
-        <input disabled={true} id="id" type="text" value={inputName} />
-        상영관
-        <input disabled={true} id="password" type="text" value={inputThname} />
-        상영일
-        <input
-          disabled={true}
-          id="phonenumber"
-          type="text"
-          value={inputStart.substr(0, 10)}
-        />
-        상영 시작시간
-        <input
-          disabled={true}
-          id="phonenumber"
-          type="text"
-          value={inputStart.substr(11)}
-        />
-        상영 종료시간
-        <input
-          disabled={true}
-          id="renumber"
-          type="text"
-          value={inputEnd.substr(11)}
-        />
-        상영시간
-        <input disabled={true} id="renumber" type="text" value={inputTime} />
-        좌석
-        <input disabled={true} id="point" type="text" value={seatname} />
-        주민등록번호{" ('-'없이)"}
-        <input
-          id="renumber"
-          type="text"
-          value={inputNum}
-          onChange={saveInputNum}
-        />
-        전화번호{" ('-'없이)"}
-        <input
-          id="phonenumber"
-          type="text"
-          value={inputPh}
-          onChange={saveInputPh}
-        />
-        <button className="intostorage">결제하러 가기</button>
+        <div className="body">
+          <div className="info">
+            <input disabled={true} id="id" type="text" value={inputName} />
+            <input
+              disabled={true}
+              id="phonenumber"
+              type="text"
+              value={
+                inputStart.substr(0, 10) +
+                " " +
+                inputStart.substr(11) +
+                " ~ " +
+                inputEnd.substr(11)
+              }
+            />
+            <input
+              disabled={true}
+              id="password"
+              type="text"
+              value={inputThname + " " + seatname}
+            />
+          </div>
+          <div className="intostorage">
+            <button>장바구니에 담기</button>
+          </div>
+          <div className="intro">
+            * 티켓 예매를 위해 필수 개인 정보를 입력해주세요.
+          </div>
+          주민등록번호
+          {" ('-'없이): "}
+          <input
+            id="customer"
+            type="text"
+            value={inputNum}
+            onChange={saveInputNum}
+          />
+          <br></br>
+          전화번호{" ('-'없이): "}
+          <input
+            id="customer"
+            type="text"
+            value={inputPh}
+            onChange={saveInputPh}
+          />
+        </div>
       </form>
     </div>
   );

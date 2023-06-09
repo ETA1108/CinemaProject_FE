@@ -14,9 +14,9 @@ const OrderItem = ({ txs }) => {
   function onClickDelete(e) {
     axios
       .delete("/customers/" + customerid + "/orders/" + orderid, {
-        //수정
         data: {
-          id: orderid,
+          customer_id: customerid,
+          order_id: orderid,
         },
       })
       .then((res) => {
