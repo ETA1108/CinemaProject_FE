@@ -2,21 +2,27 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import "./Login.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Modal from "react-modal";
 
 const Login = () => {
   // 지정된 ID를 가진 유저에 대한 요청
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [inputMn, setInputMn] = useState("");
+  const navigate = useNavigate();
+
   const saveInputId = (e) => {
     setInputId(e.target.value);
-    console.log(e.target.value);
   };
 
   const saveInputPw = (e) => {
     setInputPw(e.target.value);
-    console.log(e.target.value);
+  };
+  const saveInputMn = (e) => {
+    setInputMn(e.target.value);
   };
 
   function onClickLogin(e) {
@@ -49,12 +55,21 @@ const Login = () => {
     }
   };
 
+  function onClickNonMemberPage(e) {
+    navigate("/mypage_nm", {
+      state: { mobilenumber: inputMn },
+    });
+  }
+
   return (
     <>
       <div className="nonmemberlogin">
         <Link to="/movie_c">
           <button className="nonmembergo">비회원 주문하기</button>
         </Link>
+        <button className="nonmembergo" onClick={() => setModalIsOpen(true)}>
+          비회원 주문내역 확인
+        </button>
       </div>
       <div className="login">
         <h1>서울 시네마</h1>
@@ -82,6 +97,28 @@ const Login = () => {
           <button className="join">회원가입</button>
         </Link>
       </div>
+      <Modal
+        style={{
+          overlay: {
+            zIndex: 100,
+          },
+        }}
+        className="content"
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+      >
+        <form onSubmit={onClickNonMemberPage}>
+          전화번호
+          <input
+            id="password"
+            type="text"
+            placeholder="Password"
+            value={inputMn}
+            onChange={saveInputMn}
+          />
+          <button type="submit">주문내역 확인하기</button>
+        </form>
+      </Modal>
     </>
   );
 };

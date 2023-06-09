@@ -16,6 +16,7 @@ const Pay_C = () => {
   const [customer_id, setCId] = useState("");
   const [customer_pw, setCPw] = useState("");
   const [customer_mn, setCMn] = useState("");
+  const [customer_isJoin, setCIsJoin] = useState("");
 
   const [txs, setTxs] = useState(null);
   const [method, setMethod] = useState(""); //결제방법
@@ -70,6 +71,7 @@ const Pay_C = () => {
             setCPw(res1.data.customers[i].password);
             setCMn(res1.data.customers[i].mobile_number);
             setPoint(res1.data.customers[i].point);
+            setCIsJoin(res1.data.customers[i].is_verified);
             break;
           }
         } // 토큰 저장하기
@@ -134,8 +136,9 @@ const Pay_C = () => {
       })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
-        document.location.href = "/mypage";
         alert("결제 완료되었습니다.");
+        if (customer_isJoin) document.location.href = "/mypage";
+        else document.location.href = "/";
       })
       .catch((error) => {
         console.log(error.response);

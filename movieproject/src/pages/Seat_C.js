@@ -89,6 +89,12 @@ const Seat_C = () => {
       >
         <button className="gototicket">예매하러 가기</button>
       </Link>
+      <Link
+        to="/ticket_nm"
+        state={{ planid: planid, seatid: seatid, seatname: seat, price: price }}
+      >
+        <button className="gototicket">예매하러 eee가기</button>
+      </Link>
     </div>
   );
 };

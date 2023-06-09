@@ -51,9 +51,17 @@ const Header = () => {
           </div>
           <Link to="/mypage">
             <button className="mypage">
-              <u>{userid}</u>님의
-              <br />
-              마이 페이지
+              <u>{userid}</u>
+              {(() => {
+                if (sessionStorage.getItem("user_id"))
+                  return (
+                    <>
+                      님의
+                      <br />
+                      마이 페이지
+                    </>
+                  );
+              })()}
             </button>
           </Link>
         </nav>

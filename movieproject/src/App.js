@@ -15,12 +15,14 @@ import Seat from "./pages/Seat";
 import Seat_C from "./pages/Seat_C";
 import Ticket from "./pages/Ticket";
 import Ticket_C from "./pages/Ticket_C";
+import TicketNM from "./pages/TicketNM";
 import Customer from "./pages/Customer";
 import Customer_Order from "./pages/Customer_Order";
 import Pay from "./pages/Pay";
 import Pay_C from "./pages/Pay_C";
 import Mypage from "./pages/Mypage_C";
 import Mypage_ud from "./pages/Mypage_C_ud";
+import MypageNM from "./pages/MypageNM";
 import Orderabout_C from "./pages/Orderabout_C";
 import Orderabout from "./pages/Orderabout";
 import Order_Update from "./pages/Order_Update";
@@ -53,8 +55,10 @@ const App = () => {
         <Route path="/seat_c" element={<Seat_C />} />
         <Route path="/pay_c" element={<Pay_C />} />
         <Route path="/ticket_c" element={<Ticket_C />} />
+        <Route path="/ticket_nm" element={<TicketNM />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/mypage_ud" element={<Mypage_ud />} />
+        <Route path="/mypage_nm" element={<MypageNM />} />
         <Route path="/order_update" element={<Order_Update />} />
         <Route path="/orderabout_c" element={<Orderabout_C />} />
       </Route>
