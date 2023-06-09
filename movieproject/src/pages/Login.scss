@@ -1,3 +1,22 @@
+.nonmemberlogin {
+  display: flex;
+  justify-content: right;
+  .nonmembergo {
+    //width: 80%;
+    outline: none;
+    border: none;
+    margin-top: 2px;
+    font-size: 0.9rem;
+    background-color: transparent;
+    //color: #6e6e6e;
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover {
+      color: #0174df;
+    }
+  }
+}
+
 .login {
   display: flex;
   flex-direction: column;

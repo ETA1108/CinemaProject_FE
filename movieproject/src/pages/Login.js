@@ -50,32 +50,39 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
-      <h1>서울 시네마</h1>
-      <form onSubmit={onClickLogin}>
-        <input
-          id="id"
-          type="text"
-          placeholder="ID"
-          value={inputId}
-          onChange={saveInputId}
-        />
-        <input
-          id="password"
-          type="password"
-          placeholder="Password"
-          value={inputPw}
-          onChange={saveInputPw}
-        />
-        <button type="submit">로그인</button>
-      </form>
-      <button className="join" onClick={() => check(inputId, inputPw)}>
-        관리자 로그인
-      </button>
-      <Link to="/join">
-        <button className="join">회원가입</button>
-      </Link>
-    </div>
+    <>
+      <div className="nonmemberlogin">
+        <Link to="/movie_c">
+          <button className="nonmembergo">비회원 주문하기</button>
+        </Link>
+      </div>
+      <div className="login">
+        <h1>서울 시네마</h1>
+        <form onSubmit={onClickLogin}>
+          <input
+            id="id"
+            type="text"
+            placeholder="ID"
+            value={inputId}
+            onChange={saveInputId}
+          />
+          <input
+            id="password"
+            type="password"
+            placeholder="Password"
+            value={inputPw}
+            onChange={saveInputPw}
+          />
+          <button type="submit">로그인</button>
+        </form>
+        <button className="join" onClick={() => check(inputId, inputPw)}>
+          관리자 로그인
+        </button>
+        <Link to="/join">
+          <button className="join">회원가입</button>
+        </Link>
+      </div>
+    </>
   );
 };
 

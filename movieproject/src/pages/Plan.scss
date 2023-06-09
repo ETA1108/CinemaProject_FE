@@ -9,6 +9,36 @@
     height: 4px;
     margin-bottom: 30px;
   }
+  .select-dropdown {
+    height: 40px;
+    width: 530px;
+    position: absolute;
+    top: 120px;
+    background-color: transparent;
+    border: none;
+    font-size: 0.8rem;
+    display: flex;
+    padding-left: 25px;
+    div {
+      float: left;
+      margin-left: 5px;
+      margin-right: 20px;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+    .select-item {
+      margin-top: 0.25rem;
+      &.selected {
+        font-weight: bold;
+        color: #0174df;
+      }
+      &:hover {
+        font-weight: bold;
+        color: #0174df;
+      }
+    }
+  }
   .TxList {
     width: 700px;
     padding: 0;

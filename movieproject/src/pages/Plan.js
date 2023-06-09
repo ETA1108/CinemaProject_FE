@@ -7,6 +7,22 @@ import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 
 const Plan = () => {
+  const category = [
+    // 장르, 등급 조회
+    { id: 0, name: "전체", state: null },
+    { id: 1, name: "1관", state: "1관" },
+    { id: 2, name: "2관", state: "2관" },
+    { id: 3, name: "3관", state: "3관" },
+    { id: 4, name: "4관", state: "4관" },
+    { id: 4, name: "5관", state: "5관" },
+    { id: 5, name: "6관", state: "애6관" },
+  ];
+
+  const [categoryItem, setCategoryItem] = useState(category[0]);
+  const onChange = (id) => {
+    setCategoryItem(category[id]);
+  };
+
   const location = useLocation();
 
   const movieid = location.state.id;

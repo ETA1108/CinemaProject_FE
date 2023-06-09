@@ -14,6 +14,9 @@ const Pay_C = () => {
   //const {seatname} = state;
 
   const [customer_id, setCId] = useState("");
+  const [customer_pw, setCPw] = useState("");
+  const [customer_mn, setCMn] = useState("");
+
   const [txs, setTxs] = useState(null);
   const [method, setMethod] = useState(""); //결제방법
   const [apnum, setApnum] = useState(""); //카드번호
@@ -64,6 +67,8 @@ const Pay_C = () => {
             res1.data.customers[i].user_id === sessionStorage.getItem("user_id")
           ) {
             setCId(res1.data.customers[i].id);
+            setCPw(res1.data.customers[i].password);
+            setCMn(res1.data.customers[i].mobile_number);
             setPoint(res1.data.customers[i].point);
             break;
           }
@@ -101,49 +106,42 @@ const Pay_C = () => {
   }, 500);
 
   function onClickPay(e) {
-    /*
-    fetch("/customers/" + customer_id + "/orders", {
+    fetch("/customers/" + customer_id + "/orders/" + orderid + "/payment", {
       //put으로 바꾸기
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         //payment에 싸서 보내기
-        method: method,
         status: "결제완료",
         approval_number: apnum,
-        original_price: 12000, //합하는 함수 만들기
-        amount: 10000, //합하는 함수 만들기
-        paid_at: "05/21", // 오늘 나타내는 메서드
       }),
     })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
-        //document.location.href = "/mypage";
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+
+    axios
+      .patch("/customers/" + customer_id, {
+        user_id: sessionStorage.getItem("user_id"),
+        password: customer_pw,
+        mobile_number: customer_mn,
+        point: point + realprice * 0.1 - usepoint,
+      })
+      .then((res) => {
+        // 작업 완료 되면 페이지 이동(새로고침)
+        document.location.href = "/mypage";
         alert("결제 완료되었습니다.");
       })
       .catch((error) => {
         console.log(error.response);
       });
 
-      axios
-      .patch("/customers/" + customer_id, {
-        user_id: id,
-        password: pw,
-        mobile_number: mn,
-      })
-      .then((res) => {
-        // 작업 완료 되면 페이지 이동(새로고침)
-        sessionStorage.setItem("user_id", id);
-        document.location.href = "/mypage";
-        alert("수정되었습니다.");
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
     e.preventDefault();
-    */
   }
 
   return (
@@ -164,7 +162,7 @@ const Pay_C = () => {
         <input disabled={true} id="id" type="text" value={orprice} />
         판매 가격
         <input disabled={true} id="id" type="text" value={realprice} />
-        결제방법 (카드 / 계좌이체 / 무통장입금)
+        결제방법 (신용카드 / 계좌이체 / 무통장입금)
         <input id="id" type="text" value={method} onChange={saveInputId} />
         카드번호{" ('-'없이)"}
         <input id="password" type="text" value={apnum} onChange={saveInputPw} />

@@ -23,7 +23,6 @@ const Movie = () => {
   ];
 
   const [categoryItem, setCategoryItem] = useState(category[0]);
-  const [toggle, setToggle] = useState(false);
   const [txs, setTxs] = useState(null);
   //  const [loading, setLoading] = useState(false);
 
@@ -45,13 +44,8 @@ const Movie = () => {
     }, []);
   };
 
-  const onClick = () => {
-    setToggle(!toggle);
-  };
-
   const onChange = (id) => {
     setCategoryItem(category[id]);
-    setToggle(!toggle);
   };
 
   useInterval(() => {

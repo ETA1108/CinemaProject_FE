@@ -111,8 +111,8 @@ const Ticket_C = () => {
           },
         },
         payment: {
-          method: "-",
-          status: "결제 전",
+          method: "신용카드",
+          status: "미결제",
           approval_number: "-",
           original_price: price,
           amount: price,
@@ -126,9 +126,12 @@ const Ticket_C = () => {
         // 작업 완료 되면 페이지 이동(새로고침)
         if (window.confirm("장바구니에 담겼습니다. 바로 결제하시겠습니까?")) {
           //true는 확인버튼을 눌렀을 때 코드 작성
+
           navigate("/pay_c", {
             state: { seatid: seatid, seatname: seatname, orderid: response.id },
           });
+
+          console.log(response.id);
         } else {
           // false는 취소버튼을 눌렀을 때, 취소됨
           document.location.href = "/mypage";

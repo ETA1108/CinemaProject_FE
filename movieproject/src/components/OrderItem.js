@@ -21,9 +21,9 @@ const OrderItem = ({ txs }) => {
       })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
-        if (paystatus === "결제 전")
+        if (paystatus === "미결제")
           alert("해당 티켓은 예매 취소되었고, 결제 금액은 환불됩니다.");
-        else if (paystatus === "결제 완료")
+        else if (paystatus === "결제완료")
           alert("해당 티켓(결제 내역)은 삭제되었습니다.");
         document.location.href = "/customer";
       })
@@ -39,7 +39,7 @@ const OrderItem = ({ txs }) => {
       <div className="info1">결제 여부: {txs.payment.status}</div>
       <div className="info1">표준 가격: {txs.payment.original_price}</div>
       {(() => {
-        if (txs.payment.status === "결제 완료")
+        if (txs.payment.status === "결제완료")
           return (
             <>
               <div className="info1">결제 방법: {txs.payment.method}</div>
@@ -52,8 +52,8 @@ const OrderItem = ({ txs }) => {
       })()}
       <div className="info1">
         {(() => {
-          if (txs.payment.status === "결제 전") return "예매 일시";
-          else if (txs.payment.status === "결제 완료") return "결제 일시";
+          if (txs.payment.status === "미결제") return "예매 일시";
+          else if (txs.payment.status === "결제완료") return "결제 일시";
         })()}
         : {txs.payment.paid_at}
       </div>
@@ -66,8 +66,8 @@ const OrderItem = ({ txs }) => {
       <button className="ticketdelete" onClick={onClickDelete}>
         티켓{" "}
         {(() => {
-          if (txs.payment.status === "결제 전") return "취소하기";
-          else if (txs.payment.status === "결제 완료") return "삭제하기";
+          if (txs.payment.status === "미결제") return "취소하기";
+          else if (txs.payment.status === "결제완료") return "삭제하기";
         })()}
       </button>
     </li>

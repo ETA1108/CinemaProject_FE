@@ -7,15 +7,15 @@ import { Link } from "react-router-dom";
 
 const Customer = () => {
   const [txs, setTxs] = useState(null);
-  const [inputRRN, setInputRRN] = useState("");
+  const [inputMN, setInputMN] = useState("");
   const [temp, setTemp] = useState("");
 
-  const saveInputRRN = (e) => {
-    setInputRRN(e.target.value);
+  const saveInputMN = (e) => {
+    setInputMN(e.target.value);
   };
 
   const onClick = () => {
-    setTemp(inputRRN);
+    setTemp(inputMN);
   };
 
   const useInterval = (callback, delay) => {
@@ -44,9 +44,7 @@ const Customer = () => {
         let filteredTxs = [];
         for (let i = 0; i < response.data.customers.length; i++) {
           if (temp === "") filteredTxs.push(response.data.customers[i]);
-          else if (
-            response.data.customers[i].resident_registration_number === temp
-          )
+          else if (response.data.customers[i].mobile_number === temp)
             filteredTxs.push(response.data.customers[i]);
         }
         filteredTxs.sort((a, b) => (a.id < b.id ? -1 : 1));
@@ -74,15 +72,15 @@ const Customer = () => {
           <input
             className="Category"
             type="text"
-            value={inputRRN}
-            onChange={saveInputRRN}
+            value={inputMN}
+            onChange={saveInputMN}
           ></input>
           <button onClick={onClick}>
             <BsSearch size="17" />
           </button>
         </div>
         <div></div>
-        <div></div>
+
         {txs.map((txs) => (
           <CustomerItem txs={txs} key={txs.id} />
         ))}
