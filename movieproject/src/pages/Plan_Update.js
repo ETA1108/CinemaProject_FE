@@ -11,16 +11,14 @@ const Plan_Update = () => {
   const planid = location.state.id;
 
   const [movieid, setMvid] = useState("");
-  const [inputThid, setInputThid] = useState("");
+
   const [inputStart, setInputStart] = useState("");
   const [inputEnd, setInputEnd] = useState("");
-  const [prevThid, setprevThid] = useState("");
+
+  const [theaterName, settheaterName] = useState("");
   const [prevStart, setprevStart] = useState("");
   const [prevEnd, setprevEnd] = useState("");
 
-  const saveInputThid = (e) => {
-    setInputThid(e.target.value);
-  };
   const saveInputStart = (e) => {
     setInputStart(e.target.value);
   };
@@ -49,16 +47,11 @@ const Plan_Update = () => {
     const fetchData = async () => {
       //      setLoading(true);
       try {
-        const res1 = await axios.get("/screening-schedules");
-        for (let i = 0; i < res1.data.screening_schedules.length; i++) {
-          if (res1.data.screening_schedules[i].id === planid) {
-            setMvid(res1.data.screening_schedules[i].movie.id);
-            setprevThid(res1.data.screening_schedules[i].theater.id);
-            setprevStart(res1.data.screening_schedules[i].screening_started_at);
-            setprevEnd(res1.data.screening_schedules[i].screening_ended_at);
-            break;
-          }
-        } // 토큰 저장하기
+        const res1 = await axios.get("/screening-schedules/" + planid);
+        setMvid(res1.data.movie.id);
+        settheaterName(res1.data.theater.name);
+        setprevStart(res1.data.screening_started_at);
+        setprevEnd(res1.data.screening_ended_at);
       } catch (e) {
         console.log(e);
       }
@@ -89,7 +82,7 @@ const Plan_Update = () => {
       <h1 style={{ textAlign: "center" }}>상영일정 수정</h1>
       <form onSubmit={onClickUpdate}>
         상영관 번호 (고정)
-        <input disabled={true} id="name" type="text" value={prevThid} />
+        <input disabled={true} id="name" type="text" value={theaterName} />
         상영 시작시간<br></br>(YYYY-MM-DDThh:mm:ss 형식)
         <input
           id="time"

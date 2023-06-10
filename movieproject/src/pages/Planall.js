@@ -16,6 +16,8 @@ const Planall = () => {
     { id: 4, name: "4관", state: "4관" },
     { id: 5, name: "5관", state: "5관" },
     { id: 6, name: "6관", state: "6관" },
+    { id: 7, name: "7관", state: "7관" },
+    { id: 8, name: "8관", state: "8관" },
   ];
 
   const [categoryItem, setCategoryItem] = useState(category[0]);

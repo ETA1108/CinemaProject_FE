@@ -1,5 +1,5 @@
 .OrderListItem {
-  height: 270px;
+  height: 210px;
   width: 200px;
   background-color: white;
   margin-bottom: 15px;
@@ -58,6 +58,7 @@
     background-color: transparent;
     color: #6e6e6e;
     text-decoration: underline;
+    margin-top: 10px;
     margin-left: 50px;
     cursor: pointer;
     &:hover {

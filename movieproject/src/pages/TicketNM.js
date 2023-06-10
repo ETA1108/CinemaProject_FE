@@ -191,7 +191,7 @@ const TicketNM = () => {
             />
           </div>
           <div className="intostorage">
-            <button>장바구니에 담기</button>
+            <button>결제하러 가기</button>
           </div>
           <div className="intro">
             * 티켓 예매를 위해 필수 개인 정보를 입력해주세요.

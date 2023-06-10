@@ -61,10 +61,7 @@ const OrderItem_C = ({ txs }) => {
       })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
-        if (paystatus === "미결제")
-          alert("해당 티켓은 예매 취소되었고, 결제 금액은 환불됩니다.");
-        else if (paystatus === "결제완료")
-          alert("해당 티켓(결제 내역)은 삭제되었습니다.");
+        alert("해당 티켓은 예매 취소되었고, 결제 금액은 환불됩니다.");
         document.location.href = "/mypage";
       })
       .catch((error) => {
@@ -110,14 +107,9 @@ const OrderItem_C = ({ txs }) => {
         })()}
         : {txs.payment.paid_at}
       </div>
-      <button className="gotoplan" onClick={onClickOrder}>
-        자세히 보기
-      </button>
       <button className="ticketdelete" onClick={onClickDelete}>
-        티켓{" "}
         {(() => {
-          if (txs.payment.status === "미결제") return "취소하기";
-          else if (txs.payment.status === "결제완료") return "삭제하기";
+          if (txs.payment.status === "미결제") return "티켓 취소하기";
         })()}
       </button>
     </li>

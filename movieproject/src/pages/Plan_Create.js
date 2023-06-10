@@ -11,12 +11,24 @@ const Plan_Create = () => {
   const movieid = location.state.id;
   const moviename = location.state.name;
 
-  const [inputThid, setInputThid] = useState("");
+  const [inputThname, setInputThname] = useState("");
   const [inputStart, setInputStart] = useState("");
   const [inputEnd, setInputEnd] = useState("");
 
-  const saveInputThid = (e) => {
-    setInputThid(e.target.value);
+  const category = [
+    // 장르, 등급 조회
+    { id: 1, name: "1관" },
+    { id: 2, name: "2관" },
+    { id: 3, name: "3관" },
+    { id: 7, name: "4관" },
+    { id: 8, name: "5관" },
+    { id: 9, name: "6관" },
+    { id: 10, name: "7관" },
+    { id: 11, name: "8관" },
+  ];
+
+  const saveInputThname = (e) => {
+    setInputThname(e.target.value);
   };
   const saveInputStart = (e) => {
     setInputStart(e.target.value);
@@ -26,6 +38,13 @@ const Plan_Create = () => {
   };
 
   function onClickCreate(e) {
+    let id = 0;
+    for (let i = 0; i < 8; i++) {
+      if (category[i].name === inputThname) {
+        id = category[i].id;
+        break;
+      }
+    }
     fetch("/screening-schedules", {
       method: "POST",
       headers: {
@@ -33,7 +52,7 @@ const Plan_Create = () => {
       },
       body: JSON.stringify({
         movie_id: movieid,
-        theater_id: +inputThid,
+        theater_id: id,
         screening_started_at: inputStart + ".432Z",
         screening_ended_at: inputEnd + ".432Z",
       }),
@@ -57,12 +76,12 @@ const Plan_Create = () => {
         {">"}
       </h1>
       <form onSubmit={onClickCreate}>
-        상영관 번호
+        상영관
         <input
           id="name"
           type="text"
-          value={inputThid}
-          onChange={saveInputThid}
+          value={inputThname}
+          onChange={saveInputThname}
         />
         상영 시작시간<br></br>(YYYY-MM-DDThh:mm:ss 형식)
         <input
