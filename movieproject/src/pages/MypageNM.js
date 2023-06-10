@@ -74,6 +74,7 @@ const MypageNM = () => {
 
   return (
     <div className="Mypage">
+      <div className="Bar"></div>
       <div className="PageName">
         <h2>주문 내역</h2>
       </div>

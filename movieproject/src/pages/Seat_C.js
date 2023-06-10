@@ -14,6 +14,16 @@ const Seat_C = () => {
   const [theater, setTheater] = useState("");
   const [seat, setSeat] = useState("");
   const [seatid, setSeatid] = useState("");
+  const arr = ["A1", "A3"];
+  arr.sort((a, b) =>
+    a[0].substring(0, 1) < b[0].substring(0, 1)
+      ? -1
+      : parseFloat(a[0].substring(1, a.length)) <
+        parseFloat(+b[0].substring(1, b.length))
+      ? 0
+      : 1
+  );
+  console.log(arr);
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -39,10 +49,22 @@ const Seat_C = () => {
       try {
         const response = await axios.get("/screening-schedules/" + planid);
         let filteredTxs = [];
-        for (let i = 0; i < Object.keys(response.data.seat_map).length; i++) {
-          filteredTxs.push(Object.keys(response.data.seat_map)[i]);
+        for (
+          let i = 0;
+          i < Object.entries(response.data.seat_map).length;
+          i++
+        ) {
+          filteredTxs.push(Object.entries(response.data.seat_map)[i]);
         }
-        setTxs(filteredTxs.sort());
+        filteredTxs.sort((a, b) =>
+          a[0].substring(0, 1) < b[0].substring(0, 1)
+            ? -1
+            : parseFloat(a[0].substring(1, a.length)) <
+              parseFloat(+b[0].substring(1, b.length))
+            ? 0
+            : 1
+        );
+        setTxs(filteredTxs);
         setTheater(response.data.theater.name);
       } catch (e) {
         console.log(e);
@@ -69,17 +91,25 @@ const Seat_C = () => {
             <div className="TxID"></div>
           </button>
         );
-      seat.push(
-        <button
-          onClick={(e) => {
-            setSeat(txs[i]);
-            setSeatid(i);
-          }}
-          className="RealSeatItem"
-        >
-          <div className="TxID">{txs[i]}</div>
-        </button>
-      );
+      if (txs[i][1]) {
+        seat.push(
+          <button disabled="disabled" className="CantSeatItem">
+            <div className="TxID">{txs[i][0]}</div>
+          </button>
+        );
+      } else {
+        seat.push(
+          <button
+            className="CanSeatItem"
+            onClick={(e) => {
+              setSeat(txs[i][0]);
+              setSeatid(i + 10);
+            }}
+          >
+            <div className="TxID">{txs[i][0]}</div>
+          </button>
+        );
+      }
     }
     return seat;
   }
@@ -87,11 +117,11 @@ const Seat_C = () => {
   function onClickGoTicket(e) {
     if (!sessionStorage.getItem("user_id")) {
       navigate("/ticket_nm", {
-        state: { planid: planid, seatid: seatid, seatname: seat, price: price },
+        state: { planid: planid, seatname: seat, seatid: seatid, price: price },
       });
     } else {
       navigate("/ticket_c", {
-        state: { planid: planid, seatid: seatid, seatname: seat, price: price },
+        state: { planid: planid, seatname: seat, seatid: seatid, price: price },
       });
     }
   }

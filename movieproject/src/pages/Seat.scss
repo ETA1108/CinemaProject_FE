@@ -37,20 +37,27 @@
       outline: none;
       background-color: transparent;
     }
-    .RealSeatItem {
+    .CanSeatItem {
+      border-radius: 3px;
+      border: 1px solid #6e6e6e;
       width: 30px;
       height: 30px;
       font-size: 0.3rem;
+      background-color: white;
+      color: black;
       cursor: pointer;
       &:focus {
-        background-color: #4b088a;
+        background-color: #0174df;
         color: white;
-
-        //&:hover {
-        //  background: white;
-        //  color: darkorange;
-        //}
       }
+    }
+    .CantSeatItem {
+      border-radius: 3px;
+      width: 30px;
+      height: 30px;
+      font-size: 0.3rem;
+      background-color: #6e6e6e;
+      color: #d8d8d8;
     }
   }
   .gototicket {

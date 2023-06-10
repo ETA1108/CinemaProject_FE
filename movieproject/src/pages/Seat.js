@@ -35,13 +35,18 @@ const Seat = () => {
       try {
         const response = await axios.get("/screening-schedules/" + planid);
         let filteredTxs = [];
-        for (let i = 0; i < Object.keys(response.data.seat_map).length; i++) {
-          filteredTxs.push(Object.keys(response.data.seat_map)[i]);
+
+        for (
+          let i = 0;
+          i < Object.entries(response.data.seat_map).length;
+          i++
+        ) {
+          filteredTxs.push(Object.entries(response.data.seat_map)[i]);
         }
         filteredTxs.sort((a, b) =>
-          a.substring(0, 1) < b.substring(0, 1)
+          a[0].substring(0, 1) < b[0].substring(0, 1)
             ? -1
-            : +a.substring(1, a.length) < b.substring(1, b.length)
+            : +a[0].substring(1, a.length) < +b[0].substring(1, b.length)
             ? 0
             : 1
         );
@@ -72,11 +77,19 @@ const Seat = () => {
             <div className="TxID"></div>
           </button>
         );
-      seat.push(
-        <button className="RealSeatItem">
-          <div className="TxID">{txs[i]}</div>
-        </button>
-      );
+      if (txs[i][1]) {
+        seat.push(
+          <button disabled="disabled" className="CantSeatItem">
+            <div className="TxID">{txs[i][0]}</div>
+          </button>
+        );
+      } else {
+        seat.push(
+          <button disabled="disabled" className="CanSeatItem">
+            <div className="TxID">{txs[i][0]}</div>
+          </button>
+        );
+      }
     }
     return seat;
   }

@@ -34,6 +34,7 @@ const App = () => {
     <Routes>
       <Route index element={<Login />} />
       <Route path="/join" element={<Join />} />
+      <Route path="/mypage_nm" element={<MypageNM />} />
       <Route element={<Layout />}>
         <Route path="/movie" element={<Movie />} />
         <Route path="/movie_create" element={<Movie_Create />} />
@@ -58,7 +59,6 @@ const App = () => {
         <Route path="/ticket_nm" element={<TicketNM />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/mypage_ud" element={<Mypage_ud />} />
-        <Route path="/mypage_nm" element={<MypageNM />} />
         <Route path="/order_update" element={<Order_Update />} />
         <Route path="/orderabout_c" element={<Orderabout_C />} />
       </Route>
