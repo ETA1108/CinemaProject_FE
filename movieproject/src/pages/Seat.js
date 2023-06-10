@@ -43,15 +43,31 @@ const Seat = () => {
         ) {
           filteredTxs.push(Object.entries(response.data.seat_map)[i]);
         }
-        filteredTxs.sort((a, b) =>
-          a[0].substring(0, 1) < b[0].substring(0, 1)
-            ? -1
-            : +a[0].substring(1, a.length) < +b[0].substring(1, b.length)
-            ? 0
-            : 1
+
+        setTxs(
+          filteredTxs.sort((a, b) => {
+            if (a[0].substring(0, 1) > b[0].substring(0, 1)) {
+              return 1;
+            }
+            if (a[0].substring(0, 1) < b[0].substring(0, 1)) {
+              return -1;
+            }
+            if (
+              +a[0].substring(1, a[0].length) > +b[0].substring(1, b[0].length)
+            ) {
+              return 1;
+            }
+            if (
+              +a[0].substring(1, a[0].length) < +b[0].substring(1, b[0].length)
+            ) {
+              return -1;
+            }
+            // a must be equal to b
+            return 0;
+          })
         );
-        setTxs(filteredTxs);
         setTheater(response.data.theater.name);
+        console.log(txs);
       } catch (e) {
         console.log(e);
       }
