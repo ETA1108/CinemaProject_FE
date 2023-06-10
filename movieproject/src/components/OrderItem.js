@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./OrderItem.scss";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -9,7 +9,44 @@ const OrderItem = ({ txs }) => {
   const location = useLocation();
 
   const customerid = location.state.id;
+  const [schedules, setSchedules] = useState(null);
   const paystatus = txs.payment.status;
+
+  const useInterval = (callback, delay) => {
+    const savedCallback = useRef(null);
+
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    useEffect(() => {
+      const executeCallback = () => {
+        savedCallback.current();
+      };
+
+      const timerId = setInterval(executeCallback, delay);
+
+      return () => clearInterval(timerId);
+    }, []);
+  };
+
+  useInterval(() => {
+    const fetchData = async () => {
+      //      setLoading(true);
+      try {
+        const response = await axios.get("/screening-schedules");
+        let filteredTxs = [];
+        for (let i = 0; i < response.data.screening_schedules.length; i++) {
+          filteredTxs.push(response.data.screening_schedules[i].id);
+        }
+        setSchedules(filteredTxs);
+      } catch (e) {
+        console.log(e);
+      }
+      //      setLoading(false);
+    };
+    fetchData();
+  }, 500);
 
   function onClickDelete(e) {
     axios
@@ -54,6 +91,16 @@ const OrderItem = ({ txs }) => {
         })()}
         : {txs.payment.paid_at}
       </div>
+      <Link
+        to="/orderabout"
+        state={{
+          orderid: orderid,
+          customerid: customerid,
+          schedules: schedules,
+        }}
+      >
+        <button className="gotoplan">자세히 보기</button>
+      </Link>
       <button className="ticketdelete" onClick={onClickDelete}>
         {(() => {
           if (txs.payment.status === "미결제") return "티켓 취소하기";

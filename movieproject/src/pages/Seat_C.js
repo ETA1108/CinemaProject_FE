@@ -14,16 +14,6 @@ const Seat_C = () => {
   const [theater, setTheater] = useState("");
   const [seat, setSeat] = useState("");
   const [seatid, setSeatid] = useState("");
-  const arr = ["A1", "A3"];
-  arr.sort((a, b) =>
-    a[0].substring(0, 1) < b[0].substring(0, 1)
-      ? -1
-      : parseFloat(a[0].substring(1, a.length)) <
-        parseFloat(+b[0].substring(1, b.length))
-      ? 0
-      : 1
-  );
-  console.log(arr);
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -85,6 +75,31 @@ const Seat_C = () => {
     fetchData();
   }, 500);
 
+  useInterval(() => {
+    const fetchData = async () => {
+      //      setLoading(true);
+      try {
+        const response = await axios.get("/theaters");
+        let filteredTxs = [];
+        for (let i = 0; i < response.data.theaters.length; i++) {
+          if (response.data.theaters[i].name === theater) {
+            filteredTxs = response.data.theaters[i].seats;
+            break;
+          }
+        }
+        for (let i = 0; i < filteredTxs.length; i++) {
+          if (filteredTxs[i].name === seat) {
+            setSeatid(filteredTxs[i].id);
+            break;
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, 500);
+
   if (!txs) {
     return null;
   }
@@ -115,7 +130,6 @@ const Seat_C = () => {
             className="CanSeatItem"
             onClick={(e) => {
               setSeat(txs[i][0]);
-              setSeatid(i + 10);
             }}
           >
             <div className="TxID">{txs[i][0]}</div>

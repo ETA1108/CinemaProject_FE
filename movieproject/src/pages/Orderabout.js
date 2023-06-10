@@ -11,8 +11,7 @@ const Orderabout = () => {
 
   const customerid = location.state.customerid;
   const orderid = location.state.orderid;
-  console.log(orderid);
-  console.log(customerid);
+  const schedules = location.state.schedules;
 
   const [txs, setTxs] = useState(null);
   const [method, setMethod] = useState(""); //결제방법
@@ -22,9 +21,11 @@ const Orderabout = () => {
   const [orprice, setOrprice] = useState("");
   const [realprice, setRealprice] = useState("");
 
-  const [ticketprice, setTicketprice] = useState("");
+  const [movieName, setMovieName] = useState("");
   const [ticketrsnum, setTicketrsnum] = useState("");
-  const [seat, setSeat] = useState("");
+  const [seatId, setSeatId] = useState("");
+  const [seatName, setSeatName] = useState("");
+  const [theaterName, setTheaterName] = useState("");
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -48,13 +49,18 @@ const Orderabout = () => {
     const fetchData = async () => {
       //      setLoading(true);
       try {
-        const res1 = await axios.get("/customers");
-        for (let i = 0; i < res1.data.customers.length; i++) {
-          if (res1.data.customers[i].id === customerid) {
-            setPoint(res1.data.customers[i].point);
-            break;
-          }
-        } // 토큰 저장하기
+        const response = await axios.get(
+          "/customers/" + customerid + "/orders"
+        );
+        for (let i = 0; i < response.data.orders.length; i++) {
+          if (response.data.orders[i].id === orderid)
+            setTxs(response.data.orders[i]);
+        }
+        setSeatId(txs.tickets[0].seat_id);
+        setMethod(txs.payment.method);
+        setApnum(txs.payment.approval_number);
+        setOrprice(txs.payment.original_price);
+        setRealprice(txs.payment.amount);
       } catch (e) {
         console.log(e);
       }
@@ -67,30 +73,46 @@ const Orderabout = () => {
     const fetchData = async () => {
       //      setLoading(true);
       try {
-        const response = await axios.get(
-          "/customers/" + customerid + "/orders"
-        );
-        for (let i = 0; i < response.data.orders.length; i++) {
-          if (response.data.orders[i].id === orderid)
-            setTxs(response.data.orders[i]);
+        const response = await axios.get("/theaters");
+        for (let i = 0; i < response.data.theaters.length; i++) {
+          for (let j = 0; j < response.data.theaters[i].seats.length; j++) {
+            if (response.data.theaters[i].seats[j].id === seatId) {
+              setTheaterName(response.data.theaters[i].name);
+              setSeatName(response.data.theaters[i].seats[j].name);
+              break;
+            }
+          }
         }
-        setTicketrsnum(txs.tickets[0].revervation_number);
-        setTicketprice("가격 추가하기");
-        setSeat(txs.tickets[0].seat_id);
-        setMethod(txs.payment.method);
-        setApnum(txs.payment.approval_number);
-        setOrprice(txs.payment.original_price);
-        setRealprice(txs.payment.amount);
-        setUsepoint("포인트추가하기");
-        console.log(txs);
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);
-
+  /*
+  useInterval(() => {
+    const fetchData = async () => {
+      //      setLoading(true);
+      try {
+        let response;
+        for (let i in schedules) {
+          response = await axios.get("/screening-schedules/" + schedules[i]);
+          if (
+            response.data.theater.name === theaterName &&
+            response.data.seat_map[seatName]
+          ) {
+            setMovieName(response.data.movie.name);
+            break;
+          }
+        }
+        console.log(movieName);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, 500);
+*/
   return (
     <div className="Pay">
       <div className="PageName">
@@ -98,12 +120,8 @@ const Orderabout = () => {
       </div>
       <div className="Bar"></div>
       <form>
-        티켓 예매 번호
-        <input disabled={true} id="id" type="text" value={ticketrsnum} />
-        티켓 가격
-        <input disabled={true} id="id" type="text" value={ticketprice} />
         좌석
-        <input disabled={true} id="id" type="text" value={seat} />
+        <input disabled={true} id="id" type="text" value={seatName} />
         <div className="line">
           <hr></hr>
         </div>
@@ -115,15 +133,6 @@ const Orderabout = () => {
         <input disabled={true} id="id" type="text" value={method} />
         카드번호{" ('-'없이)"}
         <input disabled={true} id="password" type="text" value={apnum} />
-        사용한 포인트
-        <input disabled={true} id="usepoint" type="text" value={usepoint} />
-        최종 결제 금액
-        <input
-          disabled={true}
-          id="final"
-          type="text"
-          value={"realprice-usepoint"}
-        />
       </form>
     </div>
   );

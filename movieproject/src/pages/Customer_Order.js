@@ -8,7 +8,7 @@ import { Link, useLocation } from "react-router-dom";
 const Customer_Order = () => {
   const [txs, setTxs] = useState(null);
 
-  const [customername, setCustomername] = useState(null);
+  const [customername, setCustomername] = useState("");
 
   const location = useLocation();
 
@@ -38,13 +38,12 @@ const Customer_Order = () => {
     const fetchData = async () => {
       //      setLoading(true);
       try {
-        const res1 = await axios.get("/customers");
-        for (let i = 0; i < res1.data.customers.length; i++) {
-          if (res1.data.customers[i].id === customerid) {
-            setCustomername(res1.data.customers[i].user_id);
-            break;
-          }
-        } // 토큰 저장하기
+        const res1 = await axios.get("/customers/" + customerid);
+        if (res1.data.is_verified === true) {
+          setCustomername(" - " + res1.data.user_id);
+        } else {
+          setCustomername("");
+        }
       } catch (e) {
         console.log(e);
       }
@@ -81,7 +80,7 @@ const Customer_Order = () => {
   return (
     <div className="Ticket_All">
       <div className="PageName">
-        <h1>티켓 조회 - {customername}</h1>
+        <h1>티켓 조회{customername}</h1>
       </div>
       <div className="Bar"></div>
       <ul className="TxList">
