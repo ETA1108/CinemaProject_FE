@@ -5,10 +5,10 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 
 const OrderItem_C = ({ txs }) => {
+  const navigate = useNavigate();
+
   const id = txs.id;
   const status = txs.payment.status;
-  const navigate = useNavigate();
-  const paystatus = txs.payment.status;
   const [customer_id, setCId] = useState("");
 
   const useInterval = (callback, delay) => {
@@ -31,7 +31,6 @@ const OrderItem_C = ({ txs }) => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const res1 = await axios.get("/customers");
         for (let i = 0; i < res1.data.customers.length; i++) {
@@ -45,7 +44,6 @@ const OrderItem_C = ({ txs }) => {
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);
@@ -71,35 +69,21 @@ const OrderItem_C = ({ txs }) => {
   }
 
   function onClickOrder(e) {
-    console.log(status);
     if (status === "미결제") {
       navigate("/pay_c", {
-        state: { orderid: id },
+        state: { orderid: id, customerid: customer_id },
       });
     } else if (status === "결제완료") {
-      navigate("/orderabout_c", {
-        state: { orderid: id },
+      navigate("/orderabout", {
+        state: { orderid: id, customerid: customer_id },
       });
     }
   }
 
   return (
     <li className="OrderListItem">
-      <div className="reservenum">전체 주문 번호: {txs.id}</div>
+      <div className="reservenum">주문 번호: {txs.id}</div>
       <div className="info1">결제 여부: {txs.payment.status}</div>
-      <div className="info1">표준 가격: {txs.payment.original_price}</div>
-      {(() => {
-        if (txs.payment.status === "결제완료")
-          return (
-            <>
-              <div className="info1">판매 가격: {txs.payment.amount}</div>
-              <div className="info1">결제 방법: {txs.payment.method}</div>
-              <div className="info1">
-                카드 번호: {txs.payment.approval_number}
-              </div>
-            </>
-          );
-      })()}
       <div className="info1">
         {(() => {
           if (txs.payment.status === "미결제") return "예매 일시";
@@ -107,6 +91,9 @@ const OrderItem_C = ({ txs }) => {
         })()}
         : {txs.payment.paid_at}
       </div>
+      <button className="gotoplan" onClick={onClickOrder}>
+        자세히 보기
+      </button>
       <button className="ticketdelete" onClick={onClickDelete}>
         {(() => {
           if (txs.payment.status === "미결제") return "티켓 취소하기";

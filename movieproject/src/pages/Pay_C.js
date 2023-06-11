@@ -1,30 +1,27 @@
 import React from "react";
-import TicketItem from "../components/TicketItem";
 import "./Pay.scss";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-
 import { Link, useLocation } from "react-router-dom";
-import { MdAdUnits } from "react-icons/md";
 
 const Pay_C = () => {
   const { state } = useLocation();
   const { orderid } = state;
-  console.log(orderid);
-  //const {seatname} = state;
 
   const [customer_id, setCId] = useState("");
   const [customer_pw, setCPw] = useState("");
   const [customer_mn, setCMn] = useState("");
   const [customer_isJoin, setCIsJoin] = useState("");
 
-  const [txs, setTxs] = useState(null);
+  // 결제 정보
   const [method, setMethod] = useState(""); //결제방법
   const [apnum, setApnum] = useState(""); //카드번호
   const [point, setPoint] = useState(""); //보유포인트
   const [usepoint, setUsepoint] = useState(""); //사용할 포인트
   const [orprice, setOrprice] = useState("");
   const [realprice, setRealprice] = useState("");
+  // 영화
+  const [movieName, setMovieName] = useState("");
 
   const saveInputId = (e) => {
     setMethod(e.target.value);
@@ -56,7 +53,6 @@ const Pay_C = () => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const res1 = await axios.get("/customers");
         for (let i = 0; i < res1.data.customers.length; i++) {
@@ -74,42 +70,33 @@ const Pay_C = () => {
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const response = await axios.get(
-          "/customers/" + customer_id + "/orders"
+          "/customers/" + customer_id + "/orders/" + orderid
         );
-
-        for (let i = 0; i < response.data.orders.length; i++) {
-          if (response.data.orders[i].id === orderid)
-            setTxs(response.data.orders[i]);
-        }
-        setOrprice(txs.payment.original_price);
-        setRealprice(txs.payment.amount);
+        setMovieName(response.data.screening_schedule.movie.name);
+        setOrprice(response.data.payment.original_price);
+        setRealprice(response.data.payment.amount);
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);
 
   function onClickPay(e) {
     fetch("/customers/" + customer_id + "/orders/" + orderid + "/payment", {
-      //put으로 바꾸기
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        //payment에 싸서 보내기
         status: "결제완료",
         approval_number: apnum,
       }),
@@ -147,6 +134,7 @@ const Pay_C = () => {
         <h1>티켓 결제</h1>
       </div>
       <div className="Bar"></div>
+      <div className="MovieName">영화명: {movieName}</div>
       <form onSubmit={onClickPay}>
         표준 가격
         <input disabled={true} id="id" type="text" value={orprice} />

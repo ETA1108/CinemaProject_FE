@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import MovieItem_C from "../components/MovieItem_C";
 import "./Movie.scss";
 import axios from "axios";
-import { MdExpandMore, MdExpandLess } from "react-icons/md";
-import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 
 const Movie_C = () => {
@@ -24,9 +22,7 @@ const Movie_C = () => {
   ];
 
   const [categoryItem, setCategoryItem] = useState(category[0]);
-  const [toggle, setToggle] = useState(false);
   const [txs, setTxs] = useState(null);
-  //  const [loading, setLoading] = useState(false);
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -46,18 +42,12 @@ const Movie_C = () => {
     }, []);
   };
 
-  const onClick = () => {
-    setToggle(!toggle);
-  };
-
   const onChange = (id) => {
     setCategoryItem(category[id]);
-    setToggle(!toggle);
   };
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const response = await axios.get("/movies");
         let filteredTxs = [];
@@ -74,7 +64,6 @@ const Movie_C = () => {
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);

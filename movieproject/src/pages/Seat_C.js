@@ -35,7 +35,6 @@ const Seat_C = () => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const response = await axios.get("/screening-schedules/" + planid);
         let filteredTxs = [];
@@ -77,7 +76,6 @@ const Seat_C = () => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const response = await axios.get("/theaters");
         let filteredTxs = [];

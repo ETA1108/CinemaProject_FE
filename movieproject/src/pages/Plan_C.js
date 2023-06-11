@@ -2,17 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import PlanItem_C from "../components/PlanItem_C";
 import "./Plan.scss";
 import axios from "axios";
-import { MdExpandMore, MdExpandLess } from "react-icons/md";
-import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 
 const Plan_C = () => {
   const { state } = useLocation();
   const { movieid } = state;
   const { moviename } = state;
-
   const [txs, setTxs] = useState(null);
-  //  const [loading, setLoading] = useState(false);
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);

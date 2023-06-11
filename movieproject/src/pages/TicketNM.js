@@ -1,14 +1,11 @@
 import React from "react";
-import "./Ticket_C.scss";
+import "./Ticket.scss";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import { MdAdUnits } from "react-icons/md";
-import { set } from "react-hook-form";
 
 const TicketNM = () => {
   const location = useLocation();
-
   const navigate = useNavigate();
 
   const planid = location.state.planid;
@@ -20,7 +17,6 @@ const TicketNM = () => {
   const date = new Date().toISOString();
 
   const [inputName, setInputName] = useState("");
-  const [inputTime, setInputTime] = useState("");
   const [inputThid, setInputThid] = useState("");
   const [inputThname, setInputThname] = useState("");
   const [inputStart, setInputStart] = useState("");
@@ -57,11 +53,9 @@ const TicketNM = () => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const response = await axios.get("/screening-schedules/" + planid);
         setInputName(response.data.movie.name);
-        setInputTime(response.data.movie.running_time);
         setInputRate(response.data.movie.rating);
         setInputThid(response.data.theater.id);
         setInputThname(response.data.theater.name);
@@ -73,15 +67,6 @@ const TicketNM = () => {
     };
     fetchData();
   }, 500);
-
-  let seatarray = [];
-  for (let i = 0; i < 3; i++) {
-    let dataset = {
-      id: i,
-    };
-    seatarray.push(JSON.stringify(dataset));
-  }
-  console.log(seatarray);
 
   function onClickJoin(e) {
     if (!isadult(inputNum) && inputRate === "청소년 관람불가") {
@@ -107,7 +92,6 @@ const TicketNM = () => {
           console.log(error.response);
         });
     }
-
     e.preventDefault();
   }
 
@@ -115,7 +99,7 @@ const TicketNM = () => {
     fetch("/customers/" + cid + "/orders", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json", // Content-Type을 반드시 이렇게 하여야 한다.
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         screening_schedule: {

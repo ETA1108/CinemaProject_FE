@@ -38,7 +38,6 @@ const Customer = () => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const response = await axios.get("/customers");
         let filteredTxs = [];
@@ -52,7 +51,6 @@ const Customer = () => {
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);

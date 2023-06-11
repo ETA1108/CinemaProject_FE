@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { useForm } from "react-hook-form";
 import "./Movie_Create.scss";
 import { Link } from "react-router-dom";
-import test1 from "../components/images/남은 인생 10년.jpg";
 
 const Movie_Create = () => {
   // 지정된 ID를 가진 유저에 대한 요청

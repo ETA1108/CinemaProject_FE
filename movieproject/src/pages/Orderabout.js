@@ -2,30 +2,27 @@ import React from "react";
 import "./Pay.scss";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-
 import { Link, useLocation } from "react-router-dom";
-import { MdAdUnits } from "react-icons/md";
 
 const Orderabout = () => {
-  const location = useLocation();
+  const { state } = useLocation();
+  const { orderid } = state;
+  const { customerid } = state;
 
-  const customerid = location.state.customerid;
-  const orderid = location.state.orderid;
-  const schedules = location.state.schedules;
-
-  const [txs, setTxs] = useState(null);
+  // 결제 정보
+  const [status, setStatus] = useState("");
   const [method, setMethod] = useState(""); //결제방법
   const [apnum, setApnum] = useState(""); //카드번호
-  const [point, setPoint] = useState(""); //보유포인트
-  const [usepoint, setUsepoint] = useState(""); //사용할 포인트
   const [orprice, setOrprice] = useState("");
   const [realprice, setRealprice] = useState("");
-
+  const [paidat, setPaidat] = useState(""); //예매일시 or 결제일시
+  // 영화
   const [movieName, setMovieName] = useState("");
-  const [ticketrsnum, setTicketrsnum] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  const [theaterName, setTheaterName] = useState("");
   const [seatId, setSeatId] = useState("");
   const [seatName, setSeatName] = useState("");
-  const [theaterName, setTheaterName] = useState("");
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -47,31 +44,29 @@ const Orderabout = () => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const response = await axios.get(
-          "/customers/" + customerid + "/orders"
+          "/customers/" + customerid + "/orders/" + orderid
         );
-        for (let i = 0; i < response.data.orders.length; i++) {
-          if (response.data.orders[i].id === orderid)
-            setTxs(response.data.orders[i]);
-        }
-        setSeatId(txs.tickets[0].seat_id);
-        setMethod(txs.payment.method);
-        setApnum(txs.payment.approval_number);
-        setOrprice(txs.payment.original_price);
-        setRealprice(txs.payment.amount);
+        setMovieName(response.data.screening_schedule.movie.name);
+        setStartTime(response.data.screening_schedule.screening_started_at);
+        setEndTime(response.data.screening_schedule.screening_started_at);
+        setSeatId(response.data.tickets[0].seat_id);
+        setStatus(response.data.payment.status);
+        setMethod(response.data.payment.method);
+        setApnum(response.data.payment.approval_number);
+        setOrprice(response.data.payment.original_price);
+        setRealprice(response.data.payment.amount);
+        setPaidat(response.data.payment.paid_at);
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const response = await axios.get("/theaters");
         for (let i = 0; i < response.data.theaters.length; i++) {
@@ -89,30 +84,7 @@ const Orderabout = () => {
     };
     fetchData();
   }, 500);
-  /*
-  useInterval(() => {
-    const fetchData = async () => {
-      //      setLoading(true);
-      try {
-        let response;
-        for (let i in schedules) {
-          response = await axios.get("/screening-schedules/" + schedules[i]);
-          if (
-            response.data.theater.name === theaterName &&
-            response.data.seat_map[seatName]
-          ) {
-            setMovieName(response.data.movie.name);
-            break;
-          }
-        }
-        console.log(movieName);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchData();
-  }, 500);
-*/
+
   return (
     <div className="Pay">
       <div className="PageName">
@@ -120,6 +92,13 @@ const Orderabout = () => {
       </div>
       <div className="Bar"></div>
       <form>
+        <input disabled={true} id="id" type="text" value={movieName} />
+        시작
+        <input disabled={true} id="id" type="text" value={startTime} />
+        끝
+        <input disabled={true} id="id" type="text" value={endTime} />
+        상영관
+        <input disabled={true} id="id" type="text" value={theaterName} />
         좌석
         <input disabled={true} id="id" type="text" value={seatName} />
         <div className="line">
@@ -129,10 +108,29 @@ const Orderabout = () => {
         <input disabled={true} id="id" type="text" value={orprice} />
         판매 가격
         <input disabled={true} id="id" type="text" value={realprice} />
-        결제방법
-        <input disabled={true} id="id" type="text" value={method} />
-        카드번호{" ('-'없이)"}
-        <input disabled={true} id="password" type="text" value={apnum} />
+        결제 상태
+        <input disabled={true} id="id" type="text" value={status} />
+        {(() => {
+          if (status === "결제완료")
+            return (
+              <>
+                결제 방법
+                <input disabled={true} id="id" type="text" value={method} />
+                카드 번호{" ('-'없이)"}
+                <input
+                  disabled={true}
+                  id="password"
+                  type="text"
+                  value={apnum}
+                />
+              </>
+            );
+        })()}
+        {(() => {
+          if (status === "미결제") return "예매 일시";
+          else if (status === "결제완료") return "결제 일시";
+        })()}
+        <input disabled={true} id="final" type="text" value={paidat} />
       </form>
     </div>
   );

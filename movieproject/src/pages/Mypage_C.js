@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import OrderItem_C from "../components/OrderItem_C";
 import { Link } from "react-router-dom";
-import { MdAdUnits } from "react-icons/md";
 
 const Mypage = () => {
   const [id, setId] = useState("");
@@ -36,7 +35,6 @@ const Mypage = () => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const res1 = await axios.get("/customers");
         for (let i = 0; i < res1.data.customers.length; i++) {
@@ -50,14 +48,12 @@ const Mypage = () => {
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const response = await axios.get("/customers/" + customer_id);
         setId(response.data.user_id);
@@ -74,14 +70,12 @@ const Mypage = () => {
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         let filteredTxs = [];
         const response = await axios.get(
@@ -96,7 +90,6 @@ const Mypage = () => {
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);

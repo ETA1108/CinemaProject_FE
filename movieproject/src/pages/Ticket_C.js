@@ -1,9 +1,8 @@
 import React from "react";
-import "./Ticket_C.scss";
+import "./Ticket.scss";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import { MdAdUnits } from "react-icons/md";
 
 const Ticket_C = () => {
   const navigate = useNavigate();
@@ -19,7 +18,6 @@ const Ticket_C = () => {
   const [customer_id, setCId] = useState("");
 
   const [inputName, setInputName] = useState("");
-  const [inputTime, setInputTime] = useState("");
   const [inputThid, setInputThid] = useState("");
   const [inputThname, setInputThname] = useState("");
   const [inputStart, setInputStart] = useState("");
@@ -45,7 +43,6 @@ const Ticket_C = () => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const res1 = await axios.get("/customers");
         for (let i = 0; i < res1.data.customers.length; i++) {
@@ -55,22 +52,19 @@ const Ticket_C = () => {
             setCId(res1.data.customers[i].id);
             break;
           }
-        } // 토큰 저장하기
+        }
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const response = await axios.get("/screening-schedules/" + planid);
         setInputName(response.data.movie.name);
-        setInputTime(response.data.movie.running_time);
         setInputThid(response.data.theater.id);
         setInputThname(response.data.theater.name);
         setInputStart(response.data.screening_started_at);
@@ -82,20 +76,11 @@ const Ticket_C = () => {
     fetchData();
   }, 500);
 
-  let seatarray = [];
-  for (let i = 0; i < 3; i++) {
-    let dataset = {
-      id: i,
-    };
-    seatarray.push(JSON.stringify(dataset));
-  }
-  console.log(seatarray);
-
   function onClickMakeTicket(e) {
     fetch("/customers/" + customer_id + "/orders", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json", // Content-Type을 반드시 이렇게 하여야 한다.
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         screening_schedule: {

@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { useForm } from "react-hook-form";
 import "./Movie_Create.scss";
 import { Link, useLocation } from "react-router-dom";
-import noimage from "../components/images/noimage.png";
 
 const Movie_Update = () => {
-  // 지정된 ID를 가진 유저에 대한 요청
   const location = useLocation();
 
   const movieid = location.state.id;

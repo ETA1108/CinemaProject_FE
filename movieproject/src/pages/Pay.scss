@@ -8,9 +8,15 @@
     width: 600px;
     background: black;
     height: 4px;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
   }
-
+  .MovieName {
+    width: 600px;
+    text-align: right;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
   form {
     margin-top: 2%;
     display: flex;

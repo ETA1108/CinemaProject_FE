@@ -1,52 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./OrderItem.scss";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const OrderItem = ({ txs }) => {
-  const orderid = txs.id;
-
   const location = useLocation();
+  const navigate = useNavigate();
 
   const customerid = location.state.id;
-  const [schedules, setSchedules] = useState(null);
-  const paystatus = txs.payment.status;
-
-  const useInterval = (callback, delay) => {
-    const savedCallback = useRef(null);
-
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    useEffect(() => {
-      const executeCallback = () => {
-        savedCallback.current();
-      };
-
-      const timerId = setInterval(executeCallback, delay);
-
-      return () => clearInterval(timerId);
-    }, []);
-  };
-
-  useInterval(() => {
-    const fetchData = async () => {
-      //      setLoading(true);
-      try {
-        const response = await axios.get("/screening-schedules");
-        let filteredTxs = [];
-        for (let i = 0; i < response.data.screening_schedules.length; i++) {
-          filteredTxs.push(response.data.screening_schedules[i].id);
-        }
-        setSchedules(filteredTxs);
-      } catch (e) {
-        console.log(e);
-      }
-      //      setLoading(false);
-    };
-    fetchData();
-  }, 500);
+  const orderid = txs.id;
 
   function onClickDelete(e) {
     axios
@@ -67,23 +29,16 @@ const OrderItem = ({ txs }) => {
     e.preventDefault();
   }
 
+  function onClickOrder(e) {
+    navigate("/orderabout", {
+      state: { orderid: orderid, customerid: customerid },
+    });
+  }
+
   return (
     <li className="OrderListItem">
-      <div className="reservenum">전체 주문 번호: {txs.id}</div>
+      <div className="reservenum">주문 번호: {txs.id}</div>
       <div className="info1">결제 여부: {txs.payment.status}</div>
-      <div className="info1">표준 가격: {txs.payment.original_price}</div>
-      {(() => {
-        if (txs.payment.status === "결제완료")
-          return (
-            <>
-              <div className="info1">결제 방법: {txs.payment.method}</div>
-              <div className="info1">
-                카드 번호: {txs.payment.approval_number}
-              </div>
-              <div className="info1">판매 가격: {txs.payment.amount}</div>
-            </>
-          );
-      })()}
       <div className="info1">
         {(() => {
           if (txs.payment.status === "미결제") return "예매 일시";
@@ -91,16 +46,9 @@ const OrderItem = ({ txs }) => {
         })()}
         : {txs.payment.paid_at}
       </div>
-      <Link
-        to="/orderabout"
-        state={{
-          orderid: orderid,
-          customerid: customerid,
-          schedules: schedules,
-        }}
-      >
-        <button className="gotoplan">자세히 보기</button>
-      </Link>
+      <button className="gotoplan" onClick={onClickOrder}>
+        자세히 보기
+      </button>
       <button className="ticketdelete" onClick={onClickDelete}>
         {(() => {
           if (txs.payment.status === "미결제") return "티켓 취소하기";

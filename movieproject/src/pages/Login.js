@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { useForm } from "react-hook-form";
 import "./Login.scss";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";

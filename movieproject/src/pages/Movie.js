@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import MovieItem from "../components/MovieItem";
 import "./Movie.scss";
 import axios from "axios";
-import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Movie = () => {
@@ -24,7 +23,6 @@ const Movie = () => {
 
   const [categoryItem, setCategoryItem] = useState(category[0]);
   const [txs, setTxs] = useState(null);
-  //  const [loading, setLoading] = useState(false);
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -50,7 +48,6 @@ const Movie = () => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const response = await axios.get("/movies");
         let filteredTxs = [];
@@ -67,7 +64,6 @@ const Movie = () => {
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);

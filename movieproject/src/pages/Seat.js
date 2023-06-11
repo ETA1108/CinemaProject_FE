@@ -31,7 +31,6 @@ const Seat = () => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const response = await axios.get("/screening-schedules/" + planid);
         let filteredTxs = [];

@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { useForm } from "react-hook-form";
 import "./Join.scss";
 import { Link } from "react-router-dom";
 
 const Join = () => {
-  // 지정된 ID를 가진 유저에 대한 요청
-
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
   const [inputNum, setInputNum] = useState("");

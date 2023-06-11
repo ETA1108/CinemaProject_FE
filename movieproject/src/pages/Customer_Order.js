@@ -1,20 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import OrderItem from "../components/OrderItem";
-import "./Ticket.scss";
+import "./Movie.scss";
 import axios from "axios";
-import { MdExpandMore, MdExpandLess } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
 
 const Customer_Order = () => {
-  const [txs, setTxs] = useState(null);
-
-  const [customername, setCustomername] = useState("");
-
   const location = useLocation();
 
   const customerid = location.state.id;
-
-  //  const [loading, setLoading] = useState(false);
+  const [txs, setTxs] = useState(null);
+  const [customername, setCustomername] = useState("");
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -36,25 +31,22 @@ const Customer_Order = () => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const res1 = await axios.get("/customers/" + customerid);
         if (res1.data.is_verified === true) {
-          setCustomername(" - " + res1.data.user_id);
+          setCustomername(" - " + res1.data.user_id + "님");
         } else {
           setCustomername("");
         }
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         let filteredTxs = [];
         const response = await axios.get(
@@ -68,7 +60,6 @@ const Customer_Order = () => {
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);
@@ -78,7 +69,7 @@ const Customer_Order = () => {
   }
 
   return (
-    <div className="Ticket_All">
+    <div className="Plan">
       <div className="PageName">
         <h1>티켓 조회{customername}</h1>
       </div>
@@ -88,11 +79,6 @@ const Customer_Order = () => {
           <OrderItem txs={txs} key={txs.id} />
         ))}
       </ul>
-      {/*}
-      <Link to="/ticket">
-        <button className="gotoplanall">전체 티켓 조회</button>
-      </Link>
-        */}
     </div>
   );
 };

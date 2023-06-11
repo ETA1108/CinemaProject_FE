@@ -2,34 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import PlanItem from "../components/PlanItem";
 import "./Plan.scss";
 import axios from "axios";
-import { MdExpandMore, MdExpandLess } from "react-icons/md";
-import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { Link, useLocation } from "react-router-dom";
 
 const Plan = () => {
-  const category = [
-    // 장르, 등급 조회
-    { id: 0, name: "전체", state: null },
-    { id: 1, name: "1관", state: "1관" },
-    { id: 2, name: "2관", state: "2관" },
-    { id: 3, name: "3관", state: "3관" },
-    { id: 4, name: "4관", state: "4관" },
-    { id: 4, name: "5관", state: "5관" },
-    { id: 5, name: "6관", state: "애6관" },
-  ];
-
-  const [categoryItem, setCategoryItem] = useState(category[0]);
-  const onChange = (id) => {
-    setCategoryItem(category[id]);
-  };
-
   const location = useLocation();
 
   const movieid = location.state.id;
   const moviename = location.state.name;
 
   const [txs, setTxs] = useState(null);
-  //  const [loading, setLoading] = useState(false);
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -56,7 +37,6 @@ const Plan = () => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const response = await axios.get(
           "/movies/" + movieid + "/screening-schedules"
@@ -77,7 +57,6 @@ const Plan = () => {
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);

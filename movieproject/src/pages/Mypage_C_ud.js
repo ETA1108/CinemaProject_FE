@@ -3,15 +3,13 @@ import "./Mypage.scss";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
-import { Link } from "react-router-dom";
-import { MdAdUnits } from "react-icons/md";
-
 const Mypage_ud = () => {
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
   const [mn, setMn] = useState("");
   const [previd, setprevId] = useState("");
   const [prevmn, setprevMn] = useState("");
+  const [prevpt, setprevPt] = useState("");
   const [customer_id, setCId] = useState("");
 
   const saveInputId = (e) => {
@@ -44,7 +42,6 @@ const Mypage_ud = () => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const res1 = await axios.get("/customers");
         for (let i = 0; i < res1.data.customers.length; i++) {
@@ -58,22 +55,20 @@ const Mypage_ud = () => {
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const response = await axios.get("/customers/" + customer_id);
         setprevId(response.data.user_id);
         setprevMn(response.data.mobile_number);
+        setprevPt(response.data.point);
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);
@@ -84,6 +79,7 @@ const Mypage_ud = () => {
         user_id: id,
         password: pw,
         mobile_number: mn,
+        point: prevpt,
       })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./MovieItem.scss";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import noimage from "./images/noimage.png";
 import Modal from "react-modal";
 import axios from "axios";
 

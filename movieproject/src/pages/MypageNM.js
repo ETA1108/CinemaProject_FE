@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import OrderItem_C from "../components/OrderItem_C";
 import { Link, useLocation } from "react-router-dom";
-import { MdAdUnits } from "react-icons/md";
 
 const MypageNM = () => {
   const { state } = useLocation();
@@ -33,26 +32,24 @@ const MypageNM = () => {
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         const res1 = await axios.get("/customers");
         for (let i = 0; i < res1.data.customers.length; i++) {
           if (res1.data.customers[i].mobile_number === mobilenumber) {
             setCId(res1.data.customers[i].id);
+            sessionStorage.setItem("user_id", res1.data.customers[i].user_id);
             break;
           }
         } // 토큰 저장하기
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);
 
   useInterval(() => {
     const fetchData = async () => {
-      //      setLoading(true);
       try {
         let filteredTxs = [];
         const response = await axios.get(
@@ -67,13 +64,13 @@ const MypageNM = () => {
       } catch (e) {
         console.log(e);
       }
-      //      setLoading(false);
     };
     fetchData();
   }, 500);
 
   return (
     <div className="Mypage">
+      <div className="empty"></div>
       <div className="Bar"></div>
       <div className="PageName">
         <h2>주문 내역</h2>
