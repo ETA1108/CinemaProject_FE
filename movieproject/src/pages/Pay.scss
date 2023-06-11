@@ -20,10 +20,33 @@
   form {
     margin-top: 2%;
     display: flex;
-    width: 450px;
+    width: 500px;
     flex-direction: column;
     text-align: left;
-
+    .body {
+      border-radius: 10px;
+      border: 1px solid #eaeaea;
+      padding: 15px;
+      padding-left: 20px;
+      width: 460px;
+      background-color: white;
+      margin-bottom: 30px;
+      input {
+        width: 350px;
+        height: 20px;
+        background: none;
+        font-size: 1.2rem;
+        outline: none;
+        border: none;
+        color: black;
+        margin-bottom: 3px;
+      }
+      #id {
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+    }
     input {
       background: none;
       height: 40px;

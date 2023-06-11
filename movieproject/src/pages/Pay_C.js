@@ -144,15 +144,27 @@ const Pay_C = () => {
         <input id="id" type="text" value={method} onChange={saveInputId} />
         카드번호{" ('-'없이)"}
         <input id="password" type="text" value={apnum} onChange={saveInputPw} />
-        보유 포인트 (결제 시 티켓 판매 가격의 10%가 적립됩니다.)
-        <input disabled={true} id="phonenumber" type="text" value={point} />
-        사용할 포인트
-        <input
-          id="usepoint"
-          type="text"
-          value={usepoint}
-          onChange={saveInputPoint}
-        />
+        {(() => {
+          if (customer_isJoin)
+            return (
+              <>
+                보유 포인트 (결제 시 티켓 판매 가격의 10%가 적립됩니다.)
+                <input
+                  disabled={true}
+                  id="phonenumber"
+                  type="text"
+                  value={point}
+                />
+                사용할 포인트
+                <input
+                  id="usepoint"
+                  type="text"
+                  value={usepoint}
+                  onChange={saveInputPoint}
+                />
+              </>
+            );
+        })()}
         최종 결제 금액
         <input
           disabled={true}

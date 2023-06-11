@@ -91,9 +91,22 @@ const OrderItem_C = ({ txs }) => {
         })()}
         : {txs.payment.paid_at}
       </div>
-      <button className="gotoplan" onClick={onClickOrder}>
-        자세히 보기
-      </button>
+
+      {(() => {
+        if (txs.payment.status === "미결제")
+          return (
+            <button className="gotoplanpay" onClick={onClickOrder}>
+              결제하러 가기
+            </button>
+          );
+        else if (txs.payment.status === "결제완료")
+          return (
+            <button className="gotoplan" onClick={onClickOrder}>
+              자세히 보기
+            </button>
+          );
+      })()}
+
       <button className="ticketdelete" onClick={onClickDelete}>
         {(() => {
           if (txs.payment.status === "미결제") return "티켓 취소하기";

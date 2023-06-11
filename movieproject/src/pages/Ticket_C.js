@@ -114,8 +114,6 @@ const Ticket_C = () => {
           navigate("/pay_c", {
             state: { seatid: seatid, seatname: seatname, orderid: response.id },
           });
-
-          console.log(response.id);
         } else {
           // false는 취소버튼을 눌렀을 때, 취소됨
           document.location.href = "/mypage";

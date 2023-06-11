@@ -1,5 +1,5 @@
 .OrderListItem {
-  height: 200px;
+  height: 190px;
   width: 200px;
   background-color: white;
   margin-bottom: 15px;
@@ -7,9 +7,6 @@
   text-align: left;
   border-radius: 8px;
   border: 1px solid #eaeaea;
-  //text-align: center;
-  //display: flex;
-  //align-items: center;
 
   div {
     width: 185px;
@@ -52,13 +49,26 @@
     margin-left: 50px;
     font-size: 1rem;
   }
+  .gotoplanpay {
+    height: 30px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #0174df;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 43px;
+    font-size: 1rem;
+  }
   .ticketdelete {
     border: none;
     outline: none;
     background-color: transparent;
     color: #6e6e6e;
     text-decoration: underline;
-    margin-top: 10px;
+    margin-top: 5px;
     margin-left: 50px;
     cursor: pointer;
     &:hover {

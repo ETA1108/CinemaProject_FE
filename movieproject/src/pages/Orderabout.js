@@ -50,7 +50,7 @@ const Orderabout = () => {
         );
         setMovieName(response.data.screening_schedule.movie.name);
         setStartTime(response.data.screening_schedule.screening_started_at);
-        setEndTime(response.data.screening_schedule.screening_started_at);
+        setEndTime(response.data.screening_schedule.screening_ended_at);
         setSeatId(response.data.tickets[0].seat_id);
         setStatus(response.data.payment.status);
         setMethod(response.data.payment.method);
@@ -58,6 +58,7 @@ const Orderabout = () => {
         setOrprice(response.data.payment.original_price);
         setRealprice(response.data.payment.amount);
         setPaidat(response.data.payment.paid_at);
+        console.log(seatId);
       } catch (e) {
         console.log(e);
       }
@@ -92,17 +93,26 @@ const Orderabout = () => {
       </div>
       <div className="Bar"></div>
       <form>
-        <input disabled={true} id="id" type="text" value={movieName} />
-        시작
-        <input disabled={true} id="id" type="text" value={startTime} />
-        끝
-        <input disabled={true} id="id" type="text" value={endTime} />
-        상영관
-        <input disabled={true} id="id" type="text" value={theaterName} />
-        좌석
-        <input disabled={true} id="id" type="text" value={seatName} />
-        <div className="line">
-          <hr></hr>
+        <div className="body">
+          <input disabled={true} id="id" type="text" value={movieName} />
+          <input
+            disabled={true}
+            id="phonenumber"
+            type="text"
+            value={
+              startTime.substr(0, 10) +
+              " " +
+              startTime.substr(11) +
+              " ~ " +
+              endTime.substr(11)
+            }
+          />
+          <input
+            disabled={true}
+            id="password"
+            type="text"
+            value={theaterName + " " + seatName}
+          />
         </div>
         표준 가격
         <input disabled={true} id="id" type="text" value={orprice} />

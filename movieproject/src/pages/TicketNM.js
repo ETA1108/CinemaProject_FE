@@ -78,7 +78,7 @@ const TicketNM = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          resident_registration_number: inputNum,
+          resident_registration_number: inputNum + "******",
           point: 0,
           mobile_number: inputPh,
         }),
@@ -175,23 +175,26 @@ const TicketNM = () => {
             />
           </div>
           <div className="intostorage">
-            <button>결제하러 가기</button>
+            <button>
+              결제하러<br></br>가기
+            </button>
           </div>
           <div className="intro">
             * 티켓 예매를 위해 필수 개인 정보를 입력해주세요.
           </div>
           주민등록번호
-          {" ('-'없이): "}
+          {" ('-'없이, 7자리만): "}
           <input
-            id="customer"
+            id="customerrrn"
             type="text"
             value={inputNum}
             onChange={saveInputNum}
           />
+          ******
           <br></br>
           전화번호{" ('-'없이): "}
           <input
-            id="customer"
+            id="customermn"
             type="text"
             value={inputPh}
             onChange={saveInputPh}

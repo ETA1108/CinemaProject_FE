@@ -19,6 +19,7 @@
     text-align: left;
     background-color: white;
     border-radius: 10px;
+    border: 1px solid #eaeaea;
     padding: 15px;
     .body {
       width: 550px;
@@ -59,8 +60,17 @@
         font-size: 1.1rem;
         font-weight: bold;
       }
-      #customer {
-        width: 150px;
+      #customerrrn {
+        width: 65px;
+        background: none;
+        font-size: 1rem;
+        margin-bottom: 5px;
+        outline: none;
+        border: none;
+        border-bottom: 1px solid black;
+      }
+      #customermn {
+        width: 110px;
         background: none;
         font-size: 1rem;
         margin-bottom: 5px;
