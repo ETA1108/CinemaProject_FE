@@ -57,8 +57,14 @@ const Orderabout = () => {
         setApnum(response.data.payment.approval_number);
         setOrprice(response.data.payment.original_price);
         setRealprice(response.data.payment.amount);
-        setPaidat(response.data.payment.paid_at);
-        console.log(seatId);
+        let timedata = new Date(response.data.payment.paid_at);
+        setPaidat(
+          new Date(
+            timedata.getTime() - 2 * (timedata.getTimezoneOffset() * 60000)
+          )
+            .toISOString()
+            .substring(0, 19)
+        );
       } catch (e) {
         console.log(e);
       }

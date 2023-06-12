@@ -10,6 +10,7 @@ const OrderItem_C = ({ txs }) => {
   const id = txs.id;
   const status = txs.payment.status;
   const [customer_id, setCId] = useState("");
+  const timedata = new Date(txs.payment.paid_at);
 
   const useInterval = (callback, delay) => {
     const savedCallback = useRef(null);
@@ -89,7 +90,12 @@ const OrderItem_C = ({ txs }) => {
           if (txs.payment.status === "미결제") return "예매 일시";
           else if (txs.payment.status === "결제완료") return "결제 일시";
         })()}
-        : {txs.payment.paid_at}
+        :{" "}
+        {new Date(
+          timedata.getTime() - 2 * (timedata.getTimezoneOffset() * 60000)
+        )
+          .toISOString()
+          .substring(0, 19)}
       </div>
 
       {(() => {

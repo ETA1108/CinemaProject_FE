@@ -9,6 +9,7 @@ const OrderItem = ({ txs }) => {
 
   const customerid = location.state.id;
   const orderid = txs.id;
+  const timedata = new Date(txs.payment.paid_at);
 
   function onClickDelete(e) {
     axios
@@ -44,7 +45,12 @@ const OrderItem = ({ txs }) => {
           if (txs.payment.status === "미결제") return "예매 일시";
           else if (txs.payment.status === "결제완료") return "결제 일시";
         })()}
-        : {txs.payment.paid_at}
+        :{" "}
+        {new Date(
+          timedata.getTime() - 2 * (timedata.getTimezoneOffset() * 60000)
+        )
+          .toISOString()
+          .substring(0, 19)}
       </div>
       <button className="gotoplan" onClick={onClickOrder}>
         자세히 보기
