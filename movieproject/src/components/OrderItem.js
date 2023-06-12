@@ -21,7 +21,7 @@ const OrderItem = ({ txs }) => {
       })
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
-        alert("해당 티켓은 예매 취소되었고, 결제 금액은 환불됩니다.");
+        alert("해당 티켓은 예매 취소되었습니다.");
         document.location.href = "/customer";
       })
       .catch((error) => {

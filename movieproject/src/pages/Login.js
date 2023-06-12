@@ -67,7 +67,7 @@ const Login = () => {
           <button className="nonmembergo">비회원 주문하기</button>
         </Link>
         <button className="nonmembergo" onClick={() => setModalIsOpen(true)}>
-          비회원 주문내역 확인
+          비회원 주문내역 조회
         </button>
       </div>
       <div className="login">
@@ -114,7 +114,7 @@ const Login = () => {
             value={inputMn}
             onChange={saveInputMn}
           />
-          <button type="submit">주문내역 확인하기</button>
+          <button type="submit">주문내역 조회하기</button>
         </form>
       </Modal>
     </>
