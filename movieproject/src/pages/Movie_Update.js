@@ -129,16 +129,6 @@ const Movie_Update = () => {
     formData.append("synopsis", inputSynopsis);
     formData.append("price", inputPrice);
 
-    // FormData의 key 확인
-    for (let key of formData.keys()) {
-      console.log(key);
-    }
-
-    // FormData의 value 확인
-    for (let value of formData.values()) {
-      console.log(value);
-    }
-
     fetch("/movies/" + movieid, {
       method: "PUT",
       body: formData,

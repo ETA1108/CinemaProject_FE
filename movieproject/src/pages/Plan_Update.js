@@ -91,7 +91,7 @@ const Plan_Update = () => {
         />
         상영 종료시간<br></br>(YYYY-MM-DDThh:mm:ss 형식)
         <input
-          id="rate"
+          id="profile-upload"
           type="text"
           placeholder={prevEnd}
           value={inputEnd}

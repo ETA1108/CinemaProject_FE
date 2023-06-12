@@ -12,7 +12,6 @@ const TicketNM = () => {
   const seatid = location.state.seatid;
   const seatname = location.state.seatname;
   const price = location.state.price;
-  let inputAd = "";
 
   const date = new Date().toISOString();
 
@@ -69,7 +68,7 @@ const TicketNM = () => {
   }, 500);
 
   function onClickJoin(e) {
-    if (!isadult(inputNum) && inputRate === "청소년 관람불가") {
+    if (isadult(inputNum) === false && inputRate === "청소년 관람불가") {
       alert("미성년자는 청소년 관람불가 영화를 보실 수 없습니다.");
     } else {
       fetch("/customers", {
@@ -136,6 +135,7 @@ const TicketNM = () => {
   }
 
   function isadult(num) {
+    let inputAd;
     const year = num.substr(0, 2);
     const realyear = year > 23 ? "19" + year : "20" + year;
     if (realyear > 2004) {
@@ -143,6 +143,7 @@ const TicketNM = () => {
     } else if (realyear <= 2004) {
       inputAd = true;
     }
+    return inputAd;
   }
 
   return (

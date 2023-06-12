@@ -82,7 +82,7 @@ const Movie_Create = () => {
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
         document.location.href = "/movie";
-        alert("영화가 추가되었습니다.");
+        alert("영화가 등록되었습니다.");
       })
       .catch((error) => {
         console.log(error.response);
@@ -171,7 +171,7 @@ const Movie_Create = () => {
           accept="image/*"
           onChange={onChangeImg}
         />
-        <button type="submit">추가하기</button>
+        <button type="submit">등록하기</button>
       </form>
     </div>
   );

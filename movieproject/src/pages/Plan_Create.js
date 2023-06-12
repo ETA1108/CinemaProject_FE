@@ -58,7 +58,7 @@ const Plan_Create = () => {
       .then((res) => {
         // 작업 완료 되면 페이지 이동(새로고침)
         document.location.href = "/movie";
-        alert("상영일정이 추가되었습니다.");
+        alert("상영일정이 등록되었습니다.");
       })
       .catch((error) => {
         console.log(error.response);
@@ -89,8 +89,13 @@ const Plan_Create = () => {
           onChange={saveInputStart}
         />
         상영 종료시간<br></br>(YYYY-MM-DDThh:mm:ss 형식)
-        <input id="rate" type="text" value={inputEnd} onChange={saveInputEnd} />
-        <button type="submit">추가하기</button>
+        <input
+          id="profile-upload"
+          type="text"
+          value={inputEnd}
+          onChange={saveInputEnd}
+        />
+        <button type="submit">등록하기</button>
       </form>
     </div>
   );
